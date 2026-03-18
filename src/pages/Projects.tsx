@@ -1,0 +1,87 @@
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import ProjectCard from '../components/ProjectCard'
+import { projects } from '../data/projects'
+import type { ProjectStatus } from '../types'
+
+type Filter = ProjectStatus | 'ALL'
+
+const filters: Array<{ value: Filter; label: string }> = [
+  { value: 'ALL', label: 'All' },
+  { value: 'LIVE', label: 'Live' },
+  { value: 'DEV', label: 'In Dev' },
+  { value: 'INTERNAL', label: 'Internal' },
+  { value: 'ARCHIVED', label: 'Archived' },
+]
+
+export default function Projects() {
+  const [activeFilter, setActiveFilter] = useState<Filter>('ALL')
+
+  const filtered =
+    activeFilter === 'ALL' ? projects : projects.filter((p) => p.status === activeFilter)
+
+  const countFor = (f: Filter) =>
+    f === 'ALL' ? projects.length : projects.filter((p) => p.status === f).length
+
+  return (
+    <div className="max-w-7xl mx-auto px-6 py-12">
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <p className="text-xs font-mono text-cyan-500 mb-2 tracking-[0.2em] uppercase">
+          // projects
+        </p>
+        <h1 className="text-3xl font-bold text-white mb-2">Engineering Work</h1>
+        <p className="text-slate-400 text-base mb-8 max-w-xl leading-relaxed">
+          Systems and products built with a focus on correctness, performance, and operational
+          simplicity.
+        </p>
+
+        {/* Filter bar */}
+        <div className="flex flex-wrap gap-2 mb-10">
+          {filters.map(({ value, label }) => {
+            const count = countFor(value)
+            if (count === 0 && value !== 'ALL') return null
+            return (
+              <button
+                key={value}
+                onClick={() => setActiveFilter(value)}
+                className={[
+                  'px-3 py-1.5 rounded-lg text-xs font-mono transition-all duration-200',
+                  activeFilter === value
+                    ? 'bg-cyan-500/15 border border-cyan-500/30 text-cyan-400'
+                    : 'bg-white/[0.04] border border-white/[0.08] text-slate-400 hover:text-white hover:bg-white/[0.07]',
+                ].join(' ')}
+              >
+                {label}
+                <span className="ml-1.5 text-slate-600">{count}</span>
+              </button>
+            )
+          })}
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filtered.map((project, i) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: i * 0.06 }}
+              className="h-full"
+            >
+              <ProjectCard project={project} />
+            </motion.div>
+          ))}
+        </div>
+
+        {filtered.length === 0 && (
+          <div className="text-center py-20 text-slate-600 font-mono text-sm">
+            No projects with status {activeFilter}.
+          </div>
+        )}
+      </motion.div>
+    </div>
+  )
+}
