@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { usePageMeta } from '../hooks/usePageMeta'
 import ProjectCard from '../components/ProjectCard'
 import { projects } from '../data/projects'
 import type { ProjectStatus } from '../types'
@@ -15,6 +16,10 @@ const filters: Array<{ value: Filter; label: string }> = [
 ]
 
 export default function Projects() {
+  usePageMeta(
+    'Engineering Projects — Microservices, Kafka, Kubernetes | Kulshresth Jangid',
+    'Backend engineering projects: microservices architecture, distributed systems, API performance, CI/CD automation, and SLO observability. Java, Spring Boot, Kafka, Kubernetes.',
+  )
   const [activeFilter, setActiveFilter] = useState<Filter>('ALL')
 
   const filtered =
@@ -36,7 +41,8 @@ export default function Projects() {
         <h1 className="text-3xl font-bold text-white mb-2">Engineering Work</h1>
         <p className="text-slate-400 text-base mb-8 max-w-xl leading-relaxed">
           Systems and products built with a focus on correctness, performance, and operational
-          simplicity.
+          simplicity — microservices architecture, distributed systems design, high-throughput
+          API engineering, and cloud-native deployment on Kubernetes.
         </p>
 
         {/* Filter bar */}

@@ -1,5 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { projects } from '../data/projects'
 import GlassCard from '../components/GlassCard'
 import StatusBadge from '../components/StatusBadge'
@@ -7,6 +8,12 @@ import StatusBadge from '../components/StatusBadge'
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>()
   const project = projects.find((p) => p.id === id)
+  usePageMeta(
+    project
+      ? `${project.title} — Architecture & Case Study | Kulshresth Jangid`
+      : 'Project not found | Kulshresth Jangid',
+    project ? project.shortDescription : undefined,
+  )
 
   if (!project) return <Navigate to="/projects" replace />
 

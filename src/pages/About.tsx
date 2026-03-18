@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion'
+import { usePageMeta } from '../hooks/usePageMeta'
 import GlassCard from '../components/GlassCard'
 
 const experience = [
   {
     role: 'Senior Software Engineer',
-    company: 'Equinix (via Husys Consulting)',
+    company: 'Equinix',
     period: 'Jun 2025 \u2013 Present',
     location: 'Remote, India',
     notes: [
@@ -71,6 +72,10 @@ const technicalDepth = [
 ]
 
 export default function About() {
+  usePageMeta(
+    'About Kulshresth Jangid — Senior Backend Engineer, Jaipur India',
+    'Senior Backend Engineer from Jaipur, India. 4+ years building distributed systems at CarDekho, Rampwin, and Equinix. Java, Spring Boot, Kafka, Kubernetes, microservices architecture.',
+  )
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
       <motion.div
@@ -99,10 +104,11 @@ export default function About() {
           <GlassCard className="space-y-4">
             <p className="text-slate-400 leading-relaxed text-sm">
               I design distributed systems, ship production software, and operate what I build.
-              Four years across cartech, fintech, and SaaS \u2014 working on systems that handle real
-              traffic, real failure modes, and real consequence when something breaks at 2am.
-              My default orientation is ownership: I define the problem, choose the architecture,
-              write the code, instrument it, and stay on-call for it.
+              Four years as a backend engineer across cartech, fintech, and SaaS — working on
+              microservices architectures that handle real traffic, real failure modes, and real
+              consequence when something breaks at 2am. My default orientation is ownership:
+              I define the problem, choose the architecture, write the code, instrument it,
+              and stay on-call for it.
             </p>
             <p className="text-slate-400 leading-relaxed text-sm">
               I think in systems before I think in features. Before writing code, I want to

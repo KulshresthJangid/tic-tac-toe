@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { usePageMeta } from '../hooks/usePageMeta'
 import GlassCard from '../components/GlassCard'
 import StatusBadge from '../components/StatusBadge'
 import TerminalBlock from '../components/TerminalBlock'
@@ -36,6 +37,10 @@ const fadeUp = {
 }
 
 export default function Home() {
+  usePageMeta(
+    'Kulshresth Jangid — Senior Backend Engineer | Java, Spring Boot, Distributed Systems',
+    'Senior Backend Engineer specialising in distributed systems, microservices architecture, and scalable SaaS platforms. Java, Spring Boot, Kafka, Kubernetes. Based in Jaipur, India.',
+  )
   const otherProjects = projects.slice(1, 4)
   const onlineServices = appServices.filter((s) => s.status === 'ONLINE')
 
@@ -46,7 +51,7 @@ export default function Home() {
         <div className="flex flex-col gap-6">
           <div>
             <p className="text-xs font-mono text-cyan-500 mb-2 tracking-[0.2em] uppercase">
-              // entry point \u2014 jaipur, india
+              Senior Backend Engineer · Jaipur, India
             </p>
             <h1 className="text-4xl sm:text-5xl font-bold text-white leading-[1.1] mb-4">
               I build the system.
@@ -55,6 +60,9 @@ export default function Home() {
               <br />
               <span className="text-gradient">I own the outcome.</span>
             </h1>
+            <p className="text-xs font-mono text-slate-600 mb-4 tracking-wide">
+              Java · Spring Boot · Distributed Systems · Kafka · Kubernetes · Microservices
+            </p>
             <p className="text-slate-400 text-base leading-relaxed max-w-lg">
               4 years designing and operating distributed systems in production. Senior Engineer at
               Equinix. Built a full SaaS platform solo from architecture to deployment. I don't wait

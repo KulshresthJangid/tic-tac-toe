@@ -1,9 +1,14 @@
 import { motion } from 'framer-motion'
+import { usePageMeta } from '../hooks/usePageMeta'
 import AppNodeCard from '../components/AppNodeCard'
 import GlassCard from '../components/GlassCard'
 import { appServices } from '../data/apps'
 
 export default function Apps() {
+  usePageMeta(
+    'Deployed Applications & Service Registry | Kulshresth Jangid',
+    'Live service registry for the Social Media Automation SaaS platform and supporting microservices. Spring Boot, Kafka, Kubernetes, Nginx. Deployed by Kulshresth Jangid.',
+  )
   const onlineCount = appServices.filter((s) => s.status === 'ONLINE').length
   const degradedCount = appServices.filter((s) => s.status === 'DEGRADED').length
 
