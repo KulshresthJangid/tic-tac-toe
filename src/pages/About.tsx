@@ -118,11 +118,12 @@ export default function About() {
               that compose well are better than clever abstractions that hide failure modes.
             </p>
             <p className="text-slate-400 leading-relaxed text-sm">
-              Outside of employed work, I built a full Social Media Automation SaaS platform solo \u2014
-              from schema design to Kubernetes deployment. Not as a side project demo. As a real
-              product with a real architecture designed to run and scale. That work reflects how I
-              actually operate: end-to-end, without waiting for someone else to unblock a dependency
-              or make an architectural decision.
+              Outside of employed work, I built <span className="text-white font-medium">EchoPost</span> \u2014 a full-stack Marketing Operating System \u2014 entirely solo.
+              It processes raw knowledge through a four-stage pipeline (Source \u2192 Insight \u2192 Content \u2192 Distribution),
+              supports three automation modes (manual, review, autopilot), and lets teams plug in their own AI provider.
+              Frontend in Next.js, backend in Spring Boot, async workers on RabbitMQ, scheduling over Redis,
+              content indexed in Elasticsearch \u2014 all of it designed, deployed, and operated by me.
+              Not as a side-project demo. As a real product with a real architecture designed to run and scale.
             </p>
           </GlassCard>
         </div>

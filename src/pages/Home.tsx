@@ -138,7 +138,7 @@ export default function Home() {
           <div className="lg:col-span-3 flex flex-col gap-4">
             <div>
               <div className="flex items-center gap-2.5 mb-1 flex-wrap">
-                <h3 className="text-lg font-bold text-white">Social Media Automation SaaS</h3>
+          <h3 className="text-lg font-bold text-white">EchoPost — Marketing Operating System</h3>
                 <StatusBadge status="LIVE" pulse />
               </div>
               <p className="text-xs font-mono text-slate-600">Built solo \u00b7 2025 \u00b7 Production</p>
@@ -147,19 +147,21 @@ export default function Home() {
             <div className="space-y-1.5">
               <p className="text-xs text-slate-500 font-mono uppercase tracking-wider">Problem</p>
               <p className="text-sm text-slate-400 leading-relaxed">
-                Content teams burn hours on manual posting, platform-switching, and generic AI
-                output with no strategic grounding. Existing schedulers (Buffer, Hootsuite) are dumb
-                pipes \u2014 no content intelligence, no strategy layer, no ownership of the output.
+                Content teams are operationally bottlenecked: posting manually, context-switching
+                across platforms, and getting generic AI output with no strategic grounding.
+                Existing schedulers (Buffer, Hootsuite) are dumb pipes — no content intelligence,
+                no insight layer, no ownership of the output.
               </p>
             </div>
 
             <div className="space-y-1.5">
               <p className="text-xs text-slate-500 font-mono uppercase tracking-wider">Solution</p>
               <p className="text-sm text-slate-400 leading-relaxed">
-                A knowledge engine that transforms structured brand context into platform-native
-                content. Backed by a distributed Kafka async pipeline and a scheduling system
-                validated at 1M+ tasks/instance. Teams, roles, approvals, and analytics are
-                all first-class features.
+                A Marketing Operating System with a four-stage pipeline: Source → Insight → Content
+                → Distribution. Raw knowledge enters as articles and notes; the AI layer extracts
+                strategic signals; a configurable persona engine generates platform-native content;
+                async RabbitMQ workers publish it. Three automation modes: Manual, Review, Autopilot.
+                BYO-AI: plug in any LLM. Scheduling engine validated at 1M+ tasks/instance.
               </p>
             </div>
 
@@ -174,12 +176,14 @@ export default function Home() {
           <div className="lg:col-span-2 flex flex-col gap-3 lg:border-l lg:border-white/[0.06] lg:pl-8">
             <p className="text-xs font-mono text-slate-600 uppercase tracking-wider">Key signals</p>
             {[
+              ['Pipeline', 'Source → Insight → Content → Distribution'],
+              ['Automation', 'Manual / Review / Autopilot'],
               ['Scale', '1M+ tasks/instance'],
-              ['Transport', 'Kafka async pipeline'],
-              ['Scheduling', 'Time-wheel + Redis'],
-              ['Multi-tenant', 'Row-level security + RBAC'],
-              ['Observability', 'Per-stage Prometheus metrics'],
-              ['Platforms', 'LinkedIn, Twitter, Instagram'],
+              ['AI', 'BYO (OpenAI / Anthropic / self-hosted)'],
+              ['Frontend', 'Next.js (/smat-ui)'],
+              ['Backend', 'Spring Boot (/smat-server)'],
+              ['Queue', 'RabbitMQ + Redis time-wheel'],
+              ['Platforms', 'LinkedIn (live) · X (WIP)'],
             ].map(([label, value]) => (
               <div key={label} className="flex items-baseline gap-3">
                 <span className="text-[11px] font-mono text-slate-600 w-24 flex-shrink-0">{label}</span>

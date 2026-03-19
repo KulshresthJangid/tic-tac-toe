@@ -2,63 +2,63 @@ import type { AppService } from '../types'
 
 export const appServices: AppService[] = [
   {
-    id: 'social-saas',
-    name: 'Social SaaS',
+    id: 'smat-ui',
+    name: 'EchoPost UI',
     description:
-      'Content automation platform. Knowledge-driven generation, multi-platform publishing, team workflows, and engagement analytics.',
+      'Next.js frontend for the EchoPost Marketing Operating System. Onboarding wizard, Bucket management, Source ingestion, Insights browser, Post editor, Scheduling calendar, Analytics dashboards, and AI provider config.',
     route: '/saas',
     status: 'ONLINE',
-    version: '2.1.0',
-    tags: ['Kafka', 'Spring Boot', 'Multi-platform'],
+    version: '2.2.0',
+    tags: ['Next.js', 'TypeScript', 'Multi-tenant'],
   },
   {
-    id: 'content-api',
-    name: 'Content API',
+    id: 'smat-server',
+    name: 'EchoPost API',
     description:
-      'Core REST API powering the SaaS platform. Pipeline orchestration, platform OAuth integrations, and publish lifecycle management.',
-    route: '/api/v2',
+      'Core Spring Boot backend (/smat-server). Auth + Org + RBAC, content ingestion pipeline, AI processing layer, post generation engine, scheduling system, RabbitMQ execution workers, and platform integrations.',
+    route: '/api/v1',
     status: 'ONLINE',
-    version: '2.1.0',
-    tags: ['Spring Boot', 'JWT', 'REST'],
+    version: '2.2.0',
+    tags: ['Spring Boot', 'JWT', 'RabbitMQ'],
   },
   {
     id: 'scheduler',
     name: 'Scheduler Engine',
     description:
-      'Distributed task scheduling. Time-wheel algorithm over Redis sorted sets. Validated at 1M+ concurrent tasks per instance with at-least-once delivery.',
+      'Distributed task scheduling using a time-wheel algorithm over Redis sorted sets. Validated at 1M+ concurrent tasks/instance — at-least-once delivery with idempotent publish consumers.',
     route: '/scheduler',
     status: 'ONLINE',
     version: '1.4.0',
-    tags: ['Redis', 'Kafka', 'High-throughput'],
+    tags: ['Redis', 'RabbitMQ', 'High-throughput'],
+  },
+  {
+    id: 'ai-config',
+    name: 'AI Config Service',
+    description:
+      'BYO-AI provider management. Org-level LLM provider config (OpenAI, Anthropic, self-hosted). Dynamic persona templates and strategy-driven prompt configuration per org and per channel.',
+    route: '/ai',
+    status: 'ONLINE',
+    version: '1.0.0',
+    tags: ['LLM', 'BYO-AI', 'Spring Boot'],
   },
   {
     id: 'analytics',
     name: 'Analytics Service',
     description:
-      'Per-platform engagement tracking, content strategy attribution, and publishing performance dashboards.',
+      'Per-platform engagement tracking, strategy-pillar attribution, and publishing performance dashboards over rolling time windows.',
     route: '/analytics',
     status: 'ONLINE',
     version: '1.2.0',
-    tags: ['PostgreSQL', 'Kafka', 'Materialized Views'],
+    tags: ['PostgreSQL', 'Elasticsearch', 'Materialized Views'],
   },
   {
     id: 'observability',
     name: 'Observability',
     description:
-      'SLO dashboards, error budget tracking, burn-rate alerting, and structured log aggregation. Prometheus + Grafana + ELK.',
+      'SLO dashboards, error budget tracking, multi-window burn-rate alerting, and structured log aggregation. Prometheus + Grafana + ELK. Per-pipeline-stage instrumentation.',
     route: '/monitor',
     status: 'ONLINE',
     version: '1.1.0',
     tags: ['Prometheus', 'Grafana', 'ELK'],
-  },
-  {
-    id: 'auth',
-    name: 'Auth Service',
-    description:
-      'JWT authentication, team RBAC enforcement, OAuth2 social login connectors (LinkedIn, Twitter), and immutable audit log.',
-    route: '/auth',
-    status: 'ONLINE',
-    version: '1.3.0',
-    tags: ['Spring Security', 'JWT', 'OAuth2'],
   },
 ]
