@@ -6,7 +6,8 @@ export const appServices: AppService[] = [
     name: 'EchoPost UI',
     description:
       'Next.js frontend for the EchoPost Marketing Operating System. Onboarding wizard, Bucket management, Source ingestion, Insights browser, Post editor, Scheduling calendar, Analytics dashboards, and AI provider config.',
-    route: '/saas',
+    route: '/smat-ui',
+    externalUrl: '/smat-ui',
     status: 'ONLINE',
     version: '2.2.0',
     tags: ['Next.js', 'TypeScript', 'Multi-tenant'],
@@ -16,7 +17,8 @@ export const appServices: AppService[] = [
     name: 'EchoPost API',
     description:
       'Core Spring Boot backend (/smat-server). Auth + Org + RBAC, content ingestion pipeline, AI processing layer, post generation engine, scheduling system, RabbitMQ execution workers, and platform integrations.',
-    route: '/api/v1',
+    route: '/smat-server',
+    externalUrl: '/smat-server',
     status: 'ONLINE',
     version: '2.2.0',
     tags: ['Spring Boot', 'JWT', 'RabbitMQ'],
