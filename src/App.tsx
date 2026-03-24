@@ -6,6 +6,7 @@ import ProjectDetail from './pages/ProjectDetail'
 import Apps from './pages/Apps'
 import About from './pages/About'
 import DSA from './pages/DSA'
+import DSAv2 from './pages/DSAv2'
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/apps" element={<Apps />} />
           <Route path="/about" element={<About />} />
           <Route path="/dsa" element={<DSA />} />
+          <Route path="/dsa-v2" element={<DSAv2 />} />
         </Routes>
       </MainLayout>
     </BrowserRouter>

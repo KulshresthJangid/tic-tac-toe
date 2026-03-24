@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { dsaTopics } from '../data/dsa'
 import type { DSATopic, DSAProblem, CellStyle } from '../data/dsa'
@@ -1087,6 +1088,7 @@ function SystemDSABridge() {
    Main Page
 ════════════════════════════════════════════════════════════════════ */
 export default function DSA() {
+  const navigate = useNavigate()
   usePageMeta(
     'DSA Master Guide — Data Structures & Algorithms',
     '18 topics, 54 problems. Every concept, pattern, and approach for data structures & algorithms — Easy, Medium, Hard.',
@@ -1173,6 +1175,38 @@ export default function DSA() {
             Every concept. Every pattern. Easy → Medium → Hard problems for each topic.
             Zero fluff, maximum depth.
           </p>
+
+          {/* DSA-v2 CTA */}
+          <div style={{ marginBottom: '2.5rem' }}>
+            <button
+              onClick={() => navigate('/dsa-v2')}
+              style={{
+                fontFamily: 'JetBrains Mono, monospace',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                padding: '0.75rem 1.75rem',
+                border: `1px solid ${C.white}`,
+                borderRadius: 3,
+                background: 'rgba(255,255,255,0.06)',
+                color: C.white,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(255,255,255,0.12)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(255,255,255,0.06)'
+              }}
+            >
+              Move to DSA-v2 — 90-Day Mastery Sprint →
+            </button>
+            <p style={{ marginTop: '0.6rem', fontFamily: 'JetBrains Mono, monospace', fontSize: '0.6rem', color: C.grayDim, letterSpacing: '0.1em' }}>
+              120 units · AI/ML + Backend + DevOps · built to get a remote job
+            </p>
+          </div>
 
           {/* Stats */}
           <div style={{ display: 'flex', gap: '3rem', justifyContent: 'center', flexWrap: 'wrap' }}>
