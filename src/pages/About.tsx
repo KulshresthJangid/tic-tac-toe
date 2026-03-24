@@ -95,6 +95,8 @@ export default function About() {
           sameAs: [
             'https://github.com/kulshresthjangid',
             'https://www.linkedin.com/in/kulshresth-jangid/',
+            'https://x.com/nerdy_ge3k',
+            'https://medium.com/@kulshresthjangid',
           ],
         },
       },
@@ -206,6 +208,8 @@ export default function About() {
             {[
               { label: 'GitHub', href: 'https://github.com/kulshresthjangid', external: true },
               { label: 'LinkedIn', href: 'https://www.linkedin.com/in/kulshresth-jangid/', external: true },
+              { label: 'X / Twitter', href: 'https://x.com/nerdy_ge3k', external: true },
+              { label: 'Medium', href: 'https://medium.com/@kulshresthjangid', external: true },
               { label: 'Email', href: 'mailto:kulshresth@example.dev', external: false },
             ].map(({ label, href, external }) => (
               <a
