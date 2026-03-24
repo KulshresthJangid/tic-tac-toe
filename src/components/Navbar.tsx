@@ -19,7 +19,7 @@ export default function Navbar() {
             <span className="text-[10px] font-black text-black font-mono tracking-tight">KJ</span>
           </div>
           <span className="text-sm font-semibold text-white font-mono hidden sm:block">
-            kulshresthjangid.dev
+            buildwithkulshresth.com
           </span>
         </Link>
 
