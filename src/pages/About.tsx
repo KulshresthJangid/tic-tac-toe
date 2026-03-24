@@ -73,8 +73,32 @@ const technicalDepth = [
 
 export default function About() {
   usePageMeta(
-    'About Kulshresth Jangid — Systems Architect, Jaipur India',
-    'Systems architect from Jaipur, India. 4+ years building distributed systems at CarDekho, Rampwin, and Equinix. Founded Lumen (EchoPost) — a multi-tenant Marketing OS built end-to-end.',
+    'About Kulshresth Jangid — Senior Backend Engineer · Jaipur, India',
+    'Senior backend engineer from Jaipur, India. I build scalable APIs, SaaS backends, and distributed systems. 4+ years at CarDekho, Rampwin, and Equinix. Open to remote roles globally.',
+    {
+      canonical: 'https://buildwithkulshresth.com/about',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'ProfilePage',
+        name: 'About Kulshresth Jangid',
+        url: 'https://buildwithkulshresth.com/about',
+        mainEntity: {
+          '@type': 'Person',
+          name: 'Kulshresth Jangid',
+          jobTitle: 'Senior Backend Engineer',
+          description: 'Senior backend engineer from Jaipur, India. I build scalable APIs, SaaS backends, and distributed systems. 4+ years at CarDekho, Rampwin, and Equinix.',
+          worksFor: { '@type': 'Organization', name: 'Equinix' },
+          knowsAbout: [
+            'Node.js', 'TypeScript', 'Java', 'Spring Boot', 'Distributed Systems',
+            'Microservices', 'Kafka', 'Redis', 'PostgreSQL', 'Kubernetes',
+          ],
+          sameAs: [
+            'https://github.com/kulshresthjangid',
+            'https://www.linkedin.com/in/kulshresth-jangid/',
+          ],
+        },
+      },
+    },
   )
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
@@ -94,9 +118,9 @@ export default function About() {
               KJ
             </div>
             <div>
-              <h1 className="text-3xl font-black text-white mb-1 tracking-tight">Kulshresth Jangid</h1>
+          <h1 className="text-3xl font-black text-white mb-1 tracking-tight">Kulshresth Jangid</h1>
               <p className="text-white/30 text-sm font-mono">
-                Systems Architect · Product Builder · Jaipur, India
+                Senior Backend Engineer · Node.js, TypeScript, Java · Jaipur, India
               </p>
             </div>
           </div>
