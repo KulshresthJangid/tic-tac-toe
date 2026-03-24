@@ -19,7 +19,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           <StatusBadge status={project.status} />
         </div>
 
-        <p className="text-sm text-slate-400 leading-relaxed flex-1">
+        <p className="text-sm text-white/40 leading-relaxed flex-1">
           {project.shortDescription}
         </p>
 
@@ -27,22 +27,22 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           {project.techStack.slice(0, 5).map((tech) => (
             <span
               key={tech}
-              className="px-2 py-0.5 text-[10px] font-mono bg-white/[0.05] border border-white/[0.08] rounded text-slate-300"
+              className="px-2 py-0.5 text-[10px] font-mono bg-white/[0.04] border border-white/[0.07] rounded text-white/35"
             >
               {tech}
             </span>
           ))}
           {project.techStack.length > 5 && (
-            <span className="px-2 py-0.5 text-[10px] font-mono text-slate-600">
+            <span className="px-2 py-0.5 text-[10px] font-mono text-white/20">
               +{project.techStack.length - 5}
             </span>
           )}
         </div>
 
         <div className="flex items-center justify-between pt-3 border-t border-white/[0.06]">
-          <span className="text-xs text-slate-600 font-mono">{project.year}</span>
-          <span className="text-xs text-cyan-400 font-medium group-hover:text-cyan-300 transition-colors">
-            View details →
+          <span className="text-xs text-white/20 font-mono">{project.year}</span>
+          <span className="text-xs text-white/40 font-medium group-hover:text-white transition-colors">
+            View case study →
           </span>
         </div>
       </GlassCard>

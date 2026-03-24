@@ -13,43 +13,43 @@ const statusConfig: Record<
 > = {
   LIVE: {
     label: 'LIVE',
-    className: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-    dotColor: 'bg-emerald-400',
+    className: 'bg-white/[0.05] text-white border-white/20',
+    dotColor: 'bg-white',
   },
   DEV: {
     label: 'DEV',
-    className: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-    dotColor: 'bg-amber-400',
+    className: 'bg-white/[0.03] text-white/50 border-white/10',
+    dotColor: 'bg-white/50',
   },
   INTERNAL: {
     label: 'INTERNAL',
-    className: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-    dotColor: 'bg-blue-400',
+    className: 'bg-white/[0.03] text-white/40 border-white/10',
+    dotColor: 'bg-white/40',
   },
   ARCHIVED: {
     label: 'ARCHIVED',
-    className: 'bg-slate-500/10 text-slate-500 border-slate-600/20',
-    dotColor: 'bg-slate-500',
+    className: 'bg-white/[0.02] text-white/25 border-white/[0.08]',
+    dotColor: 'bg-white/25',
   },
   ONLINE: {
     label: 'ONLINE',
-    className: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-    dotColor: 'bg-emerald-400',
+    className: 'bg-white/[0.05] text-white/70 border-white/15',
+    dotColor: 'bg-white/70',
   },
   DEGRADED: {
     label: 'DEGRADED',
-    className: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-    dotColor: 'bg-amber-400',
+    className: 'bg-white/[0.03] text-white/50 border-white/10',
+    dotColor: 'bg-white/50',
   },
   OFFLINE: {
     label: 'OFFLINE',
-    className: 'bg-red-500/10 text-red-400 border-red-500/20',
-    dotColor: 'bg-red-400',
+    className: 'bg-white/[0.02] text-white/30 border-white/[0.08]',
+    dotColor: 'bg-white/30',
   },
   MAINTENANCE: {
     label: 'MAINT',
-    className: 'bg-violet-500/10 text-violet-400 border-violet-500/20',
-    dotColor: 'bg-violet-400',
+    className: 'bg-white/[0.03] text-white/40 border-white/10',
+    dotColor: 'bg-white/40',
   },
 }
 
