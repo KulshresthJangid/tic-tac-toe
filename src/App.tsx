@@ -5,6 +5,7 @@ import Projects from './pages/Projects'
 import ProjectDetail from './pages/ProjectDetail'
 import Apps from './pages/Apps'
 import About from './pages/About'
+import DSA from './pages/DSA'
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/apps" element={<Apps />} />
           <Route path="/about" element={<About />} />
+          <Route path="/dsa" element={<DSA />} />
         </Routes>
       </MainLayout>
     </BrowserRouter>
