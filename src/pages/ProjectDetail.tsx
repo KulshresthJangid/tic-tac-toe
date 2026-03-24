@@ -28,7 +28,7 @@ export default function ProjectDetail() {
         {/* Back */}
         <Link
           to="/projects"
-          className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-300 font-mono transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-white/30 hover:text-white font-mono transition-colors"
         >
           ← back to projects
         </Link>
@@ -37,10 +37,10 @@ export default function ProjectDetail() {
         <div>
           <div className="flex items-center gap-3 mb-3 flex-wrap">
             <StatusBadge status={project.status} pulse={project.status === 'LIVE'} />
-            <span className="text-xs font-mono text-slate-600">{project.year}</span>
+            <span className="text-xs font-mono text-white/25">{project.year}</span>
           </div>
-          <h1 className="text-4xl font-bold text-white mb-3">{project.title}</h1>
-          <p className="text-slate-400 text-base leading-relaxed max-w-2xl">{project.description}</p>
+          <h1 className="text-4xl font-black text-white mb-3 tracking-tight">{project.title}</h1>
+          <p className="text-white/45 text-sm leading-relaxed max-w-2xl">{project.description}</p>
         </div>
 
         {/* Action links */}
@@ -50,9 +50,9 @@ export default function ProjectDetail() {
               href={project.liveUrl}
               target={project.liveUrl.startsWith('http') ? '_blank' : undefined}
               rel={project.liveUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 text-sm font-medium hover:bg-cyan-500/20 hover:border-cyan-500/40 transition-all duration-200"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-white text-black text-sm font-semibold hover:bg-white/90 transition-all duration-150"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-black" />
               Launch Application
             </a>
           )}
@@ -61,7 +61,7 @@ export default function ProjectDetail() {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-lg glass glass-hover text-slate-300 text-sm font-medium hover:text-white transition-all duration-200"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-lg glass glass-hover text-white/50 text-sm font-medium hover:text-white transition-all duration-200"
             >
               GitHub →
             </a>
@@ -73,13 +73,13 @@ export default function ProjectDetail() {
           {project.architecture && (
             <GlassCard className="md:col-span-2">
               <h2 className="text-sm font-semibold text-white mb-4 font-mono flex items-center gap-2">
-                <span className="text-cyan-500">$</span> Architecture
+                <span className="text-white/30">$</span> Architecture
               </h2>
               <ul className="space-y-3">
                 {project.architecture.map((item, i) => (
                   <li key={i} className="flex gap-3 text-sm">
-                    <span className="text-slate-700 font-mono text-xs mt-0.5 flex-shrink-0">→</span>
-                    <span className="text-slate-400 leading-relaxed">{item}</span>
+                    <span className="text-white/20 font-mono text-xs mt-0.5 flex-shrink-0">→</span>
+                    <span className="text-white/45 leading-relaxed">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -90,13 +90,13 @@ export default function ProjectDetail() {
             className={!project.architecture ? 'md:col-span-3' : undefined}
           >
             <h2 className="text-sm font-semibold text-white mb-4 font-mono flex items-center gap-2">
-              <span className="text-cyan-500">$</span> Tech Stack
+              <span className="text-white/30">$</span> Tech Stack
             </h2>
             <div className="flex flex-wrap gap-2">
               {project.techStack.map((tech) => (
                 <span
                   key={tech}
-                  className="px-2.5 py-1 text-xs font-mono bg-white/[0.05] border border-white/[0.08] rounded text-slate-300"
+                  className="px-2.5 py-1 text-xs font-mono bg-white/[0.04] border border-white/[0.08] rounded text-white/50"
                 >
                   {tech}
                 </span>
@@ -109,13 +109,13 @@ export default function ProjectDetail() {
         {project.features && (
           <GlassCard>
             <h2 className="text-sm font-semibold text-white mb-4 font-mono flex items-center gap-2">
-              <span className="text-cyan-500">$</span> Features
+              <span className="text-white/30">$</span> Outcomes
             </h2>
             <div className="grid sm:grid-cols-2 gap-3">
               {project.features.map((feature, i) => (
                 <div key={i} className="flex items-start gap-2.5">
-                  <span className="text-emerald-500 text-xs font-mono mt-0.5 flex-shrink-0">✓</span>
-                  <span className="text-sm text-slate-400 leading-relaxed">{feature}</span>
+                  <span className="text-white/25 text-xs font-mono mt-0.5 flex-shrink-0">→</span>
+                  <span className="text-sm text-white/45 leading-relaxed">{feature}</span>
                 </div>
               ))}
             </div>

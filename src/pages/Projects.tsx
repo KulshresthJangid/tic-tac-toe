@@ -35,14 +35,14 @@ export default function Projects() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <p className="text-xs font-mono text-cyan-500 mb-2 tracking-[0.2em] uppercase">
+        <p className="text-xs font-mono text-white/20 mb-2 tracking-[0.25em] uppercase">
           // projects
         </p>
-        <h1 className="text-3xl font-bold text-white mb-2">Engineering Work</h1>
-        <p className="text-slate-400 text-base mb-8 max-w-xl leading-relaxed">
-          Systems and products built with a focus on correctness, performance, and operational
-          simplicity — microservices architecture, distributed systems design, high-throughput
-          API engineering, and cloud-native deployment on Kubernetes.
+        <h1 className="text-4xl font-black text-white mb-3 tracking-tight">Engineering Work</h1>
+        <p className="text-white/40 text-sm mb-8 max-w-lg leading-relaxed">
+          Systems built with a focus on correctness under load and debuggability under incident.
+          Microservices architecture, distributed systems, high-throughput API engineering,
+          and cloud-native deployment.
         </p>
 
         {/* Filter bar */}
@@ -57,12 +57,12 @@ export default function Projects() {
                 className={[
                   'px-3 py-1.5 rounded-lg text-xs font-mono transition-all duration-200',
                   activeFilter === value
-                    ? 'bg-cyan-500/15 border border-cyan-500/30 text-cyan-400'
-                    : 'bg-white/[0.04] border border-white/[0.08] text-slate-400 hover:text-white hover:bg-white/[0.07]',
+                    ? 'bg-white text-black'
+                    : 'bg-white/[0.04] border border-white/[0.08] text-white/40 hover:text-white hover:bg-white/[0.07]',
                 ].join(' ')}
               >
                 {label}
-                <span className="ml-1.5 text-slate-600">{count}</span>
+                <span className="ml-1.5 text-white/25">{count}</span>
               </button>
             )
           })}
@@ -83,7 +83,7 @@ export default function Projects() {
         </div>
 
         {filtered.length === 0 && (
-          <div className="text-center py-20 text-slate-600 font-mono text-sm">
+          <div className="text-center py-20 text-white/20 font-mono text-sm">
             No projects with status {activeFilter}.
           </div>
         )}
