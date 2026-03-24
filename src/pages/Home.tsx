@@ -36,8 +36,41 @@ const fadeUp = {
 
 export default function Home() {
   usePageMeta(
-    'Kulshresth Jangid — Systems Architect | Java, Spring Boot, Distributed Systems',
-    'Systems architect and product builder. Designed and operated distributed systems at CarDekho, Rampwin, and Equinix. Founded Lumen (EchoPost) — a multi-tenant Marketing OS built end-to-end.',
+    'Kulshresth Jangid — Backend Engineer · Node.js, TypeScript, Java · Open to Remote',
+    'Backend engineer with 4+ years shipping distributed systems, SaaS APIs, and real-time applications. Available for remote roles and consulting.',
+    {
+      canonical: 'https://buildwithkulshresth.com/',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'What does Kulshresth Jangid specialise in?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Backend engineering — distributed systems, SaaS APIs, microservices architecture, and performance engineering using Node.js, Java, TypeScript, and Go.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Is Kulshresth Jangid available for remote roles?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Yes. Currently open to senior backend engineering roles and consulting engagements. Remote-first. Based in Jaipur, India.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What technologies does Kulshresth Jangid work with?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Node.js, TypeScript, Java, Spring Boot, Go, Python, React, Kafka, RabbitMQ, Redis, PostgreSQL, MySQL, MongoDB, Kubernetes, Docker, and AWS.',
+            },
+          },
+        ],
+      },
+    },
   )
   const otherProjects = projects.slice(1, 4)
   const onlineServices = appServices.filter((s) => s.status === 'ONLINE')
@@ -52,11 +85,11 @@ export default function Home() {
               Kulshresth Jangid — Jaipur, India
             </p>
             <h1 className="text-5xl sm:text-6xl font-black text-white leading-[1.05] tracking-tight mb-6">
-              I design systems.
+              Backend Engineer.
               <br />
-              I ship products.
+              I build systems
               <br />
-              <span className="text-white/30">I own both.</span>
+              <span className="text-white/30">that scale.</span>
             </h1>
             <p className="text-sm text-white/40 leading-relaxed max-w-md">
               Four years building distributed systems at scale. Founded Lumen — a multi-tenant
@@ -70,20 +103,21 @@ export default function Home() {
               to="/projects"
               className="px-5 py-2 rounded-lg bg-white text-black text-sm font-semibold hover:bg-white/90 transition-all duration-150"
             >
-              View Projects
-            </Link>
-            <Link
-              to="/apps"
-              className="px-5 py-2 rounded-lg glass glass-hover text-white/60 text-sm font-medium hover:text-white transition-all duration-150"
-            >
-              App Gateway
+              View my work
             </Link>
             <Link
               to="/about"
               className="px-5 py-2 rounded-lg glass glass-hover text-white/60 text-sm font-medium hover:text-white transition-all duration-150"
             >
-              About
+              Let's talk
             </Link>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+            <span className="text-xs font-mono text-white/35">
+              Available for remote roles · Open to new projects · March 2026
+            </span>
           </div>
         </div>
         <TerminalBlock lines={terminalLines} />
@@ -112,7 +146,7 @@ export default function Home() {
         transition={{ duration: 0.45, delay: 0.16 }}
       >
         <div className="flex items-center gap-2 mb-6">
-          <h2 className="text-base font-semibold text-white">Featured Product</h2>
+          <h2 className="text-base font-semibold text-white">Featured Case Study — EchoPost</h2>
           <span className="px-2 py-0.5 text-[10px] font-mono bg-white/[0.05] border border-white/[0.1] text-white/50 rounded tracking-wider">
             CASE STUDY
           </span>
@@ -186,7 +220,7 @@ export default function Home() {
       >
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-base font-semibold text-white">Selected Work</h2>
+            <h2 className="text-base font-semibold text-white">Selected Backend Engineering Work</h2>
             <p className="text-xs text-white/20 font-mono mt-0.5">// production systems and architecture</p>
           </div>
           <Link to="/projects" className="text-xs text-white/40 hover:text-white font-mono transition-colors">
@@ -208,7 +242,7 @@ export default function Home() {
       >
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-base font-semibold text-white">Active Services</h2>
+            <h2 className="text-base font-semibold text-white">Live Infrastructure</h2>
             <p className="text-xs text-white/20 font-mono mt-0.5">// tic-tac-toe gateway — all systems nominal</p>
           </div>
           <Link to="/apps" className="text-xs text-white/40 hover:text-white font-mono transition-colors">
