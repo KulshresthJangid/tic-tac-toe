@@ -9,22 +9,20 @@ import { projects } from '../data/projects'
 import { appServices } from '../data/apps'
 
 const terminalLines = [
-  { prompt: true, text: 'system check', delay: 600 },
-  { text: '[  OK  ] spring-boot-api    ACTIVE   :8080   p99=124ms', delay: 180, color: 'text-emerald-400' },
-  { text: '[  OK  ] kafka-cluster      ACTIVE   3 brokers   consumer-lag=0', delay: 150, color: 'text-slate-300' },
-  { text: '[  OK  ] kubernetes         ACTIVE   12/12 pods scheduled', delay: 150, color: 'text-slate-300' },
-  { text: '[  OK  ] postgresql         ACTIVE   primary + 1 read-replica', delay: 150, color: 'text-slate-300' },
-  { text: '[  OK  ] redis-scheduler    ACTIVE   capacity: 1M tasks/instance', delay: 150, color: 'text-slate-300' },
-  { text: '[  OK  ] prometheus         ACTIVE   scraping 142 targets', delay: 150, color: 'text-slate-300' },
-  { prompt: true, text: 'error_budget --window 30d', delay: 400 },
-  { text: '  social-saas.availability   99.94% / 99.9% SLO   budget: 87% remaining', delay: 120, color: 'text-slate-400' },
-  { text: '  content-api.latency_p99    99.97% / 99.9% SLO   budget: 97% remaining', delay: 100, color: 'text-slate-400' },
+  { prompt: true, text: 'status', delay: 600 },
+  { text: '[  OK  ] tic-tac-toe    ACTIVE   :443    entry-point', delay: 160, color: 'text-white/70' },
+  { text: '[  OK  ] echo-post      ACTIVE   /app    lumen-saas', delay: 140, color: 'text-white/50' },
+  { text: '[  OK  ] smart-server   ACTIVE   :8080   backend-api', delay: 140, color: 'text-white/50' },
+  { text: '[  OK  ] scheduler      ACTIVE   redis   1M tasks/inst', delay: 140, color: 'text-white/50' },
+  { prompt: true, text: 'slo --window 30d', delay: 400 },
+  { text: '  echo-post.availability    99.94%   SLO 99.9%   budget: 87%', delay: 120, color: 'text-white/30' },
+  { text: '  smart-server.latency_p99  99.97%   SLO 99.9%   budget: 97%', delay: 100, color: 'text-white/30' },
   { prompt: true, text: 'whoami', delay: 350 },
-  { text: '  kulshresth jangid \u2014 senior software engineer, jaipur', delay: 80, color: 'text-cyan-400' },
+  { text: '  kulshresth jangid — systems architect, jaipur', delay: 80, color: 'text-white/60' },
 ]
 
 const impactStats = [
-  { value: '40%', label: 'p99 latency reduction', sub: 'MySQL + caching redesign' },
+  { value: '40%', label: 'p99 latency cut', sub: 'MySQL + caching redesign' },
   { value: '1M+', label: 'tasks/instance', sub: 'scheduling engine' },
   { value: '28%', label: 'MTTR reduction', sub: 'microservices migration' },
   { value: '30%', label: 'fewer deploy failures', sub: 'canary + auto-rollback' },
@@ -38,8 +36,8 @@ const fadeUp = {
 
 export default function Home() {
   usePageMeta(
-    'Kulshresth Jangid — Senior Backend Engineer | Java, Spring Boot, Distributed Systems',
-    'Senior Backend Engineer specialising in distributed systems, microservices architecture, and scalable SaaS platforms. Java, Spring Boot, Kafka, Kubernetes. Based in Jaipur, India.',
+    'Kulshresth Jangid — Systems Architect | Java, Spring Boot, Distributed Systems',
+    'Systems architect and product builder. Designed and operated distributed systems at CarDekho, Rampwin, and Equinix. Founded Lumen (EchoPost) — a multi-tenant Marketing OS built end-to-end.',
   )
   const otherProjects = projects.slice(1, 4)
   const onlineServices = appServices.filter((s) => s.status === 'ONLINE')
@@ -50,53 +48,39 @@ export default function Home() {
       <motion.section {...fadeUp} className="grid lg:grid-cols-2 gap-8 items-start">
         <div className="flex flex-col gap-6">
           <div>
-            <p className="text-xs font-mono text-cyan-500 mb-2 tracking-[0.2em] uppercase">
-              Senior Backend Engineer · Jaipur, India
+            <p className="text-xs font-mono text-white/25 mb-4 tracking-[0.25em] uppercase">
+              Kulshresth Jangid — Jaipur, India
             </p>
-            <h1 className="text-4xl sm:text-5xl font-bold text-white leading-[1.1] mb-4">
-              I build the system.
+            <h1 className="text-5xl sm:text-6xl font-black text-white leading-[1.05] tracking-tight mb-6">
+              I design systems.
               <br />
-              I ship the product.
+              I ship products.
               <br />
-              <span className="text-gradient">I own the outcome.</span>
+              <span className="text-white/30">I own both.</span>
             </h1>
-            <p className="text-xs font-mono text-slate-600 mb-4 tracking-wide">
-              Java · Spring Boot · Distributed Systems · Kafka · Kubernetes · Microservices
+            <p className="text-sm text-white/40 leading-relaxed max-w-md">
+              Four years building distributed systems at scale. Founded Lumen — a multi-tenant
+              Marketing OS — from schema to Kubernetes, currently running in production. Senior
+              Engineer at Equinix.
             </p>
-            <p className="text-slate-400 text-base leading-relaxed max-w-lg">
-              4 years designing and operating distributed systems in production. Senior Engineer at
-              Equinix. Built a full SaaS platform solo from architecture to deployment. I don't wait
-              for requirements to arrive \u2014 I find the problem, define the solution, and ship it.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-2">
-            {['Java', 'Spring Boot', 'Kafka', 'Kubernetes', 'PostgreSQL', 'Redis'].map((t) => (
-              <span
-                key={t}
-                className="px-2.5 py-1 text-xs font-mono bg-white/[0.05] border border-white/[0.08] rounded text-slate-300"
-              >
-                {t}
-              </span>
-            ))}
           </div>
 
           <div className="flex gap-3 flex-wrap">
             <Link
               to="/projects"
-              className="px-5 py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 text-sm font-medium hover:bg-cyan-500/20 hover:border-cyan-500/40 transition-all duration-200"
+              className="px-5 py-2 rounded-lg bg-white text-black text-sm font-semibold hover:bg-white/90 transition-all duration-150"
             >
               View Projects
             </Link>
             <Link
               to="/apps"
-              className="px-5 py-2 rounded-lg glass glass-hover text-slate-300 text-sm font-medium hover:text-white transition-all duration-200"
+              className="px-5 py-2 rounded-lg glass glass-hover text-white/60 text-sm font-medium hover:text-white transition-all duration-150"
             >
               App Gateway
             </Link>
             <Link
               to="/about"
-              className="px-5 py-2 rounded-lg glass glass-hover text-slate-300 text-sm font-medium hover:text-white transition-all duration-200"
+              className="px-5 py-2 rounded-lg glass glass-hover text-white/60 text-sm font-medium hover:text-white transition-all duration-150"
             >
               About
             </Link>
@@ -114,9 +98,9 @@ export default function Home() {
       >
         {impactStats.map(({ value, label, sub }) => (
           <GlassCard key={label} padding="md" className="text-center select-none">
-            <div className="text-2xl font-bold text-white font-mono">{value}</div>
-            <div className="text-xs text-slate-300 mt-1 leading-snug">{label}</div>
-            <div className="text-[10px] font-mono text-slate-600 mt-1">{sub}</div>
+            <div className="text-2xl font-black text-white font-mono">{value}</div>
+            <div className="text-xs text-white/50 mt-1 leading-snug">{label}</div>
+            <div className="text-[10px] font-mono text-white/20 mt-1">{sub}</div>
           </GlassCard>
         ))}
       </motion.section>
@@ -129,7 +113,7 @@ export default function Home() {
       >
         <div className="flex items-center gap-2 mb-6">
           <h2 className="text-base font-semibold text-white">Featured Product</h2>
-          <span className="px-2 py-0.5 text-[10px] font-mono bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 rounded tracking-wider">
+          <span className="px-2 py-0.5 text-[10px] font-mono bg-white/[0.05] border border-white/[0.1] text-white/50 rounded tracking-wider">
             CASE STUDY
           </span>
         </div>
@@ -141,12 +125,12 @@ export default function Home() {
           <h3 className="text-lg font-bold text-white">EchoPost — Marketing Operating System</h3>
                 <StatusBadge status="LIVE" pulse />
               </div>
-              <p className="text-xs font-mono text-slate-600">Built solo \u00b7 2025 \u00b7 Production</p>
+              <p className="text-xs font-mono text-white/25">Founded · 2025 · Production</p>
             </div>
 
             <div className="space-y-1.5">
-              <p className="text-xs text-slate-500 font-mono uppercase tracking-wider">Problem</p>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <p className="text-xs text-white/25 font-mono uppercase tracking-wider">Problem</p>
+              <p className="text-sm text-white/50 leading-relaxed">
                 Content teams are operationally bottlenecked: posting manually, context-switching
                 across platforms, and getting generic AI output with no strategic grounding.
                 Existing schedulers (Buffer, Hootsuite) are dumb pipes — no content intelligence,
@@ -155,39 +139,39 @@ export default function Home() {
             </div>
 
             <div className="space-y-1.5">
-              <p className="text-xs text-slate-500 font-mono uppercase tracking-wider">Solution</p>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <p className="text-xs text-white/25 font-mono uppercase tracking-wider">Solution</p>
+              <p className="text-sm text-white/50 leading-relaxed">
                 A Marketing Operating System with a four-stage pipeline: Source → Insight → Content
                 → Distribution. Raw knowledge enters as articles and notes; the AI layer extracts
                 strategic signals; a configurable persona engine generates platform-native content;
-                async RabbitMQ workers publish it. Three automation modes: Manual, Review, Autopilot.
-                BYO-AI: plug in any LLM. Scheduling engine validated at 1M+ tasks/instance.
+                async workers publish it. Three automation modes: Manual, Review, Autopilot.
+                BYO-AI: connect any LLM. Scheduling engine validated at 1M+ tasks/instance.
               </p>
             </div>
 
             <Link
               to="/projects/social-saas"
-              className="self-start mt-1 px-4 py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono hover:bg-cyan-500/20 hover:border-cyan-500/40 transition-all duration-200"
+              className="self-start mt-1 px-4 py-2 rounded-lg bg-white/[0.05] border border-white/[0.1] text-white/60 text-xs font-mono hover:bg-white/[0.09] hover:text-white transition-all duration-200"
             >
-              Read full architecture \u2192
+              Read full architecture →
             </Link>
           </div>
 
           <div className="lg:col-span-2 flex flex-col gap-3 lg:border-l lg:border-white/[0.06] lg:pl-8">
-            <p className="text-xs font-mono text-slate-600 uppercase tracking-wider">Key signals</p>
+            <p className="text-xs font-mono text-white/20 uppercase tracking-wider">Key signals</p>
             {[
               ['Pipeline', 'Source → Insight → Content → Distribution'],
               ['Automation', 'Manual / Review / Autopilot'],
               ['Scale', '1M+ tasks/instance'],
               ['AI', 'BYO (OpenAI / Anthropic / self-hosted)'],
-              ['Frontend', 'Next.js (/smat-ui)'],
-              ['Backend', 'Spring Boot (/smat-server)'],
-              ['Queue', 'RabbitMQ + Redis time-wheel'],
+              ['Entry', 'tic-tac-toe (:443)'],
+              ['Frontend', 'echo-post (/app)'],
+              ['Backend', 'smart-server (:8080)'],
               ['Platforms', 'LinkedIn (live) · X (WIP)'],
             ].map(([label, value]) => (
               <div key={label} className="flex items-baseline gap-3">
-                <span className="text-[11px] font-mono text-slate-600 w-24 flex-shrink-0">{label}</span>
-                <span className="text-xs text-slate-300">{value}</span>
+                <span className="text-[11px] font-mono text-white/20 w-24 flex-shrink-0">{label}</span>
+                <span className="text-xs text-white/50">{value}</span>
               </div>
             ))}
           </div>
@@ -203,10 +187,10 @@ export default function Home() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-base font-semibold text-white">Selected Work</h2>
-            <p className="text-xs text-slate-600 font-mono mt-0.5">// production systems and architecture</p>
+            <p className="text-xs text-white/20 font-mono mt-0.5">// production systems and architecture</p>
           </div>
-          <Link to="/projects" className="text-xs text-cyan-400 hover:text-cyan-300 font-mono transition-colors">
-            all projects \u2192
+          <Link to="/projects" className="text-xs text-white/40 hover:text-white font-mono transition-colors">
+            all projects →
           </Link>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -225,10 +209,10 @@ export default function Home() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-base font-semibold text-white">Active Services</h2>
-            <p className="text-xs text-slate-600 font-mono mt-0.5">// nginx gateway \u2014 all systems nominal</p>
+            <p className="text-xs text-white/20 font-mono mt-0.5">// tic-tac-toe gateway — all systems nominal</p>
           </div>
-          <Link to="/apps" className="text-xs text-cyan-400 hover:text-cyan-300 font-mono transition-colors">
-            full registry \u2192
+          <Link to="/apps" className="text-xs text-white/40 hover:text-white font-mono transition-colors">
+            full registry →
           </Link>
         </div>
 
@@ -242,12 +226,12 @@ export default function Home() {
               className="block"
             >
               <GlassCard hoverable padding="sm" className="flex items-center gap-3">
-                <div className="w-8 h-8 flex-shrink-0 rounded-md bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/20 flex items-center justify-center font-mono font-bold text-cyan-400 text-xs">
+                <div className="w-8 h-8 flex-shrink-0 rounded-md bg-white/[0.05] border border-white/[0.1] flex items-center justify-center font-mono font-bold text-white/50 text-xs">
                   {app.name.slice(0, 2).toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-sm font-medium text-white truncate">{app.name}</div>
-                  <div className="text-[11px] font-mono text-slate-600 truncate">
+                  <div className="text-[11px] font-mono text-white/25 truncate">
                     {app.externalUrl ?? app.route}
                   </div>
                 </div>
