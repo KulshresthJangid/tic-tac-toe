@@ -17,8 +17,38 @@ const filters: Array<{ value: Filter; label: string }> = [
 
 export default function Projects() {
   usePageMeta(
-    'Engineering Projects — Microservices, Kafka, Kubernetes | Kulshresth Jangid',
-    'Backend engineering projects: microservices architecture, distributed systems, API performance, CI/CD automation, and SLO observability. Java, Spring Boot, Kafka, Kubernetes.',
+    'Projects & Case Studies — Kulshresth Jangid · Backend Systems & SaaS Architecture',
+    'Case studies and architecture breakdowns: real systems built, decisions made, outcomes measured. Node.js, Java, TypeScript, Go in production.',
+    {
+      canonical: 'https://buildwithkulshresth.com/projects',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        name: 'Backend Engineering Projects — Kulshresth Jangid',
+        description: 'Production systems and architecture case studies by Kulshresth Jangid: distributed SaaS platforms, microservices migrations, and API performance engineering.',
+        url: 'https://buildwithkulshresth.com/projects',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            url: 'https://buildwithkulshresth.com/projects/social-saas',
+            name: 'EchoPost — Marketing Operating System',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            url: 'https://buildwithkulshresth.com/projects/microservices-migration',
+            name: 'Monolith to Microservices Migration',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            url: 'https://buildwithkulshresth.com/projects/api-performance',
+            name: 'API Performance Overhaul',
+          },
+        ],
+      },
+    },
   )
   const [activeFilter, setActiveFilter] = useState<Filter>('ALL')
 
