@@ -181,7 +181,7 @@ export default function About() {
           <GlassCard className="flex flex-wrap gap-3">
             {[
               { label: 'GitHub', href: 'https://github.com/kulshresthjangid', external: true },
-              { label: 'LinkedIn', href: 'https://linkedin.com/in/kulshresthjangid', external: true },
+              { label: 'LinkedIn', href: 'https://www.linkedin.com/in/kulshresth-jangid/', external: true },
               { label: 'Email', href: 'mailto:kulshresth@example.dev', external: false },
             ].map(({ label, href, external }) => (
               <a
