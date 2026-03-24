@@ -8,11 +8,38 @@ import StatusBadge from '../components/StatusBadge'
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>()
   const project = projects.find((p) => p.id === id)
+  const canonicalUrl = project
+    ? `https://buildwithkulshresth.com/projects/${project.id}`
+    : undefined
+  const projectSchema = project
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareSourceCode',
+        name: project.title,
+        description: project.shortDescription,
+        url: canonicalUrl,
+        programmingLanguage: project.techStack,
+        dateCreated: `${project.year}`,
+        author: {
+          '@type': 'Person',
+          name: 'Kulshresth Jangid',
+          url: 'https://buildwithkulshresth.com',
+        },
+        ...(project.liveUrl?.startsWith('http')
+          ? { codeRepository: project.liveUrl }
+          : {}),
+        ...(project.githubUrl ? { codeRepository: project.githubUrl } : {}),
+      }
+    : undefined
   usePageMeta(
     project
-      ? `${project.title} — Architecture & Case Study | Kulshresth Jangid`
+      ? `${project.title} — Architecture Case Study · Kulshresth Jangid`
       : 'Project not found | Kulshresth Jangid',
     project ? project.shortDescription : undefined,
+    {
+      canonical: canonicalUrl,
+      jsonLd: projectSchema,
+    },
   )
 
   if (!project) return <Navigate to="/projects" replace />
