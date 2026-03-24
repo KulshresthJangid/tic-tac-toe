@@ -73,8 +73,8 @@ const technicalDepth = [
 
 export default function About() {
   usePageMeta(
-    'About Kulshresth Jangid — Senior Backend Engineer, Jaipur India',
-    'Senior Backend Engineer from Jaipur, India. 4+ years building distributed systems at CarDekho, Rampwin, and Equinix. Java, Spring Boot, Kafka, Kubernetes, microservices architecture.',
+    'About Kulshresth Jangid — Systems Architect, Jaipur India',
+    'Systems architect from Jaipur, India. 4+ years building distributed systems at CarDekho, Rampwin, and Equinix. Founded Lumen (EchoPost) — a multi-tenant Marketing OS built end-to-end.',
   )
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
@@ -86,44 +86,45 @@ export default function About() {
       >
         {/* Positioning */}
         <div>
-          <p className="text-xs font-mono text-cyan-500 mb-2 tracking-[0.2em] uppercase">
+          <p className="text-xs font-mono text-white/20 mb-2 tracking-[0.2em] uppercase">
             // about
           </p>
           <div className="flex items-start gap-5 mb-6 flex-wrap sm:flex-nowrap">
-            <div className="w-16 h-16 flex-shrink-0 rounded-xl bg-gradient-to-br from-cyan-500/25 to-blue-700/25 border border-cyan-500/20 flex items-center justify-center text-xl font-black text-cyan-400 font-mono">
+            <div className="w-16 h-16 flex-shrink-0 rounded-xl bg-white/[0.05] border border-white/[0.1] flex items-center justify-center text-xl font-black text-white font-mono">
               KJ
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-white mb-1">Kulshresth Jangid</h1>
-              <p className="text-slate-500 text-sm font-mono">
-                Senior Software Engineer \u00b7 Distributed Systems \u00b7 Jaipur, India
+              <h1 className="text-3xl font-black text-white mb-1 tracking-tight">Kulshresth Jangid</h1>
+              <p className="text-white/30 text-sm font-mono">
+                Systems Architect · Product Builder · Jaipur, India
               </p>
             </div>
           </div>
 
           <GlassCard className="space-y-4">
-            <p className="text-slate-400 leading-relaxed text-sm">
+            <p className="text-white/50 leading-relaxed text-sm">
               I design distributed systems, ship production software, and operate what I build.
-              Four years as a backend engineer across cartech, fintech, and SaaS — working on
+              Four years as an engineer across cartech, fintech, and SaaS — working on
               microservices architectures that handle real traffic, real failure modes, and real
               consequence when something breaks at 2am. My default orientation is ownership:
               I define the problem, choose the architecture, write the code, instrument it,
               and stay on-call for it.
             </p>
-            <p className="text-slate-400 leading-relaxed text-sm">
+            <p className="text-white/50 leading-relaxed text-sm">
               I think in systems before I think in features. Before writing code, I want to
               understand the consistency requirements, the failure boundary, the scaling inflection
-              point, and the operational cost. I don't optimize for elegance \u2014 I optimize for
+              point, and the operational cost. I don't optimize for elegance — I optimize for
               correctness under load and debuggability under incident. Boring, obvious solutions
               that compose well are better than clever abstractions that hide failure modes.
             </p>
-            <p className="text-slate-400 leading-relaxed text-sm">
-              Outside of employed work, I built <span className="text-white font-medium">EchoPost</span> \u2014 a full-stack Marketing Operating System \u2014 entirely solo.
-              It processes raw knowledge through a four-stage pipeline (Source \u2192 Insight \u2192 Content \u2192 Distribution),
-              supports three automation modes (manual, review, autopilot), and lets teams plug in their own AI provider.
-              Frontend in Next.js, backend in Spring Boot, async workers on RabbitMQ, scheduling over Redis,
-              content indexed in Elasticsearch \u2014 all of it designed, deployed, and operated by me.
-              Not as a side-project demo. As a real product with a real architecture designed to run and scale.
+            <p className="text-white/50 leading-relaxed text-sm">
+              I founded <span className="text-white font-medium">Lumen</span> (EchoPost) — a multi-tenant Marketing Operating System — as a
+              product, not a side project. Four-stage pipeline: Source → Insight → Content → Distribution.
+              Three automation modes. BYO-AI with no model lock-in. Scheduling engine validated at 1M+ tasks/instance.
+              Entry point: <span className="text-white/70 font-mono text-xs">tic-tac-toe</span>.
+              Frontend at <span className="text-white/70 font-mono text-xs">/app</span>.
+              Backend: <span className="text-white/70 font-mono text-xs">smart-server</span>.
+              Designed, deployed, and operated end-to-end.
             </p>
           </GlassCard>
         </div>
@@ -131,13 +132,13 @@ export default function About() {
         {/* Technical depth */}
         <div>
           <h2 className="text-sm font-semibold text-white mb-5 font-mono flex items-center gap-2">
-            <span className="text-cyan-500">$</span> Technical Depth
+            <span className="text-white/30">$</span> Technical Depth
           </h2>
           <div className="grid sm:grid-cols-2 gap-3">
             {technicalDepth.map(({ title, desc }) => (
               <GlassCard key={title} padding="sm" hoverable className="space-y-1.5">
-                <div className="text-sm font-medium text-white">{title}</div>
-                <div className="text-xs text-slate-500 leading-relaxed">{desc}</div>
+                <div className="text-sm font-semibold text-white">{title}</div>
+                <div className="text-xs text-white/35 leading-relaxed">{desc}</div>
               </GlassCard>
             ))}
           </div>
@@ -146,7 +147,7 @@ export default function About() {
         {/* Experience */}
         <div>
           <h2 className="text-sm font-semibold text-white mb-5 font-mono flex items-center gap-2">
-            <span className="text-cyan-500">$</span> Experience
+            <span className="text-white/30">$</span> Experience
           </h2>
           <div className="space-y-4">
             {experience.map(({ role, company, period, location, notes }) => (
@@ -154,16 +155,16 @@ export default function About() {
                 <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
                   <div>
                     <div className="text-sm font-semibold text-white">{role}</div>
-                    <div className="text-xs text-slate-400 font-mono mt-0.5">{company}</div>
-                    <div className="text-xs text-slate-600 font-mono mt-0.5">{location}</div>
+                    <div className="text-xs text-white/40 font-mono mt-0.5">{company}</div>
+                    <div className="text-xs text-white/20 font-mono mt-0.5">{location}</div>
                   </div>
-                  <span className="text-xs font-mono text-slate-600 flex-shrink-0">{period}</span>
+                  <span className="text-xs font-mono text-white/20 flex-shrink-0">{period}</span>
                 </div>
                 <ul className="space-y-2.5">
                   {notes.map((note, i) => (
                     <li key={i} className="flex gap-2.5 text-sm">
-                      <span className="text-slate-700 font-mono text-xs mt-0.5 flex-shrink-0">\u2192</span>
-                      <span className="text-slate-400 leading-relaxed">{note}</span>
+                      <span className="text-white/20 font-mono text-xs mt-0.5 flex-shrink-0">→</span>
+                      <span className="text-white/40 leading-relaxed">{note}</span>
                     </li>
                   ))}
                 </ul>
@@ -175,7 +176,7 @@ export default function About() {
         {/* Connect */}
         <div>
           <h2 className="text-sm font-semibold text-white mb-5 font-mono flex items-center gap-2">
-            <span className="text-cyan-500">$</span> Connect
+            <span className="text-white/30">$</span> Connect
           </h2>
           <GlassCard className="flex flex-wrap gap-3">
             {[
@@ -188,7 +189,7 @@ export default function About() {
                 href={href}
                 target={external ? '_blank' : undefined}
                 rel={external ? 'noopener noreferrer' : undefined}
-                className="px-4 py-2 text-sm font-mono glass glass-hover text-slate-300 hover:text-white rounded-lg transition-all duration-200"
+                className="px-4 py-2 text-sm font-mono glass glass-hover text-white/40 hover:text-white rounded-lg transition-all duration-200"
               >
                 {label}
               </a>
