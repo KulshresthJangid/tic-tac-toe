@@ -5,9 +5,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        base: '#060b18',
-        surface: '#0d1526',
-        'surface-2': '#111c33',
+        base: '#000000',
+        surface: '#080808',
+        'surface-2': '#0f0f0f',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
