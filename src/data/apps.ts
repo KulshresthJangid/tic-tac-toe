@@ -2,23 +2,32 @@ import type { AppService } from '../types'
 
 export const appServices: AppService[] = [
   {
-    id: 'smat-ui',
-    name: 'EchoPost UI',
+    id: 'entry-point',
+    name: 'tic-tac-toe',
     description:
-      'Next.js frontend for the EchoPost Marketing Operating System. Onboarding wizard, Bucket management, Source ingestion, Insights browser, Post editor, Scheduling calendar, Analytics dashboards, and AI provider config.',
-    route: '/smat-ui',
-    externalUrl: '/smat-ui',
+      'Reverse proxy entry point (:443). Routes /app to echo-post frontend, /api/v1/ to smart-server backend. All production traffic passes through this layer.',
+    route: '/',
+    status: 'ONLINE',
+    version: '1.0.0',
+    tags: ['Nginx', 'Entry Point', 'Reverse Proxy'],
+  },
+  {
+    id: 'echo-post',
+    name: 'EchoPost (Lumen)',
+    description:
+      'Next.js frontend for the Lumen Marketing OS, served at /app. Onboarding, Bucket management, Source ingestion, Insights browser, Post editor, Scheduling calendar, Analytics, and AI provider config.',
+    route: '/app',
+    externalUrl: '/app',
     status: 'ONLINE',
     version: '2.2.0',
     tags: ['Next.js', 'TypeScript', 'Multi-tenant'],
   },
   {
-    id: 'smat-server',
-    name: 'EchoPost API',
+    id: 'smart-server',
+    name: 'smart-server',
     description:
-      'Core Spring Boot backend (/smat-server). Auth + Org + RBAC, content ingestion pipeline, AI processing layer, post generation engine, scheduling system, RabbitMQ execution workers, and platform integrations.',
-    route: '/smat-server',
-    externalUrl: '/smat-server',
+      'Core Spring Boot backend (:8080). Auth + Org + RBAC, content ingestion pipeline, AI processing layer, post generation engine, scheduling system, RabbitMQ execution workers, and platform integrations.',
+    route: '/api/v1',
     status: 'ONLINE',
     version: '2.2.0',
     tags: ['Spring Boot', 'JWT', 'RabbitMQ'],
