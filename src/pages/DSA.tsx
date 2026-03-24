@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { dsaTopics } from '../data/dsa'
 import type { DSATopic, DSAProblem, CellStyle } from '../data/dsa'
@@ -351,6 +352,345 @@ function TopicSection({ topic }: { topic: DSATopic }) {
 }
 
 /* ════════════════════════════════════════════════════════════════════
+   Dashboard data
+════════════════════════════════════════════════════════════════════ */
+
+const DAILY_BLOCKS = [
+  {
+    num: 'B1',
+    title: 'DSA',
+    time: '1.5–2h',
+    rule: '1 problem max. Brute force first → optimise → write complexity + edge cases.',
+    note: 'High focus. Do this first.',
+  },
+  {
+    num: 'B2',
+    title: 'Input',
+    time: '1–1.5h',
+    rule: '1 deep article. Connect it: caching → hashmap, message queues → heap.',
+    note: 'Bridge DSA to real systems.',
+  },
+  {
+    num: 'B3',
+    title: 'Build',
+    time: '2–4h',
+    rule: '1 feature that visibly uses a DSA concept. Rate limiter → sliding window. Feed → heap.',
+    note: 'Every system must use DSA.',
+  },
+  {
+    num: 'B4',
+    title: 'Output',
+    time: '1h',
+    rule: 'Write 1 insight bridging DSA + production. "Heaps in notification systems" = rare = brand.',
+    note: 'Ship the content.',
+  },
+  {
+    num: 'B5',
+    title: 'Review',
+    time: '30m',
+    rule: 'Log: pattern learned, where stuck, did you understand the optimisation or memorise it?',
+    note: 'Honest only.',
+  },
+]
+
+type PatternStatus = 'locked' | 'learning' | 'mastered'
+
+const PATTERNS = [
+  { id: 'arrays',        label: 'Arrays',               phase: 1 },
+  { id: 'strings',       label: 'Strings',              phase: 1 },
+  { id: 'hashing',       label: 'Hashing',              phase: 1 },
+  { id: 'two-ptr',       label: 'Two Pointers',         phase: 1 },
+  { id: 'sliding-w',     label: 'Sliding Window',       phase: 1 },
+  { id: 'stack',         label: 'Stack',                phase: 2 },
+  { id: 'queue',         label: 'Queue',                phase: 2 },
+  { id: 'linked-list',   label: 'Linked List',          phase: 2 },
+  { id: 'recursion',     label: 'Recursion',            phase: 2 },
+  { id: 'binary-search', label: 'Binary Search',        phase: 2 },
+  { id: 'bin-tree',      label: 'Binary Trees',         phase: 3 },
+  { id: 'bst',           label: 'BST',                  phase: 3 },
+  { id: 'dfs',           label: 'DFS',                  phase: 3 },
+  { id: 'bfs',           label: 'BFS',                  phase: 3 },
+  { id: 'graph',         label: 'Graph Traversal',      phase: 3 },
+  { id: 'heap',          label: 'Heap / Priority Queue',phase: 4 },
+  { id: 'backtrack',     label: 'Backtracking',         phase: 4 },
+  { id: 'dp',            label: 'Dynamic Programming',  phase: 4 },
+]
+
+const PHASE_LABELS = [
+  'Phase 1 · Foundations (Weeks 1–3)',
+  'Phase 2 · Core Structures (Weeks 4–7)',
+  'Phase 3 · Trees & Graphs (Weeks 8–13)',
+  'Phase 4 · Advanced (Weeks 14–19)',
+]
+
+const SYSTEM_BRIDGE = [
+  { system: 'Chat message ordering',     pattern: 'Queue / Heap',      why: 'FIFO delivery, priority by timestamp' },
+  { system: 'Deduplication engine',      pattern: 'Hashing',           why: 'O(1) lookup for seen IDs' },
+  { system: 'Rate limiter',              pattern: 'Sliding Window',    why: 'Queue + timestamps define the window' },
+  { system: 'Feed ranking / Top-k',      pattern: 'Heap',              why: 'Min-heap of k elements in O(n log k)' },
+  { system: 'LRU Cache',                 pattern: 'HashMap + DLL',     why: 'O(1) get and O(1) eviction' },
+  { system: 'Route / path finding',      pattern: 'BFS / Graph',       why: 'Shortest path in unweighted graph' },
+  { system: 'Task scheduler',            pattern: 'Priority Queue',    why: 'Pop min/max priority in O(log n)' },
+  { system: 'Autocomplete / search',     pattern: 'Trie',              why: 'Prefix match in O(m)' },
+  { system: 'Matching / recommendation', pattern: 'Graph DFS',         why: 'Connected component traversal' },
+  { system: 'Leaderboard',               pattern: 'Heap / BST',        why: 'Ranked insertion + range queries' },
+]
+
+/* ════════════════════════════════════════════════════════════════════
+   Dashboard components
+════════════════════════════════════════════════════════════════════ */
+
+function DailyTracker() {
+  const today = new Date().toISOString().slice(0, 10)
+  const blockKey  = `dsa_blocks_${today}`
+  const datesKey  = 'dsa_completed_dates'
+
+  const [checked, setChecked] = useState<boolean[]>(() => {
+    try { return JSON.parse(localStorage.getItem(blockKey) || 'null') ?? Array(5).fill(false) }
+    catch { return Array(5).fill(false) }
+  })
+
+  const [streak, setStreak] = useState(0)
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(blockKey, JSON.stringify(checked))
+      const dates: string[] = JSON.parse(localStorage.getItem(datesKey) || '[]')
+      if (checked.every(Boolean) && !dates.includes(today)) {
+        dates.push(today)
+        localStorage.setItem(datesKey, JSON.stringify(dates))
+      }
+      let s = 0
+      const d = new Date()
+      for (let i = 0; i < 365; i++) {
+        if (dates.includes(d.toISOString().slice(0, 10))) { s++; d.setDate(d.getDate() - 1) }
+        else break
+      }
+      setStreak(s)
+    } catch {}
+  }, [checked, blockKey, today, datesKey])
+
+  const toggle = (i: number) =>
+    setChecked((prev) => prev.map((v, idx) => (idx === i ? !v : v)))
+
+  const done = checked.filter(Boolean).length
+
+  return (
+    <div style={{ marginBottom: '3.5rem' }}>
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+        <div>
+          <h2 style={{ fontSize: '1.05rem', fontWeight: 800, color: C.whiteOff, letterSpacing: '-0.01em' }}>
+            Today's System
+          </h2>
+          <p style={{ fontSize: '0.68rem', fontFamily: 'JetBrains Mono, monospace', color: C.grayDim, marginTop: '0.2rem' }}>
+            {today} · {done}/5 blocks complete · repeat 90 days
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: '2rem' }}>
+          {[
+            { val: streak,                              label: 'day streak',   col: streak > 0 ? C.white : C.grayDeep },
+            { val: `${Math.round((done / 5) * 100)}%`, label: 'today',        col: done === 5 ? C.white : C.gray },
+          ].map(({ val, label, col }) => (
+            <div key={label} style={{ textAlign: 'right' }}>
+              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1.6rem', fontWeight: 700, color: col, lineHeight: 1 }}>
+                {val}
+              </div>
+              <div style={{ fontSize: '0.58rem', fontFamily: 'JetBrains Mono, monospace', color: C.grayDim, letterSpacing: '0.13em', textTransform: 'uppercase', marginTop: '0.2rem' }}>
+                {label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Progress bar */}
+      <div style={{ height: 2, background: C.border, borderRadius: 1, marginBottom: '1.25rem', overflow: 'hidden' }}>
+        <div style={{ height: '100%', width: `${(done / 5) * 100}%`, background: C.white, transition: 'width 0.35s ease' }} />
+      </div>
+
+      {/* Blocks */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+        {DAILY_BLOCKS.map((block, i) => (
+          <div
+            key={i}
+            onClick={() => toggle(i)}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '20px 80px 1fr',
+              alignItems: 'start',
+              gap: '1rem',
+              padding: '0.85rem 1.1rem',
+              background: checked[i] ? 'rgba(255,255,255,0.025)' : C.surface,
+              border: `1px solid ${checked[i] ? 'rgba(255,255,255,0.1)' : C.border}`,
+              borderRadius: 4,
+              cursor: 'pointer',
+              transition: 'all 0.18s',
+              userSelect: 'none',
+            }}
+          >
+            {/* Checkbox */}
+            <div style={{
+              width: 15, height: 15,
+              border: `1px solid ${checked[i] ? C.white : C.grayDeep}`,
+              borderRadius: 2,
+              background: checked[i] ? C.white : 'transparent',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              transition: 'all 0.15s',
+              marginTop: 3, flexShrink: 0,
+            }}>
+              {checked[i] && <span style={{ color: C.bg, fontSize: '0.6rem', fontWeight: 900, lineHeight: 1 }}>✓</span>}
+            </div>
+
+            {/* Badge */}
+            <div>
+              <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.68rem', fontWeight: 700, color: checked[i] ? C.grayDim : C.white, display: 'block' }}>
+                {block.num} · {block.title}
+              </span>
+              <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.58rem', color: C.grayDeep }}>
+                {block.time}
+              </span>
+            </div>
+
+            {/* Rule */}
+            <div style={{ fontSize: '0.78rem', color: checked[i] ? C.grayDeep : C.gray, lineHeight: 1.55, textDecoration: checked[i] ? 'line-through' : 'none', textDecorationColor: C.grayDeep }}>
+              {block.rule}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function PatternMastery() {
+  const storageKey = 'dsa_pattern_status'
+  const [statuses, setStatuses] = useState<Record<string, PatternStatus>>(() => {
+    try { return JSON.parse(localStorage.getItem(storageKey) || '{}') }
+    catch { return {} }
+  })
+
+  const cycle = (id: string) => {
+    const order: PatternStatus[] = ['locked', 'learning', 'mastered']
+    const current = (statuses[id] ?? 'locked') as PatternStatus
+    const next = order[(order.indexOf(current) + 1) % 3]
+    const updated = { ...statuses, [id]: next }
+    setStatuses(updated)
+    try { localStorage.setItem(storageKey, JSON.stringify(updated)) } catch {}
+  }
+
+  const masteredCount = PATTERNS.filter((p) => statuses[p.id] === 'mastered').length
+  const learningCount = PATTERNS.filter((p) => statuses[p.id] === 'learning').length
+
+  const tagStyle = (status: PatternStatus): React.CSSProperties => {
+    if (status === 'mastered') return { border: `1px solid ${C.white}`,    color: C.white,    background: 'rgba(255,255,255,0.07)' }
+    if (status === 'learning') return { border: `1px solid ${C.gray}`,     color: C.gray,     background: 'rgba(255,255,255,0.02)' }
+    return                             { border: `1px solid ${C.border}`,  color: C.grayDeep, background: C.surface }
+  }
+
+  return (
+    <div style={{ marginBottom: '3.5rem' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+        <div>
+          <h2 style={{ fontSize: '1.05rem', fontWeight: 800, color: C.whiteOff, letterSpacing: '-0.01em' }}>
+            Pattern Mastery
+          </h2>
+          <p style={{ fontSize: '0.68rem', fontFamily: 'JetBrains Mono, monospace', color: C.grayDim, marginTop: '0.2rem' }}>
+            Click to cycle: locked → learning → mastered
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: '1.5rem' }}>
+          {[
+            { val: masteredCount,                                           label: 'mastered', col: C.white    },
+            { val: learningCount,                                           label: 'learning', col: C.gray     },
+            { val: PATTERNS.length - masteredCount - learningCount,        label: 'locked',   col: C.grayDeep },
+          ].map(({ val, label, col }) => (
+            <div key={label} style={{ textAlign: 'right' }}>
+              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1.4rem', fontWeight: 700, color: col, lineHeight: 1 }}>{val}</div>
+              <div style={{ fontSize: '0.58rem', fontFamily: 'JetBrains Mono, monospace', color: C.grayDim, letterSpacing: '0.12em', textTransform: 'uppercase', marginTop: '0.2rem' }}>{label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Progress bar */}
+      <div style={{ height: 2, background: C.border, borderRadius: 1, marginBottom: '1.5rem', overflow: 'hidden' }}>
+        <div style={{ height: '100%', width: `${(masteredCount / PATTERNS.length) * 100}%`, background: C.white, transition: 'width 0.35s ease' }} />
+      </div>
+
+      {[1, 2, 3, 4].map((phase, pi) => (
+        <div key={phase} style={{ marginBottom: '1.1rem' }}>
+          <div style={{ fontSize: '0.58rem', fontFamily: 'JetBrains Mono, monospace', color: C.grayDim, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.55rem' }}>
+            {PHASE_LABELS[pi]}
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
+            {PATTERNS.filter((p) => p.phase === phase).map((p) => {
+              const status = (statuses[p.id] ?? 'locked') as PatternStatus
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => cycle(p.id)}
+                  style={{
+                    ...tagStyle(status),
+                    fontFamily: 'JetBrains Mono, monospace',
+                    fontSize: '0.7rem',
+                    fontWeight: 600,
+                    padding: '0.3rem 0.7rem',
+                    borderRadius: 3,
+                    cursor: 'pointer',
+                    transition: 'all 0.15s',
+                  }}
+                >
+                  {status === 'mastered' ? '✓ ' : status === 'learning' ? '◐ ' : '○ '}
+                  {p.label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function SystemDSABridge() {
+  return (
+    <div style={{ marginBottom: '3.5rem' }}>
+      <h2 style={{ fontSize: '1.05rem', fontWeight: 800, color: C.whiteOff, letterSpacing: '-0.01em', marginBottom: '0.3rem' }}>
+        System → DSA Bridge
+      </h2>
+      <p style={{ fontSize: '0.78rem', color: C.grayDim, marginBottom: '1.25rem', fontWeight: 400, lineHeight: 1.6 }}>
+        Every system you build must visibly use a DSA concept. This is what separates you from engineers who only grind LeetCode.
+      </p>
+      <div style={{ border: `1px solid ${C.border}`, borderRadius: 6, overflow: 'hidden' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'JetBrains Mono, monospace', fontSize: '0.74rem' }}>
+          <thead>
+            <tr>
+              {['System', 'DSA Pattern', 'Why'].map((h) => (
+                <th key={h} style={{ background: '#0d0d0d', color: C.grayDim, padding: '0.65rem 1rem', textAlign: 'left', borderBottom: `1px solid ${C.border}`, fontSize: '0.58rem', letterSpacing: '0.13em', textTransform: 'uppercase', fontWeight: 700 }}>
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {SYSTEM_BRIDGE.map((row, i) => (
+              <tr key={i} style={{ borderBottom: i < SYSTEM_BRIDGE.length - 1 ? `1px solid ${C.border}` : 'none' }}
+                className="hover:bg-[#0f0f0f] transition-colors"
+              >
+                <td style={{ padding: '0.65rem 1rem', color: C.whiteOff, fontWeight: 600 }}>{row.system}</td>
+                <td style={{ padding: '0.65rem 1rem', color: C.gray }}>{row.pattern}</td>
+                <td style={{ padding: '0.65rem 1rem', color: C.grayDim }}>{row.why}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
+
+/* ════════════════════════════════════════════════════════════════════
    Main Page
 ════════════════════════════════════════════════════════════════════ */
 export default function DSA() {
@@ -546,6 +886,16 @@ export default function DSA() {
 
       {/* ── MAIN ──────────────────────────────────────────────────────── */}
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '5rem 1.5rem' }}>
+
+        {/* ── SELF-LEARNING DASHBOARD ───────────────────────────────── */}
+        <div style={{ marginBottom: '5rem' }}>
+          <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.62rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: C.grayDim, marginBottom: '2.5rem', paddingBottom: '1rem', borderBottom: `1px solid ${C.border}` }}>
+            // Self-Learning Dashboard — DSA is not optional
+          </div>
+          <DailyTracker />
+          <PatternMastery />
+          <SystemDSABridge />
+        </div>
 
         {/* Roadmap */}
         <div
