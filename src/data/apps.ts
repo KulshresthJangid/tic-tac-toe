@@ -5,7 +5,7 @@ export const appServices: AppService[] = [
     id: 'entry-point',
     name: 'tic-tac-toe',
     description:
-      'Reverse proxy entry point (:443). Routes /app to echo-post frontend, /api/v1/ to smart-server backend. All production traffic passes through this layer.',
+      'Reverse proxy entry point (:443). Routes /lumen to echo-post frontend, /api/v1/ to smart-server backend. All production traffic passes through this layer.',
     route: '/',
     status: 'ONLINE',
     version: '1.0.0',
@@ -15,9 +15,9 @@ export const appServices: AppService[] = [
     id: 'echo-post',
     name: 'EchoPost (Lumen)',
     description:
-      'Next.js frontend for the Lumen Marketing OS, served at /app. Onboarding, Bucket management, Source ingestion, Insights browser, Post editor, Scheduling calendar, Analytics, and AI provider config.',
-    route: '/app',
-    externalUrl: '/app',
+      'Next.js frontend for the Lumen Marketing OS, served at /lumen. Onboarding, Bucket management, Source ingestion, Insights browser, Post editor, Scheduling calendar, Analytics, and AI provider config.',
+    route: '/lumen',
+    externalUrl: '/lumen',
     status: 'ONLINE',
     version: '2.2.0',
     tags: ['Next.js', 'TypeScript', 'Multi-tenant'],
