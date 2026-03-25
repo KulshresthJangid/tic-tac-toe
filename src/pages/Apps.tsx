@@ -7,7 +7,7 @@ import { appServices } from '../data/apps'
 export default function Apps() {
   usePageMeta(
     'Service Registry — tic-tac-toe Gateway | Kulshresth Jangid',
-    'Live service registry. tic-tac-toe (entry point) proxies echo-post frontend at /app and smart-server backend at :8080. Lumen SaaS platform and supporting infrastructure.',
+    'Live service registry. tic-tac-toe (entry point) proxies echo-post frontend at /lumen and smart-server backend at :8080. Lumen SaaS platform and supporting infrastructure.',
   )
   const onlineCount = appServices.filter((s) => s.status === 'ONLINE').length
   const degradedCount = appServices.filter((s) => s.status === 'DEGRADED').length
