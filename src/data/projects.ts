@@ -12,8 +12,8 @@ export const projects: Project[] = [
     status: 'LIVE',
     liveUrl: '/apps',
     architecture: [
-      'Entry point: tic-tac-toe (reverse proxy, :443) — routes /app to echo-post frontend, /api/v1/ to smart-server backend. All traffic flows through this layer.',
-      'Frontend (echo-post at /app — Next.js + TypeScript): Onboarding wizard, Bucket management, Source ingestion UI, Insights browser, Post editor with review workflow, Scheduling calendar, Analytics dashboards, AI provider config.',
+      'Entry point: tic-tac-toe (reverse proxy, :443) — routes /lumen to echo-post frontend, /api/v1/ to smart-server backend. All traffic flows through this layer.',
+      'Frontend (echo-post at /lumen — Next.js + TypeScript): Onboarding wizard, Bucket management, Source ingestion UI, Insights browser, Post editor with review workflow, Scheduling calendar, Analytics dashboards, AI provider config.',
       'Backend (smart-server — Spring Boot): Auth + Org + RBAC module (JWT, team roles at claim level), Content ingestion pipeline (Source processors, Bucket indexing into Elasticsearch), AI processing layer (provider-agnostic LLM client, configurable persona and dynamic prompt templates), Post generation engine (Insight → strategy-aware draft), Scheduling system (Redis time-wheel), Execution workers (RabbitMQ consumers, platform connectors), Analytics aggregation.',
       'Async pipeline: Source ingestion → RabbitMQ event → AI processing worker (Insight extraction) → generation worker (draft) → review step (mode-dependent) → scheduling worker (enqueue) → execution worker (publish). Each stage independently scalable, failure-isolated, with dead-letter queue and configurable backoff retry.',
       'BYO-AI layer: org-level provider config stored encrypted; outbound LLM requests routed through a provider-adaptor interface supporting OpenAI, Anthropic, and self-hosted endpoints. Persona and system prompt templates are configurable per org and per channel — no hardcoded prompts anywhere.',
