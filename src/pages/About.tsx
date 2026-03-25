@@ -148,7 +148,7 @@ export default function About() {
               product, not a side project. Four-stage pipeline: Source → Insight → Content → Distribution.
               Three automation modes. BYO-AI with no model lock-in. Scheduling engine validated at 1M+ tasks/instance.
               Entry point: <span className="text-white/70 font-mono text-xs">tic-tac-toe</span>.
-              Frontend at <span className="text-white/70 font-mono text-xs">/app</span>.
+              Frontend at <span className="text-white/70 font-mono text-xs">/lumen</span>.
               Backend: <span className="text-white/70 font-mono text-xs">smart-server</span>.
               Designed, deployed, and operated end-to-end.
             </p>
