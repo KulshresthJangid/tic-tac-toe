@@ -11,7 +11,7 @@ import { appServices } from '../data/apps'
 const terminalLines = [
   { prompt: true, text: 'status', delay: 600 },
   { text: '[  OK  ] tic-tac-toe    ACTIVE   :443    entry-point', delay: 160, color: 'text-white/70' },
-  { text: '[  OK  ] echo-post      ACTIVE   /app    lumen-saas', delay: 140, color: 'text-white/50' },
+  { text: '[  OK  ] echo-post      ACTIVE   /lumen  lumen-saas', delay: 140, color: 'text-white/50' },
   { text: '[  OK  ] smart-server   ACTIVE   :8080   backend-api', delay: 140, color: 'text-white/50' },
   { text: '[  OK  ] scheduler      ACTIVE   redis   1M tasks/inst', delay: 140, color: 'text-white/50' },
   { prompt: true, text: 'slo --window 30d', delay: 400 },
@@ -199,7 +199,7 @@ export default function Home() {
               ['Scale', '1M+ tasks/instance'],
               ['AI', 'BYO (OpenAI / Anthropic / self-hosted)'],
               ['Entry', 'tic-tac-toe (:443)'],
-              ['Frontend', 'echo-post (/app)'],
+              ['Frontend', 'echo-post (/lumen)'],
               ['Backend', 'smart-server (:8080)'],
               ['Platforms', 'LinkedIn (live) · X (WIP)'],
             ].map(([label, value]) => (
