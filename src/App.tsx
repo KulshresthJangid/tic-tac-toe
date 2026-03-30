@@ -7,6 +7,9 @@ import Apps from './pages/Apps'
 import About from './pages/About'
 import DSA from './pages/DSA'
 import DSAv2 from './pages/DSAv2'
+import Admin from './pages/Admin'
+import AdminPlan from './pages/AdminPlan'
+import ProtectedRoute from './components/ProtectedRoute'
 
 export default function App() {
   return (
@@ -18,8 +21,10 @@ export default function App() {
           <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/apps" element={<Apps />} />
           <Route path="/about" element={<About />} />
-          <Route path="/dsa" element={<DSA />} />
-          <Route path="/dsa-v2" element={<DSAv2 />} />
+          <Route path="/dsa" element={<ProtectedRoute><DSA /></ProtectedRoute>} />
+          <Route path="/dsa-v2" element={<ProtectedRoute><DSAv2 /></ProtectedRoute>} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/plan" element={<ProtectedRoute><AdminPlan /></ProtectedRoute>} />
         </Routes>
       </MainLayout>
     </BrowserRouter>
