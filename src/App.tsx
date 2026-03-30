@@ -9,6 +9,7 @@ import DSA from './pages/DSA'
 import DSAv2 from './pages/DSAv2'
 import Admin from './pages/Admin'
 import AdminPlan from './pages/AdminPlan'
+import AIMLRoadmap from './pages/AIMLRoadmap'
 import ProtectedRoute from './components/ProtectedRoute'
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/apps" element={<Apps />} />
           <Route path="/about" element={<About />} />
+          <Route path="/ai-ml" element={<ProtectedRoute><AIMLRoadmap /></ProtectedRoute>} />
           <Route path="/dsa" element={<ProtectedRoute><DSA /></ProtectedRoute>} />
           <Route path="/dsa-v2" element={<ProtectedRoute><DSAv2 /></ProtectedRoute>} />
           <Route path="/admin" element={<Admin />} />
