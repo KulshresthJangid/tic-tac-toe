@@ -158,6 +158,15 @@ const modules = [
     desc: 'Upgraded DSA workspace with enhanced layout, filters, and deeper problem breakdowns.',
     meta: 'enhanced · filtered · v2',
   },
+  {
+    to: '/ai-ml',
+    badge: 'AI/ML',
+    badgeColor: 'text-[#818cf8] bg-[#12111f] border-[#2d2d5e]/50',
+    accent: 'border-l-[#4f46e5]',
+    title: 'My AI/ML Journey',
+    desc: 'A 5-phase structured roadmap from Python foundations to LLM engineering and MLOps. Progress tracked here.',
+    meta: '5 phases · 49h · milestones + proof',
+  },
 ]
 
 function AdminDashboard() {
