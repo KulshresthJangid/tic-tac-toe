@@ -93,4 +93,14 @@ export const appServices: AppService[] = [
     version: '1.0.0',
     tags: ['Express', 'TypeScript', 'JWT', 'Zod'],
   },
+  {
+    id: 'session-logger-db',
+    name: 'Session Logger DB',
+    description:
+      'PostgreSQL 16 instance in Docker Compose. Prisma v5 ORM with billing snapshot schema — client rate frozen into each session row at start time.',
+    route: '/session-logger/db',
+    status: 'ONLINE',
+    version: '16.0',
+    tags: ['PostgreSQL', 'Prisma', 'Docker Compose'],
+  },
 ]
