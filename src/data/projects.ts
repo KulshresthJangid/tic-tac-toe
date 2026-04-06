@@ -133,4 +133,17 @@ export const projects: Project[] = [
     ],
     year: 2024,
   },
+  {
+    id: 'session-logger',
+    title: 'Session Logger — Freelance Time Tracker',
+    shortDescription:
+      'A full-stack freelance session tracker that replaces spreadsheets and stopwatches with one-click time tracking, automatic billing calculation, and exportable monthly reports.',
+    description:
+      'Freelancers and consultants who bill clients hourly typically juggle a stopwatch, a notes app, and a spreadsheet. Session Logger replaces that entire workflow with a single self-hosted web app. One-click session start with a live elapsed timer, concurrent-session guard (409 on duplicates), billing snapshots that freeze the rate at session start so future rate changes never corrupt historical invoices, monthly billing breakdowns with CSV export, and a filterable session history. The timer initialises from the real start timestamp on every page load — a browser refresh never resets the clock. The entire stack runs on a single VPS with zero external SaaS dependencies.',
+    techStack: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'React Query', 'Zustand', 'Axios', 'Node.js', 'Express', 'Prisma', 'PostgreSQL', 'Zod', 'JWT', 'Docker', 'Nginx'],
+    status: 'LIVE',
+    liveUrl: 'https://buildwithkulshresth.com/session-logger',
+    githubUrl: 'https://github.com/KulshresthJangid/session-logger',
+    year: 2025,
+  },
 ]
