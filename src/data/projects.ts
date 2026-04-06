@@ -152,6 +152,18 @@ export const projects: Project[] = [
       'Concurrent session guard: API returns 409 Conflict if a second session is started for the same client. Server-side duration and cost computation on session close.',
       'Infra: single VPS, Docker Compose for Postgres, nohup process for the Node server, nginx reverse proxy. ./start.sh builds frontend + backend, runs migrations, and starts the server.',
     ],
+    features: [
+      'Dashboard with real-time stat cards: total clients, sessions this month, revenue this month, currently active sessions — auto-refreshes every 10 seconds',
+      'One-click session start/stop with live HH:MM:SS elapsed timer initialised from real start timestamp on every page load',
+      'Billing snapshot: client rate frozen at session start — rate changes never retroactively alter past invoices',
+      'Concurrent session guard: 409 Conflict on duplicate session start for the same client',
+      'Monthly billing reports: filter by month (up to 12 months back) and by client, with per-client summary and grand total row',
+      'CSV export for dropping straight into an invoice template or accountancy tool',
+      'Full session history: filterable by client, status (ACTIVE / COMPLETED / ABANDONED), and date range',
+      'Client CRUD with per-client hourly/fixed rate, optional monthly budget, tags, and notes',
+      'Secure auth: bcrypt + JWT, 401 auto-redirect, token stored in localStorage with Axios interceptor',
+      'Self-hosted, zero external SaaS dependencies — entire stack on a single VPS',
+    ],
     year: 2025,
   },
 ]
