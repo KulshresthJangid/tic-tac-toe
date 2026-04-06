@@ -11,6 +11,7 @@ import Admin from './pages/Admin'
 import AdminPlan from './pages/AdminPlan'
 import AIMLRoadmap from './pages/AIMLRoadmap'
 import ProtectedRoute from './components/ProtectedRoute'
+import NotFound from './pages/NotFound'
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="/dsa-v2" element={<ProtectedRoute><DSAv2 /></ProtectedRoute>} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/plan" element={<ProtectedRoute><AdminPlan /></ProtectedRoute>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </MainLayout>
     </BrowserRouter>
