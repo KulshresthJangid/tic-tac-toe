@@ -144,6 +144,14 @@ export const projects: Project[] = [
     status: 'LIVE',
     liveUrl: 'https://buildwithkulshresth.com/session-logger',
     githubUrl: 'https://github.com/KulshresthJangid/session-logger',
+    architecture: [
+      'Frontend: React 18 + TypeScript + Vite 5. React Query v5 as the single source of truth for all server state; Zustand only for auth token management. Tailwind CSS dark-only design.',
+      'Backend: Node.js + Express + TypeScript. Zod schema-first validation on every request body and query parameter. JWT auth (jsonwebtoken + bcryptjs).',
+      'Database: Prisma v5 ORM over PostgreSQL 16 in Docker Compose. Billing snapshot pattern — client rate copied into session row at start time.',
+      'Timer architecture: useTimer hook initialises elapsed seconds in useState lazy initialiser (Date.now() - startTime), not in useEffect — no "00:00:00" flash on page load or refresh.',
+      'Concurrent session guard: API returns 409 Conflict if a second session is started for the same client. Server-side duration and cost computation on session close.',
+      'Infra: single VPS, Docker Compose for Postgres, nohup process for the Node server, nginx reverse proxy. ./start.sh builds frontend + backend, runs migrations, and starts the server.',
+    ],
     year: 2025,
   },
 ]
