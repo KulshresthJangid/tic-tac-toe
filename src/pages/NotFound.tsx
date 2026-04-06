@@ -4,30 +4,39 @@ import { usePageMeta } from '../hooks/usePageMeta'
 import { useState, useEffect } from 'react'
 
 const glitchMessages = [
-  "You've wandered into the void.",
-  "This page ran away. We're still looking.",
-  "Even my nginx can't find this one.",
-  "Looks like you took a wrong turn at /dev/null.",
-  "This route doesn't exist. I checked. Twice.",
-  "HTTP 404: Page not found. Dignity also missing.",
-  "The page you're looking for is in another castle.",
-  "I'd blame DNS, but it's definitely your URL.",
-  "Congratulations, you broke the internet.",
-  "This page was last seen mass-migrating to /dev/null.",
+  "this page ghosted you. no closure. just 404.",
+  "bro really typed a random URL and expected something.",
+  "this route is giving ✨ absolutely nothing ✨",
+  "page said 'i need space' and left forever.",
+  "you're lost. the page is lost. we're all lost. it's fine.",
+  "404: not found. just like my will to add this route.",
+  "this URL has the same energy as an empty fridge at 3am.",
+  "the page you want doesn't exist. neither does my sleep schedule.",
+  "nginx said no. i said no. the server said absolutely not.",
+  "skill issue tbh.",
+  "this page left the chat.",
+  "POV: you fumbled the URL.",
+  "bro thought this was a real page 💀",
+  "404 — but like, existentially.",
+  "the vibes here? immaculate. the page? nonexistent.",
 ]
 
 const terminalLines = [
   '$ curl -I buildwithkulshresth.com' + window.location.pathname,
   'HTTP/2 404',
-  'x-powered-by: mass delusion',
-  'x-vibe: lost',
-  'content-type: disappointment/html',
+  'x-powered-by: audacity',
+  'x-vibe: dead',
+  'x-mood: disappointed but not surprised',
+  'content-type: emotional-damage/html',
   '',
-  '$ grep -r "this page" /var/www/',
-  'grep: pattern not found',
+  '$ find / -name "this-page" 2>/dev/null',
+  '# ...crickets...',
   '',
-  '$ echo "maybe try the homepage?"',
-  'maybe try the homepage?',
+  '$ git blame --why',
+  'fatal: you. it was you.',
+  '',
+  '$ echo "go home bro"',
+  'go home bro',
 ]
 
 export default function NotFound() {
@@ -105,13 +114,13 @@ export default function NotFound() {
           to="/"
           className="px-5 py-2.5 rounded-lg bg-white text-black text-sm font-semibold hover:bg-white/90 transition-all duration-150"
         >
-          Take me home
+          take me home pls
         </Link>
         <button
           onClick={() => window.history.back()}
           className="px-5 py-2.5 rounded-lg border border-white/10 text-white/50 text-sm font-medium hover:text-white/80 hover:border-white/20 transition-all duration-150"
         >
-          Go back
+          undo my mistakes
         </button>
       </motion.div>
     </div>
