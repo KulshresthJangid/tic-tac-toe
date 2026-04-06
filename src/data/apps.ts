@@ -72,4 +72,15 @@ export const appServices: AppService[] = [
     version: '1.1.0',
     tags: ['Prometheus', 'Grafana', 'ELK'],
   },
+  {
+    id: 'session-logger',
+    name: 'Session Logger',
+    description:
+      'Freelance session tracker: one-click time tracking, billing snapshots, monthly reports with CSV export. React + Express + Prisma + PostgreSQL.',
+    route: '/session-logger',
+    externalUrl: 'https://buildwithkulshresth.com/session-logger',
+    status: 'ONLINE',
+    version: '1.0.0',
+    tags: ['React', 'Express', 'Prisma', 'PostgreSQL'],
+  },
 ]
