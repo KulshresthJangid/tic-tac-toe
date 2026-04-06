@@ -83,4 +83,14 @@ export const appServices: AppService[] = [
     version: '1.0.0',
     tags: ['React', 'Express', 'Prisma', 'PostgreSQL'],
   },
+  {
+    id: 'session-logger-api',
+    name: 'Session Logger API',
+    description:
+      'Express + TypeScript backend for Session Logger. JWT auth, Zod validation, billing snapshot on session start, concurrent session guard (409), server-side duration/cost computation.',
+    route: '/session-logger/api',
+    status: 'ONLINE',
+    version: '1.0.0',
+    tags: ['Express', 'TypeScript', 'JWT', 'Zod'],
+  },
 ]
