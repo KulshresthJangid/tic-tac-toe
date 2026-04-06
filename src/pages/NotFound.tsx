@@ -61,16 +61,16 @@ export default function NotFound() {
       >
         {/* Giant 404 */}
         <motion.h1
-          className="text-[8rem] sm:text-[10rem] font-black text-white/[0.03] leading-none select-none"
-          animate={{ opacity: [0.03, 0.06, 0.03] }}
+          className="text-[8rem] sm:text-[10rem] font-black text-red-500/10 leading-none select-none"
+          animate={{ opacity: [0.1, 0.2, 0.1] }}
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
         >
           404
         </motion.h1>
 
         {/* Random message */}
-        <p className="text-white/70 text-lg font-medium -mt-8 mb-2">{msg}</p>
-        <p className="text-white/25 text-sm font-mono mb-8">
+        <p className="text-white text-lg sm:text-xl font-semibold -mt-8 mb-2">{msg}</p>
+        <p className="text-red-400/60 text-sm font-mono mb-8">
           {window.location.pathname}
         </p>
       </motion.div>
@@ -80,26 +80,30 @@ export default function NotFound() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.3 }}
-        className="w-full max-w-lg rounded-lg border border-white/[0.06] bg-[#0a0a0a] p-5 font-mono text-xs mb-10"
+        className="w-full max-w-lg rounded-lg border border-white/[0.08] bg-[#0a0a0a] p-5 font-mono text-xs mb-10"
       >
         {terminalLines.slice(0, visibleLines).map((line, i) => (
           <div
             key={i}
             className={
               line.startsWith('$')
-                ? 'text-white/50'
+                ? 'text-green-400/80'
                 : line.startsWith('HTTP')
-                  ? 'text-red-400/70'
-                  : line === ''
-                    ? 'h-3'
-                    : 'text-white/20'
+                  ? 'text-red-400 font-bold'
+                  : line.startsWith('fatal')
+                    ? 'text-red-400/90'
+                    : line.startsWith('#')
+                      ? 'text-yellow-500/60 italic'
+                      : line === ''
+                        ? 'h-3'
+                        : 'text-white/50'
             }
           >
             {line}
           </div>
         ))}
         {visibleLines < terminalLines.length && (
-          <span className="inline-block w-1.5 h-3.5 bg-white/40 animate-pulse" />
+          <span className="inline-block w-1.5 h-3.5 bg-green-400/70 animate-pulse" />
         )}
       </motion.div>
 
