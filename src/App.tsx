@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { GenZProvider } from './context/GenZContext'
 import MainLayout from './layouts/MainLayout'
 import Home from './pages/Home'
 import Projects from './pages/Projects'
@@ -15,22 +16,24 @@ import NotFound from './pages/NotFound'
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <MainLayout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/projects/:id" element={<ProjectDetail />} />
-          <Route path="/apps" element={<Apps />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/ai-ml" element={<ProtectedRoute><AIMLRoadmap /></ProtectedRoute>} />
-          <Route path="/dsa" element={<ProtectedRoute><DSA /></ProtectedRoute>} />
-          <Route path="/dsa-v2" element={<ProtectedRoute><DSAv2 /></ProtectedRoute>} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/admin/plan" element={<ProtectedRoute><AdminPlan /></ProtectedRoute>} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </MainLayout>
-    </BrowserRouter>
+    <GenZProvider>
+      <BrowserRouter>
+        <MainLayout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/projects/:id" element={<ProjectDetail />} />
+            <Route path="/apps" element={<Apps />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/ai-ml" element={<ProtectedRoute><AIMLRoadmap /></ProtectedRoute>} />
+            <Route path="/dsa" element={<ProtectedRoute><DSA /></ProtectedRoute>} />
+            <Route path="/dsa-v2" element={<ProtectedRoute><DSAv2 /></ProtectedRoute>} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/plan" element={<ProtectedRoute><AdminPlan /></ProtectedRoute>} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </MainLayout>
+      </BrowserRouter>
+    </GenZProvider>
   )
 }
