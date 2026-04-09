@@ -296,6 +296,8 @@ export default function Home() {
           </div>
           <Link to="/apps" className="text-xs text-white/40 hover:text-white font-mono transition-colors">
             {genzMode ? 'full roster ->' : 'full registry →'}
+          </Link>
+        </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {onlineServices.map((app) => (
