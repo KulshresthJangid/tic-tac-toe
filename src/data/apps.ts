@@ -103,4 +103,45 @@ export const appServices: AppService[] = [
     version: '16.0',
     tags: ['PostgreSQL', 'Prisma', 'Docker Compose'],
   },
+  {
+    id: 'leadgen-pro',
+    name: 'LeadGen Pro',
+    description:
+      'AI-powered B2B lead generation dashboard: real-time WebSocket updates, lead filtering, manual category override, per-lead notes, CSV export. React + Vite + TailwindCSS + TanStack Query.',
+    route: '/drip',
+    externalUrl: 'https://buildwithkulshresth.com/drip',
+    status: 'ONLINE',
+    version: '1.0.0',
+    tags: ['React', 'Vite', 'TailwindCSS', 'Socket.io'],
+  },
+  {
+    id: 'leadgen-pro-api',
+    name: 'LeadGen Pro API',
+    description:
+      'Node.js 20 (ESM) + Express.js backend. JWT HS256 auth, rate-limited endpoints, scraping orchestration, AI enrichment triggers, daily target mode, and CSV export.',
+    route: '/drip-api',
+    status: 'ONLINE',
+    version: '1.0.0',
+    tags: ['Express.js', 'Node.js', 'JWT', 'Socket.io'],
+  },
+  {
+    id: 'leadgen-pro-ai',
+    name: 'LeadGen Pro AI (Ollama)',
+    description:
+      'Mistral 7B via Ollama running on GTX 1050 GPU (CUDA). Two-pass enrichment: lead qualification + scoring, then hyper-personalised outreach copy. Zero API cost.',
+    route: '/drip/ai',
+    status: 'ONLINE',
+    version: '7B',
+    tags: ['Mistral 7B', 'Ollama', 'CUDA', 'GPU Inference'],
+  },
+  {
+    id: 'leadgen-pro-db',
+    name: 'LeadGen Pro DB',
+    description:
+      'SQLite (default) or PostgreSQL — swappable via env var. SHA-256 email fingerprinting and Levenshtein fuzzy deduplication at the persistence layer.',
+    route: '/drip/db',
+    status: 'ONLINE',
+    version: '1.0.0',
+    tags: ['SQLite', 'PostgreSQL', 'Deduplication'],
+  },
 ]
