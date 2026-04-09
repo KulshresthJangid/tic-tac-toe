@@ -16,11 +16,22 @@ export default {
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         blink: 'blink 1.1s step-end infinite',
+        wiggle: 'wiggle 2.5s ease-in-out infinite',
       },
       keyframes: {
         blink: {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0' },
+        },
+        wiggle: {
+          '0%, 60%, 100%': { transform: 'translateX(0)' },
+          '65%': { transform: 'translateX(-3px)' },
+          '70%': { transform: 'translateX(3px)' },
+          '75%': { transform: 'translateX(-3px)' },
+          '80%': { transform: 'translateX(3px)' },
+          '85%': { transform: 'translateX(-2px)' },
+          '90%': { transform: 'translateX(2px)' },
+          '95%': { transform: 'translateX(0)' },
         },
       },
     },
