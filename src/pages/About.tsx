@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { usePageMeta } from '../hooks/usePageMeta'
+import { useGenZ } from '../context/GenZContext'
 import GlassCard from '../components/GlassCard'
 
 const experience = [
@@ -102,6 +103,7 @@ export default function About() {
       },
     },
   )
+  const { genzMode } = useGenZ()
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
       <motion.div
@@ -113,44 +115,45 @@ export default function About() {
         {/* Positioning */}
         <div>
           <p className="text-xs font-mono text-white/20 mb-2 tracking-[0.2em] uppercase">
-            // about
+            {genzMode ? '// who is this guy' : '// about'}
           </p>
           <div className="flex items-start gap-5 mb-6 flex-wrap sm:flex-nowrap">
             <div className="w-16 h-16 flex-shrink-0 rounded-xl bg-white/[0.05] border border-white/[0.1] flex items-center justify-center text-xl font-black text-white font-mono">
               KJ
             </div>
             <div>
-          <h1 className="text-3xl font-black text-white mb-1 tracking-tight">Kulshresth Jangid</h1>
+          <h1 className="text-3xl font-black text-white mb-1 tracking-tight">
+            {genzMode ? 'kul. just kul.' : 'Kulshresth Jangid'}
+          </h1>
               <p className="text-white/30 text-sm font-mono">
-                Senior Backend Engineer · Node.js, TypeScript, Java · Jaipur, India
+                {genzMode
+                  ? 'makes servers work · ships things · jaipur, india'
+                  : 'Senior Backend Engineer · Node.js, TypeScript, Java · Jaipur, India'}
               </p>
             </div>
           </div>
 
           <GlassCard className="space-y-4">
             <p className="text-white/50 leading-relaxed text-sm">
-              I design distributed systems, ship production software, and operate what I build.
-              Four years as an engineer across cartech, fintech, and SaaS — working on
-              microservices architectures that handle real traffic, real failure modes, and real
-              consequence when something breaks at 2am. My default orientation is ownership:
-              I define the problem, choose the architecture, write the code, instrument it,
-              and stay on-call for it.
+              {genzMode
+                ? 'i write backend code and somehow systems do not fall over. four years. cartech, fintech, saas. real traffic, real incidents, real 2am pages. i own what i build end to end, which means i have to fix it when it breaks, which means i try very hard not to break it.'
+                : 'I design distributed systems, ship production software, and operate what I build. Four years as an engineer across cartech, fintech, and SaaS — working on microservices architectures that handle real traffic, real failure modes, and real consequence when something breaks at 2am. My default orientation is ownership: I define the problem, choose the architecture, write the code, instrument it, and stay on-call for it.'}
             </p>
             <p className="text-white/50 leading-relaxed text-sm">
-              I think in systems before I think in features. Before writing code, I want to
-              understand the consistency requirements, the failure boundary, the scaling inflection
-              point, and the operational cost. I don't optimize for elegance — I optimize for
-              correctness under load and debuggability under incident. Boring, obvious solutions
-              that compose well are better than clever abstractions that hide failure modes.
+              {genzMode
+                ? 'i think in systems before i think in features. what breaks first? where does data get lost? what happens at 100x load? boring obvious solutions that compose well beat clever abstractions that hide failure modes every single time.'
+                : 'I think in systems before I think in features. Before writing code, I want to understand the consistency requirements, the failure boundary, the scaling inflection point, and the operational cost. I don\'t optimize for elegance \u2014 I optimize for correctness under load and debuggability under incident. Boring, obvious solutions that compose well are better than clever abstractions that hide failure modes.'}
             </p>
             <p className="text-white/50 leading-relaxed text-sm">
-              I founded <span className="text-white font-medium">Lumen</span> (EchoPost) — a multi-tenant Marketing Operating System — as a
-              product, not a side project. Four-stage pipeline: Source → Insight → Content → Distribution.
-              Three automation modes. BYO-AI with no model lock-in. Scheduling engine validated at 1M+ tasks/instance.
-              Entry point: <span className="text-white/70 font-mono text-xs">tic-tac-toe</span>.
-              Frontend at <span className="text-white/70 font-mono text-xs">/lumen</span>.
-              Backend: <span className="text-white/70 font-mono text-xs">smart-server</span>.
-              Designed, deployed, and operated end-to-end.
+              {genzMode ? (
+                <>
+                  i founded <span className="text-white font-medium">Lumen</span> (EchoPost). built a whole marketing OS from scratch. four stages, three automation modes, bring your own AI, 1M+ tasks per instance. named the entry point <span className="text-white/70 font-mono text-xs">tic-tac-toe</span> because why not. frontend at <span className="text-white/70 font-mono text-xs">/lumen</span>. backend is <span className="text-white/70 font-mono text-xs">smart-server</span>. designed, deployed, operated, still running.
+                </>
+              ) : (
+                <>
+                  I founded <span className="text-white font-medium">Lumen</span> (EchoPost) \u2014 a multi-tenant Marketing Operating System \u2014 as a product, not a side project. Four-stage pipeline: Source \u2192 Insight \u2192 Content \u2192 Distribution. Three automation modes. BYO-AI with no model lock-in. Scheduling engine validated at 1M+ tasks/instance. Entry point: <span className="text-white/70 font-mono text-xs">tic-tac-toe</span>. Frontend at <span className="text-white/70 font-mono text-xs">/lumen</span>. Backend: <span className="text-white/70 font-mono text-xs">smart-server</span>. Designed, deployed, and operated end-to-end.
+                </>
+              )}
             </p>
           </GlassCard>
         </div>

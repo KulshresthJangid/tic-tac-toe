@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { usePageMeta } from '../hooks/usePageMeta'
+import { useGenZ } from '../context/GenZContext'
 import ProjectCard from '../components/ProjectCard'
 import { projects } from '../data/projects'
 import type { ProjectStatus } from '../types'
@@ -50,6 +51,7 @@ export default function Projects() {
       },
     },
   )
+  const { genzMode } = useGenZ()
   const [activeFilter, setActiveFilter] = useState<Filter>('ALL')
 
   const filtered =
@@ -66,13 +68,15 @@ export default function Projects() {
         transition={{ duration: 0.4 }}
       >
         <p className="text-xs font-mono text-white/20 mb-2 tracking-[0.25em] uppercase">
-          // projects
+          {genzMode ? '// the damage' : '// projects'}
         </p>
-        <h1 className="text-4xl font-black text-white mb-3 tracking-tight">Engineering Work</h1>
+        <h1 className="text-4xl font-black text-white mb-3 tracking-tight">
+          {genzMode ? 'Stuff I Actually Built' : 'Engineering Work'}
+        </h1>
         <p className="text-white/40 text-sm mb-8 max-w-lg leading-relaxed">
-          Systems built with a focus on correctness under load and debuggability under incident.
-          Microservices architecture, distributed systems, high-throughput API engineering,
-          and cloud-native deployment.
+          {genzMode
+            ? 'real code, real prod, real chaos. these are not side projects they are therapy. every single one of these has been in production and survived.'
+            : 'Systems built with a focus on correctness under load and debuggability under incident. Microservices architecture, distributed systems, high-throughput API engineering, and cloud-native deployment.'}
         </p>
 
         {/* Filter bar */}
