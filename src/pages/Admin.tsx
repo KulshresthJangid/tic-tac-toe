@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SESSION_KEY, signOut } from '../lib/adminAuth'
 
-const ADMIN_HASH = 'f2652cc5135f343fb587c8a21357271011e9350dd61be46225e0b46886681599'
+const ADMIN_HASH = 'a55b293fa48e444068da36c9a235974a89ba753dd7d8c90a8e69d671b2bfcb31'
 
 async function hashInput(value: string): Promise<string> {
   const encoder = new TextEncoder()
