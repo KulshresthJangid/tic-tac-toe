@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,37 +16,83 @@
   }
 
   body {
-    @apply bg-base text-white font-sans antialiased;
+    @apply bg-black text-white font-sans antialiased;
     min-height: 100vh;
   }
 
-  ::-webkit-scrollbar {
+  ::selection {
+    @apply bg-primary text-black;
+  }
+
+  /* Brutal Theme Scrollbar */
+  html[data-theme="brutal"] ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  html[data-theme="brutal"] ::-webkit-scrollbar-track {
+    background: #000;
+    border-left: 2px solid #fff;
+  }
+  html[data-theme="brutal"] ::-webkit-scrollbar-thumb {
+    @apply bg-white border-2 border-black;
+  }
+  html[data-theme="brutal"] ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary;
+  }
+
+  /* Glass Theme Scrollbar */
+  html[data-theme="glass"] ::-webkit-scrollbar {
     width: 4px;
     height: 4px;
   }
-
-  ::-webkit-scrollbar-track {
+  html[data-theme="glass"] ::-webkit-scrollbar-track {
     background: transparent;
   }
-
-  ::-webkit-scrollbar-thumb {
+  html[data-theme="glass"] ::-webkit-scrollbar-thumb {
     @apply bg-white/10 rounded-full;
   }
-
-  ::-webkit-scrollbar-thumb:hover {
+  html[data-theme="glass"] ::-webkit-scrollbar-thumb:hover {
     @apply bg-white/20;
   }
 }
 
 @layer components {
+  /* Brutalist Container */
+  .brutal-card {
+    @apply bg-black border-2 border-white shadow-brutal transition-all duration-75 relative overflow-hidden rounded-none;
+  }
+  
+  .brutal-card-hover {
+    @apply hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-brutal-hover;
+  }
+
+  .brutal-btn {
+    @apply inline-flex items-center justify-center px-6 py-3 font-bold uppercase tracking-widest bg-white text-black border-2 border-white shadow-brutal-primary transition-all duration-75 rounded-none;
+  }
+
+  .brutal-btn:hover {
+    @apply bg-primary translate-x-[4px] translate-y-[4px] shadow-brutal-hover-primary text-black;
+  }
+  
+  .brutal-btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 font-bold uppercase tracking-widest bg-black text-white border-2 border-white shadow-brutal transition-all duration-75 rounded-none;
+  }
+  
+  .brutal-btn-secondary:hover {
+    @apply bg-white text-black translate-x-[4px] translate-y-[4px] shadow-brutal-hover;
+  }
+
+  .text-invert {
+    @apply bg-white text-black;
+  }
+
+  /* Glassmorphism Container */
   .glass {
     @apply bg-[#0a0a0a] border border-[#1c1c1c] rounded-xl;
   }
-
   .glass-hover {
     @apply hover:bg-[#111] hover:border-[#2a2a2a] transition-all duration-200;
   }
-
   .text-gradient {
     @apply text-white;
   }
