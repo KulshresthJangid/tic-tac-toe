@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { GenZProvider } from './context/GenZContext'
+import { ThemeProvider } from './context/ThemeContext'
 import MainLayout from './layouts/MainLayout'
 import Home from './pages/Home'
 import Projects from './pages/Projects'
@@ -17,7 +18,8 @@ import NotFound from './pages/NotFound'
 
 export default function App() {
   return (
-    <GenZProvider>
+    <ThemeProvider>
+      <GenZProvider>
       <BrowserRouter>
         <MainLayout>
           <Routes>
@@ -37,5 +39,6 @@ export default function App() {
         </MainLayout>
       </BrowserRouter>
     </GenZProvider>
+    </ThemeProvider>
   )
 }

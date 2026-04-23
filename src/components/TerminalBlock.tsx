@@ -23,25 +23,21 @@ export default function TerminalBlock({ lines, className = '' }: TerminalBlockPr
   }, [visibleCount, lines])
 
   return (
-    <div className={`glass rounded-xl p-5 font-mono text-sm ${className}`}>
+    <div className={`border-4 border-white bg-black p-5 font-mono text-sm shadow-brutal transition-none ${className}`}>
       {/* Window chrome */}
-      <div className="flex items-center gap-1.5 mb-4 pb-3 border-b border-white/[0.06]">
-        <span className="w-3 h-3 rounded-full bg-white/10" />
-        <span className="w-3 h-3 rounded-full bg-white/10" />
-        <span className="w-3 h-3 rounded-full bg-white/10" />
-        <span className="ml-3 text-xs text-white/20 select-none">bash — server@production</span>
+      <div className="flex items-center gap-2 mb-4 pb-3 border-b-4 border-white">
+        <span className="w-3 h-3 bg-white" />
+        <span className="w-3 h-3 bg-white" />
+        <span className="w-3 h-3 bg-white" />
+        <span className="ml-4 text-sm text-white font-black uppercase tracking-widest select-none">sys_root</span>
       </div>
 
-      <div className="space-y-1.5">
+      <div className="space-y-2">
         {lines.slice(0, visibleCount).map((line, i) => (
-          <div key={i} className="flex gap-2 leading-relaxed">
+          <div key={i} className="flex gap-3 leading-relaxed font-bold">
             {line.prompt && (
-              <span className="flex-shrink-0 select-none whitespace-nowrap">
-                <span className="text-white/60">root</span>
-                <span className="text-white/20">@</span>
-                <span className="text-white/60">server</span>
-                <span className="text-white/20">:~</span>
-                <span className="text-white/50">#</span>
+              <span className="flex-shrink-0 select-none whitespace-nowrap text-primary">
+                root@server:~$
               </span>
             )}
             <span
@@ -49,8 +45,8 @@ export default function TerminalBlock({ lines, className = '' }: TerminalBlockPr
                 line.color
                   ? line.color
                   : line.prompt
-                  ? 'text-white/80'
-                  : 'text-white/40'
+                  ? 'text-white'
+                  : 'text-gray-400'
               }
             >
               {line.text}
@@ -58,7 +54,7 @@ export default function TerminalBlock({ lines, className = '' }: TerminalBlockPr
           </div>
         ))}
         {visibleCount < lines.length && (
-          <span className="inline-block w-2 h-[1.1em] bg-white/70 align-middle animate-blink" />
+          <span className="inline-block w-2 h-4 bg-primary align-middle animate-pulse ml-2" />
         )}
       </div>
     </div>
