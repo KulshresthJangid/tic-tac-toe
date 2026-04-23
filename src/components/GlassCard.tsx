@@ -1,41 +1,8 @@
-import type { ReactNode } from 'react'
+import { useTheme } from '../context/ThemeContext'
+import GlassCardBrutal from './GlassCardBrutal'
+import GlassCardGlass from './GlassCardGlass'
 
-interface GlassCardProps {
-  children: ReactNode
-  className?: string
-  onClick?: () => void
-  hoverable?: boolean
-  padding?: 'none' | 'sm' | 'md' | 'lg'
-}
-
-const paddingMap = {
-  none: '',
-  sm: 'p-4',
-  md: 'p-6',
-  lg: 'p-8',
-}
-
-export default function GlassCard({
-  children,
-  className = '',
-  onClick,
-  hoverable = false,
-  padding = 'md',
-}: GlassCardProps) {
-  return (
-    <div
-      onClick={onClick}
-      className={[
-        'glass',
-        paddingMap[padding],
-        hoverable ? 'glass-hover' : '',
-        onClick ? 'cursor-pointer' : '',
-        className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
-    >
-      {children}
-    </div>
-  )
+export default function GlassCard(props: any) {
+  const { theme } = useTheme()
+  return theme === 'brutal' ? <GlassCardBrutal {...props} /> : <GlassCardGlass {...props} />
 }
