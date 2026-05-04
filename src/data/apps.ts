@@ -144,4 +144,14 @@ export const appServices: AppService[] = [
     version: '1.0.0',
     tags: ['SQLite', 'PostgreSQL', 'Deduplication'],
   },
+  {
+    id: 'sso-identity-provider',
+    name: 'SSO Identity Provider',
+    description:
+      'Centralised authentication and identity management service. Multi-tenant Spring Authorization Server with a React UI. Provides OIDC-compliant JWTs for all internal applications.',
+    route: '/sso',
+    status: 'ONLINE',
+    version: '1.0.0',
+    tags: ['Spring Boot', 'React', 'OIDC', 'OAuth2', 'PostgreSQL'],
+  },
 ]
