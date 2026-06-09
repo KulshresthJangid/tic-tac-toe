@@ -8,7 +8,6 @@ import TerminalBlock from '../components/TerminalBlock'
 import ProjectCard from '../components/ProjectCard'
 import { projects } from '../data/projects'
 import { appServices } from '../data/apps'
-import { HeroGeometric } from '../components/ui/shape-landing-hero'
 
 const terminalLines = [
   { prompt: true, text: 'status', delay: 600 },
@@ -21,6 +20,13 @@ const terminalLines = [
   { text: '  smart-server.latency_p99  99.97%   SLO 99.9%   budget: 97%', delay: 100, color: 'text-white/30' },
   { prompt: true, text: 'whoami', delay: 350 },
   { text: '  kulshresth jangid — systems architect, jaipur', delay: 80, color: 'text-white/60' },
+]
+
+const impactStats = [
+  { value: '40%', label: 'p99 latency cut', sub: 'MySQL + caching redesign' },
+  { value: '1M+', label: 'tasks/instance', sub: 'scheduling engine' },
+  { value: '28%', label: 'MTTR reduction', sub: 'microservices migration' },
+  { value: '30%', label: 'fewer deploy failures', sub: 'canary + auto-rollback' },
 ]
 
 const genzTerminalLines = [
@@ -36,13 +42,6 @@ const genzTerminalLines = [
   { text: '  kul from jaipur — delulu enough to build this', delay: 80, color: 'text-white/60' },
 ]
 
-const impactStats = [
-  { value: '40%', label: 'p99 latency cut', sub: 'MySQL + caching redesign' },
-  { value: '1M+', label: 'tasks/instance', sub: 'scheduling engine' },
-  { value: '28%', label: 'MTTR reduction', sub: 'microservices migration' },
-  { value: '30%', label: 'fewer deploy failures', sub: 'canary + auto-rollback' },
-]
-
 const genzImpactStats = [
   { value: '40%', label: 'made db go fast', sub: 'fixed what was clearly broken' },
   { value: '1M+', label: 'tasks handled ngl', sub: 'scheduler was unhinged' },
@@ -50,11 +49,10 @@ const genzImpactStats = [
   { value: '30%', label: 'fewer 3am calls', sub: 'auto-rollback clocked in' },
 ]
 
-const sectionFadeUp = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-60px' },
-  transition: { duration: 0.55, ease: [0.25, 0.4, 0.25, 1] },
+const fadeUp = {
+  initial: { opacity: 0, y: 18 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.45 },
 }
 
 export default function Home() {
@@ -83,109 +81,105 @@ export default function Home() {
               text: 'Yes. Currently open to senior backend engineering roles and consulting engagements. Remote-first. Based in Jaipur, India.',
             },
           },
+          {
+            '@type': 'Question',
+            name: 'What technologies does Kulshresth Jangid work with?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Node.js, TypeScript, Java, Spring Boot, Go, Python, React, Kafka, RabbitMQ, Redis, PostgreSQL, MySQL, MongoDB, Kubernetes, Docker, and AWS.',
+            },
+          },
         ],
       },
     },
   )
-
   const { genzMode } = useGenZ()
   const otherProjects = projects.slice(1, 4)
   const onlineServices = appServices.filter((s) => s.status === 'ONLINE')
 
   return (
-    <div className="overflow-x-hidden">
-      {/* ── Full-screen hero ── */}
-      <section className="-mt-14">
-        <HeroGeometric
-          badge={genzMode ? 'kul · jaipur · he/him' : 'Backend Engineer · Open to Remote'}
-          title1={genzMode ? 'i make servers' : 'Building Systems'}
-          title2={genzMode ? 'go brrr.' : 'That Actually Scale.'}
-          description={
-            genzMode
-              ? 'been writing code since before it was a personality. founded a whole saas thing. senior engineer at equinix. lowkey just vibing and shipping.'
-              : 'Four years building distributed systems at scale. Founded Lumen — a multi-tenant Marketing OS. Senior Engineer at Equinix. Based in Jaipur, India.'
-          }
-        >
-          <div className="flex gap-3 justify-center flex-wrap mt-2">
+    <div className="max-w-7xl mx-auto px-6 py-12 space-y-14">
+      {/* Hero */}
+      <motion.section {...fadeUp} className="grid lg:grid-cols-2 gap-8 items-start">
+        <div className="flex flex-col gap-6">
+          <div>
+            <p className="text-xs font-mono text-white/25 mb-4 tracking-[0.25em] uppercase">
+              {genzMode ? 'kul · jaipur, india · he/him' : 'Kulshresth Jangid — Jaipur, India'}
+            </p>
+            <h1 className="text-5xl sm:text-6xl font-black text-white leading-[1.05] tracking-tight mb-6">
+              {genzMode ? (
+                <>
+                  i make servers
+                  <br />
+                  go brrr.
+                  <br />
+                  <span className="text-white/30">no cap.</span>
+                </>
+              ) : (
+                <>
+                  Backend Engineer.
+                  <br />
+                  I build systems
+                  <br />
+                  <span className="text-white/30">that scale.</span>
+                </>
+              )}
+            </h1>
+            <p className="text-sm text-white/40 leading-relaxed max-w-md">
+              {genzMode
+                ? "been writing code since before it was a personality. founded a whole saas thing from scratch. senior engineer at equinix. lowkey just vibing and shipping."
+                : 'Four years building distributed systems at scale. Founded Lumen — a multi-tenant Marketing OS — from schema to Kubernetes, currently running in production. Senior Engineer at Equinix.'}
+            </p>
+          </div>
+
+          <div className="flex gap-3 flex-wrap">
             <Link
               to="/projects"
-              className="px-6 py-2.5 rounded-lg bg-white text-black text-sm font-semibold hover:bg-white/90 transition-all duration-200 cursor-pointer"
+              className="px-5 py-2 rounded-lg bg-white text-black text-sm font-semibold hover:bg-white/90 transition-all duration-150"
             >
               {genzMode ? 'witness the damage' : 'View my work'}
             </Link>
             <Link
               to="/about"
-              className="px-6 py-2.5 rounded-lg bg-white/[0.06] border border-white/[0.12] text-white/70 text-sm font-medium hover:bg-white/[0.12] hover:text-white transition-all duration-200 cursor-pointer"
+              className="px-5 py-2 rounded-lg glass glass-hover text-white/60 text-sm font-medium hover:text-white transition-all duration-150"
             >
-              {genzMode ? "shoot your shot" : "Let's talk"}
+              {genzMode ? 'shoot your shot' : "Let's talk"}
             </Link>
           </div>
-          <div className="flex items-center justify-center gap-2 mt-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
-            <span className="text-xs font-mono text-white/30 tracking-wide">
+
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+            <span className="text-xs font-mono text-white/35">
               {genzMode
-                ? 'open to remote · will consider equity · 2026'
-                : 'Available for remote roles · Open to new projects · 2026'}
+                ? 'open to remote · will consider equity · april 2026'
+                : 'Available for remote roles · Open to new projects · March 2026'}
             </span>
           </div>
-        </HeroGeometric>
-      </section>
-
-      {/* ── Terminal snapshot ── */}
-      <motion.section
-        {...sectionFadeUp}
-        className="max-w-7xl mx-auto px-6 py-16"
-      >
-        <div className="grid lg:grid-cols-2 gap-8 items-start">
-          <div className="flex flex-col gap-4">
-            <p className="text-xs font-mono text-white/25 tracking-[0.25em] uppercase">
-              {genzMode ? 'system check' : 'System Status'}
-            </p>
-            <h2 className="text-2xl font-bold text-white leading-tight">
-              {genzMode ? (
-                <>all services are <span className="text-white/30">not crashed.</span></>
-              ) : (
-                <>Infrastructure is <span className="text-white/30">running nominal.</span></>
-              )}
-            </h2>
-            <p className="text-sm text-white/40 leading-relaxed max-w-sm">
-              {genzMode
-                ? 'every service is alive and coping. scheduler doing 1M tasks like its nothing. we love to see it.'
-                : 'All production services healthy. Scheduling engine validated at 1M+ tasks/instance. SLO budgets intact across 30-day windows.'}
-            </p>
-          </div>
-          <TerminalBlock lines={genzMode ? genzTerminalLines : terminalLines} />
         </div>
+        <TerminalBlock lines={genzMode ? genzTerminalLines : terminalLines} />
       </motion.section>
 
-      {/* ── Impact stats ── */}
+      {/* Impact stats */}
       <motion.section
-        {...sectionFadeUp}
-        className="max-w-7xl mx-auto px-6 pb-16"
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.1 }}
+        className="grid grid-cols-2 lg:grid-cols-4 gap-4"
       >
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {(genzMode ? genzImpactStats : impactStats).map(({ value, label, sub }, i) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.07, ease: 'easeOut' }}
-            >
-              <GlassCard padding="md" className="text-center select-none group cursor-default hover:border-white/[0.15] transition-all duration-300">
-                <div className="text-2xl font-black text-white font-mono group-hover:scale-105 transition-transform duration-200">{value}</div>
-                <div className="text-xs text-white/50 mt-1 leading-snug">{label}</div>
-                <div className="text-[10px] font-mono text-white/20 mt-1">{sub}</div>
-              </GlassCard>
-            </motion.div>
-          ))}
-        </div>
+        {(genzMode ? genzImpactStats : impactStats).map(({ value, label, sub }) => (
+          <GlassCard key={label} padding="md" className="text-center select-none">
+            <div className="text-2xl font-black text-white font-mono">{value}</div>
+            <div className="text-xs text-white/50 mt-1 leading-snug">{label}</div>
+            <div className="text-[10px] font-mono text-white/20 mt-1">{sub}</div>
+          </GlassCard>
+        ))}
       </motion.section>
 
-      {/* ── Featured Case Study ── */}
+      {/* Featured Case Study */}
       <motion.section
-        {...sectionFadeUp}
-        className="max-w-7xl mx-auto px-6 pb-16"
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.16 }}
       >
         <div className="flex items-center gap-2 mb-6">
           <h2 className="text-base font-semibold text-white">
@@ -200,7 +194,7 @@ export default function Home() {
           <div className="lg:col-span-3 flex flex-col gap-4">
             <div>
               <div className="flex items-center gap-2.5 mb-1 flex-wrap">
-                <h3 className="text-lg font-bold text-white">EchoPost — Marketing Operating System</h3>
+          <h3 className="text-lg font-bold text-white">EchoPost — Marketing Operating System</h3>
                 <StatusBadge status="LIVE" pulse />
               </div>
               <p className="text-xs font-mono text-white/25">Founded · 2025 · Production</p>
@@ -230,7 +224,7 @@ export default function Home() {
 
             <Link
               to="/projects/social-saas"
-              className="self-start mt-1 px-4 py-2 rounded-lg bg-white/[0.05] border border-white/[0.1] text-white/60 text-xs font-mono hover:bg-white/[0.09] hover:text-white transition-all duration-200 cursor-pointer"
+              className="self-start mt-1 px-4 py-2 rounded-lg bg-white/[0.05] border border-white/[0.1] text-white/60 text-xs font-mono hover:bg-white/[0.09] hover:text-white transition-all duration-200"
             >
               {genzMode ? 'see the unhinged plan ->' : 'Read full architecture →'}
             </Link>
@@ -259,10 +253,11 @@ export default function Home() {
         </GlassCard>
       </motion.section>
 
-      {/* ── Selected work ── */}
+      {/* Selected work */}
       <motion.section
-        {...sectionFadeUp}
-        className="max-w-7xl mx-auto px-6 pb-16"
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.22 }}
       >
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -273,29 +268,22 @@ export default function Home() {
               {genzMode ? '// real code, real prod, real chaos' : '// production systems and architecture'}
             </p>
           </div>
-          <Link to="/projects" className="text-xs text-white/40 hover:text-white font-mono transition-colors cursor-pointer">
+          <Link to="/projects" className="text-xs text-white/40 hover:text-white font-mono transition-colors">
             {genzMode ? 'all the damage ->' : 'all projects →'}
           </Link>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {otherProjects.map((project, i) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
-            >
-              <ProjectCard project={project} />
-            </motion.div>
+          {otherProjects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
       </motion.section>
 
-      {/* ── Active services ── */}
+      {/* Active services */}
       <motion.section
-        {...sectionFadeUp}
-        className="max-w-7xl mx-auto px-6 pb-20"
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.28 }}
       >
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -306,23 +294,19 @@ export default function Home() {
               {genzMode ? '// tic-tac-toe gateway — touch wood' : '// tic-tac-toe gateway — all systems nominal'}
             </p>
           </div>
-          <Link to="/apps" className="text-xs text-white/40 hover:text-white font-mono transition-colors cursor-pointer">
+          <Link to="/apps" className="text-xs text-white/40 hover:text-white font-mono transition-colors">
             {genzMode ? 'full roster ->' : 'full registry →'}
           </Link>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {onlineServices.map((app, i) => (
-            <motion.a
+          {onlineServices.map((app) => (
+            <a
               key={app.id}
               href={app.externalUrl ?? app.route}
               target={app.externalUrl ? '_blank' : undefined}
               rel={app.externalUrl ? 'noopener noreferrer' : undefined}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.35, delay: i * 0.06 }}
-              className="block cursor-pointer"
+              className="block"
             >
               <GlassCard hoverable padding="sm" className="flex items-center gap-3">
                 <div className="w-8 h-8 flex-shrink-0 rounded-md bg-white/[0.05] border border-white/[0.1] flex items-center justify-center font-mono font-bold text-white/50 text-xs">
@@ -336,7 +320,7 @@ export default function Home() {
                 </div>
                 <StatusBadge status={app.status} pulse />
               </GlassCard>
-            </motion.a>
+            </a>
           ))}
         </div>
       </motion.section>
