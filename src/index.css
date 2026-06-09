@@ -38,14 +38,14 @@
 
 @layer components {
   .glass {
-    @apply bg-[#0a0a0a] border border-[#1c1c1c] rounded-xl;
+    @apply bg-white/[0.03] backdrop-blur-md border border-white/[0.08] rounded-xl;
   }
 
   .glass-hover {
-    @apply hover:bg-[#111] hover:border-[#2a2a2a] transition-all duration-200;
+    @apply hover:bg-white/[0.06] hover:border-white/[0.14] transition-all duration-200;
   }
 
   .text-gradient {
-    @apply text-white;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-white to-rose-300;
   }
 }
