@@ -7,7 +7,7 @@ import { appServices } from '../data/apps'
 export default function Apps() {
   usePageMeta(
     'Service Registry — tic-tac-toe Gateway | Kulshresth Jangid',
-    'Live service registry. tic-tac-toe (entry point) proxies echo-post frontend at /lumen and smart-server backend at :8080. Lumen SaaS platform and supporting infrastructure.',
+    'Live service registry. tic-tac-toe (entry point) proxies Kaizex frontend at /kaizex and smart-server backend at :8080. Kaizex platform and supporting infrastructure.',
   )
   const onlineCount = appServices.filter((s) => s.status === 'ONLINE').length
   const degradedCount = appServices.filter((s) => s.status === 'DEGRADED').length
@@ -28,7 +28,7 @@ export default function Apps() {
           <h1 className="text-4xl font-black text-white mb-3 tracking-tight">Service Registry</h1>
           <p className="text-white/40 text-sm max-w-lg leading-relaxed">
             All services behind the <span className="text-white/70 font-mono">tic-tac-toe</span> entry point.
-            Lumen (echo-post) is the primary application — all surrounding services support it at the infrastructure layer.
+            Kaizex is the primary application — all surrounding services support it at the infrastructure layer.
           </p>
         </div>
 

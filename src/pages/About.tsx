@@ -147,11 +147,11 @@ export default function About() {
             <p className="text-white/50 leading-relaxed text-sm">
               {genzMode ? (
                 <>
-                  i founded <span className="text-white font-medium">Lumen</span> (EchoPost). built a whole marketing OS from scratch. four stages, three automation modes, bring your own AI, 1M+ tasks per instance. named the entry point <span className="text-white/70 font-mono text-xs">tic-tac-toe</span> because why not. frontend at <span className="text-white/70 font-mono text-xs">/lumen</span>. backend is <span className="text-white/70 font-mono text-xs">smart-server</span>. designed, deployed, operated, still running.
+                  i founded <span className="text-white font-medium">Kaizex</span>. built a whole marketing OS from scratch. four stages, three automation modes, bring your own AI, 1M+ tasks per instance. named the entry point <span className="text-white/70 font-mono text-xs">tic-tac-toe</span> because why not. frontend at <span className="text-white/70 font-mono text-xs">/kaizex</span>. backend is <span className="text-white/70 font-mono text-xs">smart-server</span>. designed, deployed, operated, still running.
                 </>
               ) : (
                 <>
-                  I founded <span className="text-white font-medium">Lumen</span> (EchoPost) \u2014 a multi-tenant Marketing Operating System \u2014 as a product, not a side project. Four-stage pipeline: Source \u2192 Insight \u2192 Content \u2192 Distribution. Three automation modes. BYO-AI with no model lock-in. Scheduling engine validated at 1M+ tasks/instance. Entry point: <span className="text-white/70 font-mono text-xs">tic-tac-toe</span>. Frontend at <span className="text-white/70 font-mono text-xs">/lumen</span>. Backend: <span className="text-white/70 font-mono text-xs">smart-server</span>. Designed, deployed, and operated end-to-end.
+                  I founded <span className="text-white font-medium">Kaizex</span> \u2014 a multi-tenant Marketing Operating System \u2014 as a product, not a side project. Four-stage pipeline: Source \u2192 Insight \u2192 Content \u2192 Distribution. Three automation modes. BYO-AI with no model lock-in. Scheduling engine validated at 1M+ tasks/instance. Entry point: <span className="text-white/70 font-mono text-xs">tic-tac-toe</span>. Frontend at <span className="text-white/70 font-mono text-xs">/kaizex</span>. Backend: <span className="text-white/70 font-mono text-xs">smart-server</span>. Designed, deployed, and operated end-to-end.
                 </>
               )}
             </p>

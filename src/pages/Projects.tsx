@@ -33,7 +33,7 @@ export default function Projects() {
             '@type': 'ListItem',
             position: 1,
             url: 'https://buildwithkulshresth.com/projects/social-saas',
-            name: 'EchoPost — Marketing Operating System',
+            name: 'Kaizex — Marketing Operating System',
           },
           {
             '@type': 'ListItem',

@@ -12,11 +12,11 @@ import { appServices } from '../data/apps'
 const terminalLines = [
   { prompt: true, text: 'status', delay: 600 },
   { text: '[  OK  ] tic-tac-toe    ACTIVE   :443    entry-point', delay: 160, color: 'text-white/70' },
-  { text: '[  OK  ] echo-post      ACTIVE   /lumen  lumen-saas', delay: 140, color: 'text-white/50' },
+  { text: '[  OK  ] kaizex       ACTIVE   /kaizex  kaizex-saas', delay: 140, color: 'text-white/50' },
   { text: '[  OK  ] smart-server   ACTIVE   :8080   backend-api', delay: 140, color: 'text-white/50' },
   { text: '[  OK  ] scheduler      ACTIVE   redis   1M tasks/inst', delay: 140, color: 'text-white/50' },
   { prompt: true, text: 'slo --window 30d', delay: 400 },
-  { text: '  echo-post.availability    99.94%   SLO 99.9%   budget: 87%', delay: 120, color: 'text-white/30' },
+  { text: '  kaizex.availability    99.94%   SLO 99.9%   budget: 87%', delay: 120, color: 'text-white/30' },
   { text: '  smart-server.latency_p99  99.97%   SLO 99.9%   budget: 97%', delay: 100, color: 'text-white/30' },
   { prompt: true, text: 'whoami', delay: 350 },
   { text: '  kulshresth jangid — systems architect, jaipur', delay: 80, color: 'text-white/60' },
@@ -32,11 +32,11 @@ const impactStats = [
 const genzTerminalLines = [
   { prompt: true, text: 'vibe --check', delay: 600 },
   { text: '[  OK  ] tic-tac-toe    NOT CRASHED  :443    still standing', delay: 160, color: 'text-white/70' },
-  { text: '[  OK  ] echo-post      ATE          /lumen  no crumbs left', delay: 140, color: 'text-white/50' },
+  { text: '[  OK  ] kaizex       ATE          /kaizex  no crumbs left', delay: 140, color: 'text-white/50' },
   { text: '[  OK  ] smart-server   COPING       :8080   its giving backend', delay: 140, color: 'text-white/50' },
   { text: '[  OK  ] scheduler      SENDING      redis   1M tasks bestie', delay: 140, color: 'text-white/50' },
   { prompt: true, text: 'slo --vibecheck 30d', delay: 400 },
-  { text: '  echo-post    99.94%   eating       budget: 87%  slay', delay: 120, color: 'text-white/30' },
+  { text: '  kaizex   99.94%   eating       budget: 87%  slay', delay: 120, color: 'text-white/30' },
   { text: '  smart-server 99.97%   no cap       budget: 97%  ate', delay: 100, color: 'text-white/30' },
   { prompt: true, text: 'whoami', delay: 350 },
   { text: '  kul from jaipur — delulu enough to build this', delay: 80, color: 'text-white/60' },
@@ -128,7 +128,7 @@ export default function Home() {
             <p className="text-sm text-white/40 leading-relaxed max-w-md">
               {genzMode
                 ? "been writing code since before it was a personality. founded a whole saas thing from scratch. senior engineer at equinix. lowkey just vibing and shipping."
-                : 'Four years building distributed systems at scale. Founded Lumen — a multi-tenant Marketing OS — from schema to Kubernetes, currently running in production. Senior Engineer at Equinix.'}
+                : 'Four years building distributed systems at scale. Founded Kaizex — a multi-tenant Marketing OS — from schema to Kubernetes, currently running in production. Senior Engineer at Equinix.'}
             </p>
           </div>
 
@@ -183,7 +183,7 @@ export default function Home() {
       >
         <div className="flex items-center gap-2 mb-6">
           <h2 className="text-base font-semibold text-white">
-            {genzMode ? 'the one i am actually proud of — EchoPost' : 'Featured Case Study — EchoPost'}
+            {genzMode ? 'the one i am actually proud of — Kaizex' : 'Featured Case Study — Kaizex'}
           </h2>
           <span className="px-2 py-0.5 text-[10px] font-mono bg-white/[0.05] border border-white/[0.1] text-white/50 rounded tracking-wider">
             {genzMode ? 'MY MAGNUM OPUS' : 'CASE STUDY'}
@@ -194,7 +194,7 @@ export default function Home() {
           <div className="lg:col-span-3 flex flex-col gap-4">
             <div>
               <div className="flex items-center gap-2.5 mb-1 flex-wrap">
-          <h3 className="text-lg font-bold text-white">EchoPost — Marketing Operating System</h3>
+          <h3 className="text-lg font-bold text-white">Kaizex — Marketing Operating System</h3>
                 <StatusBadge status="LIVE" pulse />
               </div>
               <p className="text-xs font-mono text-white/25">Founded · 2025 · Production</p>
@@ -240,7 +240,7 @@ export default function Home() {
               ['Scale', '1M+ tasks/instance'],
               ['AI', 'BYO (OpenAI / Anthropic / self-hosted)'],
               ['Entry', 'tic-tac-toe (:443)'],
-              ['Frontend', 'echo-post (/lumen)'],
+              ['Frontend', 'kaizex (/kaizex)'],
               ['Backend', 'smart-server (:8080)'],
               ['Platforms', 'LinkedIn (live) · X (WIP)'],
             ].map(([label, value]) => (

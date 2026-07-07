@@ -173,7 +173,7 @@ const UNITS: MasteryUnit[] = [
   { id:'b17', code:'B17', unit:'Bulkhead: thread pool isolation',         domain:'Backend',      resource:'Resilience4j "Bulkhead" docs',                                                             task:'Separate thread pools for DB calls vs external API calls, prevent cascading failure',        proof:'GitHub commit + load test',                                             hours:1.5, difficulty:'Hard',        week:8 },
   { id:'b18', code:'B18', unit:'OAuth 2.1 + PKCE flow from scratch',      domain:'Backend',      resource:'Aaron Parecki "OAuth 2.0 Simplified" (Ch14) + RFC 7636',                                   task:'Implement authorization code + PKCE from scratch (no library for the core flow)',             proof:'GitHub repo: oauth-pkce-demo',                                          hours:2,   difficulty:'Hard',        week:8 },
   { id:'b19', code:'B19', unit:'Async job queue: advanced patterns',      domain:'Backend',      resource:'Redis "RPOPLPUSH pattern" + Bull queue docs "Priority + delayed jobs"',                   task:'Implement priority queue + delayed job + deduplication in Redis',                             proof:'GitHub commit',                                                         hours:1.5, difficulty:'Hard',        week:8 },
-  { id:'b20', code:'B20', unit:'Backend system write-up (EchoPost)',      domain:'Backend',      resource:'Your own project: EchoPost architecture',                                                  task:'Write a 1500-word technical breakdown of EchoPost pipeline with diagrams',                   proof:'Published: dev.to or GitHub Pages',                                     hours:2,   difficulty:'Medium',      week:9 },
+  { id:'b20', code:'B20', unit:'Backend system write-up (Kaizex)',      domain:'Backend',      resource:'Your own project: Kaizex architecture',                                                  task:'Write a 1500-word technical breakdown of Kaizex pipeline with diagrams',                   proof:'Published: dev.to or GitHub Pages',                                     hours:2,   difficulty:'Medium',      week:9 },
 
   /* ════ Frontend (10) ════ */
   { id:'f1',  code:'F1',  unit:'React Server Components',                 domain:'Frontend',     resource:'Next.js docs "Server and Client Components" + Theo "RSC explained" YouTube',              task:'Refactor a Client component to Server component, measure bundle size reduction',              proof:'GitHub commit + bundle analyzer screenshot',                            hours:1.5, difficulty:'Hard',        week:4 },
@@ -194,10 +194,10 @@ const UNITS: MasteryUnit[] = [
   { id:'os4',  code:'OS4',  unit:'GitHub profile as portfolio',           domain:'OSS',          resource:'GitHub "Managing your profile README" docs',                                               task:'Pin 6 best repos, write profile README with your stack + what you\'re building',             proof:'Live GitHub profile URL',                                               hours:1,   difficulty:'Easy',        week:1 },
   { id:'os5',  code:'OS5',  unit:'HuggingFace profile optimization',       domain:'OSS',          resource:'HuggingFace "Profile" + "Spaces" docs',                                                   task:'Write profile README, pin your best model + Space, add dataset card',                        proof:'Live HuggingFace profile URL',                                          hours:1,   difficulty:'Easy',        week:1 },
   { id:'os6',  code:'OS6',  unit:'LinkedIn build-in-public system',       domain:'OSS',          resource:'Taplio "LinkedIn Algorithm" blog + 3 examples of devs hired via posts',                  task:'Post 1 technical update per week for 12 weeks (template: built + why + link)',               proof:'12 LinkedIn posts scheduled/drafted',                                   hours:1,   difficulty:'Easy',        week:1 },
-  { id:'os7',  code:'OS7',  unit:'Technical blog: first post',            domain:'OSS',          resource:'dev.to "Getting Started" + "How to Write a Technical Blog Post" (swyx.io)',               task:'Write "How I built X" covering EchoPost pipeline — 1500 words',                              proof:'Published dev.to URL',                                                  hours:2,   difficulty:'Medium',      week:1 },
+  { id:'os7',  code:'OS7',  unit:'Technical blog: first post',            domain:'OSS',          resource:'dev.to "Getting Started" + "How to Write a Technical Blog Post" (swyx.io)',               task:'Write "How I built X" covering Kaizex pipeline — 1500 words',                              proof:'Published dev.to URL',                                                  hours:2,   difficulty:'Medium',      week:1 },
   { id:'os8',  code:'OS8',  unit:'Third OSS PR: feature/bug fix',         domain:'OSS',          resource:'langchain4j or similar Java AI repo',                                                     task:'Fix a real issue (not just docs), get it reviewed and merged',                               proof:'Merged PR URL',                                                         hours:3,   difficulty:'Hard',        week:5 },
   { id:'os9',  code:'OS9',  unit:'Cold outreach for remote jobs',         domain:'OSS',          resource:'Lenny\'s Newsletter "How to get a job remotely" + resumeworded.com "Developer Resume"',  task:'Write 3 outreach messages for 3 companies you actually want to work at',                    proof:'3 drafts + 3 sent',                                                     hours:1,   difficulty:'Medium',      week:7 },
-  { id:'os10', code:'OS10', unit:'System design write-up as portfolio',   domain:'OSS',          resource:'"Architecture Patterns with Python" O\'Reilly intro (free preview)',                       task:'Write an architecture decision record for EchoPost\'s scheduling system',                    proof:'Published: GitHub or blog',                                             hours:2,   difficulty:'Medium',      week:6 },
+  { id:'os10', code:'OS10', unit:'System design write-up as portfolio',   domain:'OSS',          resource:'"Architecture Patterns with Python" O\'Reilly intro (free preview)',                       task:'Write an architecture decision record for Kaizex\'s scheduling system',                    proof:'Published: GitHub or blog',                                             hours:2,   difficulty:'Medium',      week:6 },
 ]
 
 const ALL_DOMAINS: Domain[] = ['DSA', 'AI/ML', 'Data Science', 'DevOps', 'Backend', 'Frontend', 'OSS']
@@ -310,7 +310,7 @@ const OSS_REPOS = [
   {
     repo: 'spring-projects/spring-data-redis',
     url: 'https://github.com/spring-projects/spring-data-redis',
-    why: 'You already use Redis heavily (EchoPost). Contributing here is authentic, not forced.',
+    why: 'You already use Redis heavily (Kaizex). Contributing here is authentic, not forced.',
     units: ['B4', 'B12', 'B19'],
     issues: [
       'Reproduce a reported bug, confirm + add a failing test',
@@ -1049,7 +1049,7 @@ function ProofSystem() {
     {
       name: 'GitHub',
       desc: 'Profile README (stack + what you\'re building), 6 pinned repos, commit every day. Every repo needs a live demo link OR architecture diagram in README.',
-      items: ['Profile README live', 'EchoPost pinned with architecture write-up', 'spam-classifier repo with HuggingFace links', 'dsa-solutions repo (your daily commits)', 'Green commit graph visible to recruiters'],
+      items: ['Profile README live', 'Kaizex pinned with architecture write-up', 'spam-classifier repo with HuggingFace links', 'dsa-solutions repo (your daily commits)', 'Green commit graph visible to recruiters'],
     },
     {
       name: 'HuggingFace',
@@ -1059,7 +1059,7 @@ function ProofSystem() {
     {
       name: 'dev.to / Blog',
       desc: '1 post per week = 12 articles after 12 weeks. Format that gets traction: "How I built X using Y — tradeoffs, mistakes, code." Ranks on Google, generates inbound interest.',
-      items: ['"How I built a spam classifier in one week"', '"EchoPost architecture: why we use Redis time-wheels"', '"Implementing Redlock in Spring Boot"', '"From LeetCode to real systems: what I actually learned"'],
+      items: ['"How I built a spam classifier in one week"', '"Kaizex architecture: why we use Redis time-wheels"', '"Implementing Redlock in Spring Boot"', '"From LeetCode to real systems: what I actually learned"'],
     },
     {
       name: 'LinkedIn',
@@ -1504,7 +1504,7 @@ export default function DSAv2() {
                   'HuggingFace profile with 2 live models + Spaces',
                   '3 merged OSS PRs',
                   'Published blog posts (actual links, not "I blog")',
-                  'EchoPost with architectural write-up',
+                  'Kaizex with architectural write-up',
                   'DSA commits visible daily on GitHub',
                 ].map((item) => (
                   <div
