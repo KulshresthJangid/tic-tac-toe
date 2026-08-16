@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { useGenZ } from '../context/GenZContext'
 import GlassCard from '../components/GlassCard'
+import ResumeDownload from '../components/ResumeDownload'
 
 const skillCategories = [
   {
@@ -260,6 +261,14 @@ export default function About() {
               </GlassCard>
             ))}
           </div>
+        </div>
+
+        {/* Resume */}
+        <div>
+          <h2 className="text-sm font-semibold text-white mb-5 font-mono flex items-center gap-2">
+            <span className="text-white/30">$</span> {genzMode ? 'the receipts, pdf format' : 'Resume'}
+          </h2>
+          <ResumeDownload />
         </div>
 
         {/* Connect */}
