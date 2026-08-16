@@ -49,3 +49,41 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-white to-rose-300;
   }
 }
+
+/*
+ * Retro cursor — deliberately unlayered (outside @layer) so it reliably
+ * overrides Tailwind's own `cursor-pointer` utility. Tailwind's cascade
+ * layers always resolve `utilities` after `base`/`components` regardless
+ * of source order, so a rule inside @layer here would silently lose to
+ * every `cursor-pointer` class in the app; unlayered CSS beats layered
+ * CSS unconditionally per the cascade layers spec.
+ *
+ * Default: a solid block, matching the terminal-caret cursor already used
+ * in TerminalBlock/ResumeDownload (same `▮` idea, just as the OS cursor).
+ * Interactive elements: an old-DOS-mouse-driver crosshair — cursors were
+ * crosshairs before Windows standardized the arrow.
+ */
+body {
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='18' viewBox='0 0 12 18'%3E%3Crect x='1' y='1' width='10' height='16' fill='white' stroke='black' stroke-width='1'/%3E%3C/svg%3E")
+      2 2,
+    auto;
+}
+
+a,
+button,
+[role='button'],
+input,
+select,
+textarea,
+label,
+.cursor-pointer {
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Crect x='8.5' y='1.5' width='3' height='17' fill='black'/%3E%3Crect x='1.5' y='8.5' width='17' height='3' fill='black'/%3E%3Crect x='9' y='2' width='2' height='16' fill='white'/%3E%3Crect x='2' y='9' width='16' height='2' fill='white'/%3E%3C/svg%3E")
+      10 10,
+    pointer;
+}
+
+:disabled {
+  cursor: not-allowed;
+}

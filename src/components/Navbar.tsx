@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { motion, useAnimation } from 'framer-motion'
 import { useEffect } from 'react'
+import { Download } from 'lucide-react'
 import { useGenZ } from '../context/GenZContext'
 
 const navLinks = [
@@ -64,6 +65,15 @@ export default function Navbar() {
 
         {/* Right side */}
         <div className="flex items-center gap-2 flex-shrink-0">
+          <a
+            href="/resume/kulshresth-jangid-resume.pdf"
+            download="kulshresth-jangid-resume.pdf"
+            title={genzMode ? 'grab the receipts' : 'Download resume (PDF)'}
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[11px] font-mono text-white/40 border border-white/[0.08] hover:text-white hover:border-white/20 hover:bg-white/[0.06] transition-all duration-200"
+          >
+            <Download size={12} />
+            {genzMode ? 'receipts' : 'Resume'}
+          </a>
           <motion.button
             onClick={toggleGenZ}
             animate={shakeControls}
