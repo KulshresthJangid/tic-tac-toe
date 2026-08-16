@@ -3,6 +3,33 @@ import { usePageMeta } from '../hooks/usePageMeta'
 import { useGenZ } from '../context/GenZContext'
 import GlassCard from '../components/GlassCard'
 
+const skillCategories = [
+  {
+    title: 'Backend Architecture',
+    skills: ['Java', 'Spring Boot', 'Node.js', 'TypeScript', 'Express.js', 'REST', 'GraphQL', 'gRPC', 'WebSockets'],
+  },
+  {
+    title: 'Distributed Systems',
+    skills: ['Kafka', 'Microservices', 'Canary Rollouts', 'SLO Design', 'Zero-Downtime Migrations', 'API Contracts', 'Concurrency Control', 'Idempotency'],
+  },
+  {
+    title: 'Databases',
+    skills: ['MySQL', 'PostgreSQL', 'MongoDB', 'Redis', 'Elasticsearch', 'DynamoDB'],
+  },
+  {
+    title: 'Infra & DevOps',
+    skills: ['Kubernetes', 'Docker', 'Helm', 'GitHub Actions', 'Jenkins', 'Terraform', 'AWS (EC2, RDS, EKS)'],
+  },
+  {
+    title: 'Observability',
+    skills: ['Prometheus', 'Grafana', 'ELK Stack', 'SLO Alerting', 'Runbooks', 'Postmortems'],
+  },
+  {
+    title: 'Testing',
+    skills: ['JUnit', 'Jest', 'Pact Contract Testing', 'Integration Tests', 'Smoke Tests'],
+  },
+]
+
 const experience = [
   {
     role: 'Senior Software Engineer',
@@ -169,6 +196,39 @@ export default function About() {
                 <div className="text-sm font-semibold text-white">{title}</div>
                 <div className="text-xs text-white/35 leading-relaxed">{desc}</div>
               </GlassCard>
+            ))}
+          </div>
+        </div>
+
+        {/* Core skills */}
+        <div>
+          <h2 className="text-sm font-semibold text-white mb-5 font-mono flex items-center gap-2">
+            <span className="text-white/30">$</span> {genzMode ? 'the toolkit' : 'Core Skills'}
+          </h2>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {skillCategories.map(({ title, skills }, i) => (
+              <motion.div
+                key={title}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, delay: i * 0.05 }}
+              >
+                <GlassCard padding="sm" hoverable className="space-y-2.5 h-full">
+                  <div className="text-xs font-semibold text-white/70 font-mono uppercase tracking-wider">
+                    {title}
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-2 py-0.5 text-[11px] font-mono text-white/40 bg-white/[0.04] border border-white/[0.08] rounded-md transition-all duration-150 hover:text-white hover:bg-white/[0.09] hover:border-white/20 hover:-translate-y-0.5"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </GlassCard>
+              </motion.div>
             ))}
           </div>
         </div>
