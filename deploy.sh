@@ -4,7 +4,7 @@ set -e
 
 APP_NAME="tic-tac-toe"
 SRC_PATH="/root/apps/$APP_NAME"
-BUILD_PATH="$SRC_PATH/build"
+BUILD_PATH="$SRC_PATH/dist"
 DEST_PATH="/var/www/$APP_NAME"
 
 echo "Starting build and deploy for $APP_NAME..."
