@@ -1,3 +1,10 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin/plan
+Disallow: /ai-ml
+Disallow: /dsa
+Disallow: /dsa-v2
+Disallow: /dsa-v3
+
 Sitemap: https://buildwithkulshresth.com/sitemap.xml
