@@ -3,6 +3,8 @@ import { usePageMeta } from '../hooks/usePageMeta'
 import { useGenZ } from '../context/GenZContext'
 import GlassCard from '../components/GlassCard'
 import ResumeDownload from '../components/ResumeDownload'
+import Testimonials from '../components/Testimonials'
+import { testimonials } from '../data/testimonials'
 
 const skillCategories = [
   {
@@ -261,6 +263,14 @@ export default function About() {
               </GlassCard>
             ))}
           </div>
+        </div>
+
+        {/* Testimonials */}
+        <div>
+          <h2 className="text-sm font-semibold text-white mb-5 font-mono flex items-center gap-2">
+            <span className="text-white/30">$</span> {genzMode ? 'what people actually say' : 'Testimonials'}
+          </h2>
+          <Testimonials testimonials={testimonials} />
         </div>
 
         {/* Resume */}
