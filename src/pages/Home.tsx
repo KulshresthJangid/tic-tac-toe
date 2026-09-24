@@ -6,8 +6,10 @@ import GlassCard from '../components/GlassCard'
 import StatusBadge from '../components/StatusBadge'
 import TerminalBlock from '../components/TerminalBlock'
 import ProjectCard from '../components/ProjectCard'
+import Testimonials from '../components/Testimonials'
 import { projects } from '../data/projects'
 import { appServices } from '../data/apps'
+import { testimonials } from '../data/testimonials'
 
 const terminalLines = [
   { prompt: true, text: 'status', delay: 600 },
@@ -277,6 +279,28 @@ export default function Home() {
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>
+      </motion.section>
+
+      {/* Testimonials */}
+      <motion.section
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.25 }}
+      >
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-base font-semibold text-white">
+              {genzMode ? 'people who’ve worked with me' : 'What People Say'}
+            </h2>
+            <p className="text-xs text-white/20 font-mono mt-0.5">
+              {genzMode ? '// receipts from real humans' : '// colleagues, managers, clients'}
+            </p>
+          </div>
+          <Link to="/about" className="text-xs text-white/40 hover:text-white font-mono transition-colors">
+            {genzMode ? 'more ->' : 'more →'}
+          </Link>
+        </div>
+        <Testimonials testimonials={testimonials} compact />
       </motion.section>
 
       {/* Active services */}
