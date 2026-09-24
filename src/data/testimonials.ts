@@ -62,7 +62,7 @@ export const testimonials: Testimonial[] = [
     company: '—',
     relationship: 'Engineering collaborator',
     quote:
-      "Kulshresth is the kind of engineer who reads the whole ticket before touching code — asks the annoying questions early so nobody's debugging a wrong assumption three days later.",
+      "I've genuinely never worked with a dev this versatile. DevOps, QA, automation, backend, frontend — he just picks it up and runs with it like it's his specialty, not a stretch. If there's such a thing as a true master of all trades, it's him.",
     approved: false,
   },
   {
