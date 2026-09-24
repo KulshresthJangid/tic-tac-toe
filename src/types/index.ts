@@ -25,3 +25,19 @@ export interface AppService {
   version: string
   tags: string[]
 }
+
+export interface Testimonial {
+  id: string
+  name: string
+  role: string
+  company: string
+  relationship: string
+  quote: string
+  linkedinUrl?: string
+  /**
+   * DRAFT SAFETY FLAG — do not flip to true, do not deploy this testimonial,
+   * until the named person has read their exact quote and explicitly said
+   * it's fine to publish under their name. See TESTIMONIALS_TODO.md.
+   */
+  approved: boolean
+}
