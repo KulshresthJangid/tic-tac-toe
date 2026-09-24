@@ -24,14 +24,7 @@ export default function Testimonials({ testimonials, compact = false }: Testimon
     <div className={`grid gap-4 ${compact ? 'md:grid-cols-3' : 'md:grid-cols-2'}`}>
       {items.map((t) => (
         <GlassCard key={t.id} padding="md" className="flex flex-col gap-4">
-          <div className="flex items-start gap-2">
-            <span className="text-white/15 font-mono text-2xl leading-none select-none">“</span>
-            {!t.approved && (
-              <span className="ml-auto flex-shrink-0 px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider rounded border border-amber-400/20 bg-amber-400/[0.06] text-amber-300/70">
-                draft · unconfirmed
-              </span>
-            )}
-          </div>
+          <span className="text-white/15 font-mono text-2xl leading-none select-none">“</span>
 
           <p className="text-sm text-white/60 leading-relaxed -mt-2">{t.quote}</p>
 
@@ -39,7 +32,7 @@ export default function Testimonials({ testimonials, compact = false }: Testimon
             <div className="w-9 h-9 flex-shrink-0 rounded-full bg-white/[0.05] border border-white/[0.1] flex items-center justify-center font-mono font-bold text-white/50 text-xs">
               {initials(t.name)}
             </div>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <div className="text-sm font-medium text-white truncate">
                 {t.linkedinUrl ? (
                   <a
@@ -58,6 +51,14 @@ export default function Testimonials({ testimonials, compact = false }: Testimon
                 {t.role}{t.company !== '—' ? ` · ${t.company}` : ''}
               </div>
             </div>
+            {!t.approved && (
+              <span
+                title="Draft quote — not yet confirmed by the person it's attributed to"
+                className="flex-shrink-0 text-[10px] font-mono text-white/15 italic"
+              >
+                draft
+              </span>
+            )}
           </div>
         </GlassCard>
       ))}
