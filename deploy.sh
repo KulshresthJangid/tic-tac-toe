@@ -13,38 +13,43 @@ echo "Starting build and deploy for $APP_NAME..."
 
 cd "$SRC_PATH"
 
-# Step 2: Install dependencies (if needed)
+# Step 2: Pull latest
+
+echo "Pulling latest..."
+git pull
+
+# Step 3: Install dependencies (if needed)
 
 echo "Installing dependencies..."
 npm install
 
-# Step 3: Build project
+# Step 4: Build project
 
 echo "Building React app..."
 npm run build
 
-# Step 4: Prepare destination directory
+# Step 5: Prepare destination directory
 
 echo "Preparing destination..."
 mkdir -p "$DEST_PATH"
 
-# Step 5: Clean old build
+# Step 6: Clean old build
 
 echo "Cleaning old build..."
 rm -rf "$DEST_PATH"/*
 
-# Step 6: Copy new build
+# Step 7: Copy new build
 
 echo "Copying new build..."
 cp -r "$BUILD_PATH"/* "$DEST_PATH"/
 
-# Step 7: Set ownership and permissions
+# Step 8: Set ownership and permissions
 
 echo "Setting permissions..."
 chown -R nginx:nginx "$DEST_PATH"
 chmod -R 755 "$DEST_PATH"
 
-# Step 8: Set SELinux context (if applicable)
+# Step 9: Set SELinux context (if applicable)
 
 if command -v chcon >/dev/null 2>&1; then
 echo "Setting SELinux context..."
