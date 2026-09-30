@@ -16,7 +16,12 @@ function initials(name: string) {
 }
 
 export default function Testimonials({ testimonials, compact = false }: TestimonialsProps) {
-  const items = compact ? testimonials.slice(0, 3) : testimonials
+  // Safety gate: unapproved drafts never render on a real deploy, no matter
+  // what gets passed in or what state the data file is in. Approval happens
+  // by flipping `approved: true` in testimonials.ts once the named person
+  // has actually confirmed their quote.
+  const approved = testimonials.filter((t) => t.approved)
+  const items = compact ? approved.slice(0, 3) : approved
 
   if (items.length === 0) return null
 
