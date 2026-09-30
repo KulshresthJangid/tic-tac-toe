@@ -35,16 +35,19 @@ I build backend systems that stay up under load and stay legible under incident 
 
 ## Flagship build — Kaizex
 
-**Multi-tenant Marketing Operating System** · Java · Spring Boot · Next.js · RabbitMQ · Redis · Elasticsearch · MariaDB
+**Multi-tenant Marketing Operating System** · Java · Spring Boot · Next.js · RabbitMQ · Redis · Elasticsearch · MariaDB · Meta Graph API
 **[buildwithkulshresth.com/kaizex →](https://buildwithkulshresth.com/kaizex)**
 
-A full content lifecycle engine for marketing teams: connect a social channel, feed it source material, and Kaizex turns that into scheduled, on-brand posts — with a human in the loop or fully autonomous.
+A full content lifecycle engine for marketing teams: connect a social channel, feed it source material, and Kaizex turns that into scheduled, on-brand posts — with a human in the loop or fully autonomous. A visual, node-based automation builder also drives real conversational flows across the website widget and real WhatsApp Business numbers.
 
 - **Three independent async pipelines** on RabbitMQ — knowledge extraction, AI generation, platform dispatch — each failure-isolated and independently scalable
 - **Redis time-wheel scheduler** — 24 hourly slots/day, validated at 1M+ concurrent scheduled tasks per instance, at-least-once delivery with idempotent consumers
 - **Provider-agnostic LLM layer** — OpenAI, Anthropic, Gemini, Ollama, or any custom endpoint; orgs bring their own key, encrypted at rest, zero model lock-in
 - **Row-level multi-tenancy** — method-level RBAC via `@PreAuthorize`, 15 permissions auto-seeded per org, no schema-per-tenant complexity
 - Three automation modes (Manual / Review / Autopilot), OAuth2 PKCE channel connections, Elasticsearch-backed post + knowledge stores
+- **WhatsApp Business via Meta Embedded Signup** — a customer connects their own WhatsApp number in one guided popup flow; long-lived token exchange and webhook subscription happen automatically, no manual Graph API work
+- **Decoupled webhook queues** — inbound messages ack instantly and hand off to a dedicated incoming-message queue for automation; outbound sends run through their own queue so a slow third-party API call never blocks the request that triggered it
+- **Unified, channel-agnostic inbox** — website widget and WhatsApp conversations land in one admin screen, with live pipeline-captured customer data and per-conversation/bulk delete
 
 <br/>
 
