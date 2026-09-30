@@ -265,13 +265,15 @@ export default function About() {
           </div>
         </div>
 
-        {/* Testimonials */}
-        <div>
-          <h2 className="text-sm font-semibold text-white mb-5 font-mono flex items-center gap-2">
-            <span className="text-white/30">$</span> {genzMode ? 'what people actually say' : 'Testimonials'}
-          </h2>
-          <Testimonials testimonials={testimonials} />
-        </div>
+        {/* Testimonials — whole block hidden until at least one is approved */}
+        {testimonials.some((t) => t.approved) && (
+          <div>
+            <h2 className="text-sm font-semibold text-white mb-5 font-mono flex items-center gap-2">
+              <span className="text-white/30">$</span> {genzMode ? 'what people actually say' : 'Testimonials'}
+            </h2>
+            <Testimonials testimonials={testimonials} />
+          </div>
+        )}
 
         {/* Resume */}
         <div>

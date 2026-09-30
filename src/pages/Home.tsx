@@ -281,27 +281,31 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Testimonials */}
-      <motion.section
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.25 }}
-      >
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-base font-semibold text-white">
-              {genzMode ? 'people who’ve worked with me' : 'What People Say'}
-            </h2>
-            <p className="text-xs text-white/20 font-mono mt-0.5">
-              {genzMode ? '// receipts from real humans' : '// colleagues, managers, clients'}
-            </p>
+      {/* Testimonials — whole section hidden, not just the grid, until at
+          least one entry is approved (an empty heading with nothing under
+          it is its own small bug we hit in prod) */}
+      {testimonials.some((t) => t.approved) && (
+        <motion.section
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.25 }}
+        >
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-base font-semibold text-white">
+                {genzMode ? 'people who’ve worked with me' : 'What People Say'}
+              </h2>
+              <p className="text-xs text-white/20 font-mono mt-0.5">
+                {genzMode ? '// receipts from real humans' : '// colleagues, managers, clients'}
+              </p>
+            </div>
+            <Link to="/about" className="text-xs text-white/40 hover:text-white font-mono transition-colors">
+              {genzMode ? 'more ->' : 'more →'}
+            </Link>
           </div>
-          <Link to="/about" className="text-xs text-white/40 hover:text-white font-mono transition-colors">
-            {genzMode ? 'more ->' : 'more →'}
-          </Link>
-        </div>
-        <Testimonials testimonials={testimonials} compact />
-      </motion.section>
+          <Testimonials testimonials={testimonials} compact />
+        </motion.section>
+      )}
 
       {/* Active services */}
       <motion.section
