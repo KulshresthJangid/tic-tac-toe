@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { useGenZ } from '../context/GenZContext'
 import GlassCard from '../components/GlassCard'
@@ -159,6 +160,36 @@ export default function Home() {
           </div>
         </div>
         <TerminalBlock lines={genzMode ? genzTerminalLines : terminalLines} />
+      </motion.section>
+
+      {/* Freelance CTA */}
+      <motion.section
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.06 }}
+      >
+        <Link to="/hire" className="block group">
+          <GlassCard
+            hoverable
+            padding="md"
+            className="flex items-center justify-between gap-4 flex-wrap group-hover:border-white/[0.16] transition-colors duration-300"
+          >
+            <div>
+              <p className="text-sm font-semibold text-white">
+                {genzMode ? 'taking on select freelance work rn' : 'Taking on select freelance projects'}
+              </p>
+              <p className="text-xs text-white/40 mt-1">
+                {genzMode
+                  ? 'backend + AI/chatbot builds for early-stage teams. slide in.'
+                  : 'Backend and AI/chatbot builds for early-stage teams, scoped and delivered project by project.'}
+              </p>
+            </div>
+            <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white text-black text-xs font-semibold flex-shrink-0 group-hover:bg-white/90 transition-colors">
+              {genzMode ? 'slide into the inbox' : 'Work with me'}
+              <ArrowRight size={13} />
+            </span>
+          </GlassCard>
+        </Link>
       </motion.section>
 
       {/* Impact stats */}

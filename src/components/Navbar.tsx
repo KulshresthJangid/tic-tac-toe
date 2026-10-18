@@ -9,6 +9,7 @@ const navLinks = [
   { to: '/projects', label: 'Projects', genz: 'the builds' },
   { to: '/apps', label: 'Apps', genz: 'live stuff' },
   { to: '/about', label: 'About', genz: 'who dis' },
+  { to: '/hire', label: 'Work with me', genz: 'hire me fr' },
 ]
 
 export default function Navbar() {

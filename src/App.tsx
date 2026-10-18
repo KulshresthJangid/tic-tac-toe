@@ -6,6 +6,7 @@ import Projects from './pages/Projects'
 import ProjectDetail from './pages/ProjectDetail'
 import Apps from './pages/Apps'
 import About from './pages/About'
+import Hire from './pages/Hire'
 import DSA from './pages/DSA'
 import DSAv2 from './pages/DSAv2'
 import DSAv3 from './pages/DSAv3'
@@ -26,6 +27,7 @@ export default function App() {
             <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/apps" element={<Apps />} />
             <Route path="/about" element={<About />} />
+            <Route path="/hire" element={<Hire />} />
             <Route path="/ai-ml" element={<ProtectedRoute><AIMLRoadmap /></ProtectedRoute>} />
             <Route path="/dsa" element={<ProtectedRoute><DSA /></ProtectedRoute>} />
             <Route path="/dsa-v2" element={<ProtectedRoute><DSAv2 /></ProtectedRoute>} />

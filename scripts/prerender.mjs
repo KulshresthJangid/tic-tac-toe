@@ -31,6 +31,7 @@ const DIST = path.join(__dirname, '..', 'dist')
 const ROUTES = [
   '/',
   '/about',
+  '/hire',
   '/projects',
   '/projects/social-saas',
   '/projects/microservices-migration',
