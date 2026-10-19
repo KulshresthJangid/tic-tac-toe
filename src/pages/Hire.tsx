@@ -5,18 +5,17 @@ import { Calendar, Mail, CheckCircle2, Loader2 } from 'lucide-react'
 import { usePageMeta } from '../hooks/usePageMeta'
 import GlassCard from '../components/GlassCard'
 
-// Fill these in before shipping — see the placeholder list in the PR/commit
-// this page landed in.
-const CALENDLY_LINK = 'https://calendly.com/[CALENDLY_LINK]'
+const CALENDLY_LINK = 'https://calendly.com/jangidkulshresth/20-min-intro-call'
 const EMAIL = 'jangidkulshresth@gmail.com'
-const OVERLAP_HOURS = '[OVERLAP_HOURS]'
+// Calendly's intro-call event is open 7-11pm IST weekdays — that window is
+// ~13:30-17:30 UTC, i.e. roughly 8:30am-12:30pm US Eastern. Real overlap is
+// with Eastern mornings; Pacific clients land in their very-early morning.
+const OVERLAP_HOURS = '4 hours (US Eastern mornings)'
 
 // Web3Forms — free, no backend of our own needed (this site is a static
-// SPA with no server). Get an access key at https://web3forms.com (just an
-// email address, no account) and drop it in here. Until it's a real key,
-// the form shows an honest "not wired up yet" state instead of silently
-// losing submissions.
-const WEB3FORMS_ACCESS_KEY = '[WEB3FORMS_ACCESS_KEY]'
+// SPA with no server). This key is a public, client-side key by design
+// (Web3Forms' own model, not a secret leak) — safe to ship in the bundle.
+const WEB3FORMS_ACCESS_KEY = '4322fba6-b1a2-4070-8c14-391821aca840'
 
 const fadeUp = {
   initial: { opacity: 0, y: 18 },
@@ -29,19 +28,19 @@ const offers = [
     title: 'LLM / Chatbot Backends',
     who: 'Teams that need a real conversational product — support automation, an internal AI assistant, a qualification or booking flow — wired into actual data, not a demo script.',
     get: 'A conversational backend built for production: structured prompts, conversation state and memory, and real integrations into your systems. Same foundation I built Zigchat and its Bot Creation API on.',
-    timeline: '[X weeks]',
+    timeline: '2-4 weeks',
   },
   {
     title: 'API & Microservice Builds',
     who: 'Founders and CTOs who need a backend service built from scratch or extended without breaking what already works.',
     get: 'A Node.js/TypeScript or Java/Spring Boot service with a proper schema, auth, and clean architecture — SQL or NoSQL, Redis where it earns its place, tests that actually catch regressions.',
-    timeline: '[X weeks]',
+    timeline: '2-4 weeks',
   },
   {
     title: 'Backend Audit & Scaling',
     who: 'An existing backend that is slow, flaky, or hard to deploy, and a team that wants a straight answer on why.',
     get: 'A full review of your current backend, concrete performance and reliability fixes, and a production setup — Docker, Kubernetes, Nginx, CI/CD — that holds up under real traffic.',
-    timeline: '[X weeks]',
+    timeline: '1-2 weeks',
   },
 ]
 
