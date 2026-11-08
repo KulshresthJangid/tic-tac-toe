@@ -33,6 +33,7 @@ const ROUTES = [
   '/about',
   '/hire',
   '/privacy',
+  '/terms',
   '/projects',
   '/projects/social-saas',
   '/projects/microservices-migration',

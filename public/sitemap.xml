@@ -33,6 +33,13 @@
   </url>
 
   <url>
+    <loc>https://buildwithkulshresth.com/terms</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+
+  <url>
     <loc>https://buildwithkulshresth.com/projects</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>

@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { GenZProvider } from './context/GenZContext'
+import { ThemeProvider } from './context/ThemeContext'
 import MainLayout from './layouts/MainLayout'
 import Home from './pages/Home'
 import Projects from './pages/Projects'
@@ -9,6 +10,7 @@ import Apps from './pages/Apps'
 import About from './pages/About'
 import Hire from './pages/Hire'
 import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
 import ProtectedRoute from './components/ProtectedRoute'
 import NotFound from './pages/NotFound'
 
@@ -23,6 +25,7 @@ const AIMLRoadmap = lazy(() => import('./pages/AIMLRoadmap'))
 
 export default function App() {
   return (
+    <ThemeProvider>
     <GenZProvider>
       <BrowserRouter>
         <MainLayout>
@@ -35,6 +38,7 @@ export default function App() {
               <Route path="/about" element={<About />} />
               <Route path="/hire" element={<Hire />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
               <Route path="/ai-ml" element={<ProtectedRoute><AIMLRoadmap /></ProtectedRoute>} />
               <Route path="/dsa" element={<ProtectedRoute><DSA /></ProtectedRoute>} />
               <Route path="/dsa-v2" element={<ProtectedRoute><DSAv2 /></ProtectedRoute>} />
@@ -47,5 +51,6 @@ export default function App() {
         </MainLayout>
       </BrowserRouter>
     </GenZProvider>
+    </ThemeProvider>
   )
 }
