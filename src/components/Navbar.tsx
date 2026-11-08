@@ -1,100 +1,112 @@
+import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { motion, useAnimation } from 'framer-motion'
-import { useEffect } from 'react'
-import { Download } from 'lucide-react'
-import { useGenZ } from '../context/GenZContext'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ArrowUpRight, Menu, X } from 'lucide-react'
+import LogoMark from './LogoMark'
+
+export const CALENDLY_URL = 'https://calendly.com/jangidkulshresth/20-min-intro-call'
 
 const navLinks = [
-  { to: '/', label: 'Home', genz: 'home base' },
-  { to: '/projects', label: 'Projects', genz: 'the builds' },
-  { to: '/apps', label: 'Apps', genz: 'live stuff' },
-  { to: '/about', label: 'About', genz: 'who dis' },
-  { to: '/hire', label: 'Work with me', genz: 'hire me fr' },
+  { to: '/projects', label: 'Work' },
+  { to: '/about', label: 'About' },
+  { to: '/hire', label: 'Services' },
 ]
 
 export default function Navbar() {
   const { pathname } = useLocation()
-  const { genzMode, toggleGenZ } = useGenZ()
-  const shakeControls = useAnimation()
+  const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => setOpen(false), [pathname])
 
   useEffect(() => {
-    if (!genzMode) {
-      shakeControls.start({
-        x: [0, -5, 5, -5, 5, -3, 3, 0],
-        transition: { duration: 0.7, repeat: Infinity, repeatDelay: 1.8 },
-      })
-    } else {
-      shakeControls.stop()
-      shakeControls.set({ x: 0 })
-    }
-  }, [genzMode])
+    const onScroll = () => setScrolled(window.scrollY > 12)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const isActive = (to: string) => pathname === to || pathname.startsWith(to + '/')
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-14 flex items-center px-6 border-b border-white/[0.06] bg-black/90 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto w-full flex items-center justify-between gap-4">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2.5 flex-shrink-0">
-          <div className="w-7 h-7 rounded-md bg-white flex items-center justify-center">
-            <span className="text-[10px] font-black text-black font-mono tracking-tight">KJ</span>
-          </div>
-          <span className="text-sm font-semibold text-white font-mono hidden sm:block">
-            {genzMode ? 'kul.js' : 'buildwithkulshresth.com'}
-          </span>
+    <header
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+        scrolled || open ? 'bg-ink/85 backdrop-blur-md border-b border-white/[0.08]' : 'border-b border-transparent'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto h-16 px-5 sm:px-8 flex items-center justify-between gap-6">
+        <Link to="/" className="flex items-center gap-3 group" aria-label="Kulshresth Jangid, home">
+          <LogoMark size={34} className="transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105" />
+          <span className="display text-xl text-white leading-none">Kulshresth Jangid</span>
         </Link>
 
-        {/* Nav */}
-        <nav className="flex items-center gap-0.5">
-          {navLinks.map(({ to, label, genz }) => {
-            const isActive =
-              to === '/' ? pathname === '/' : pathname === to || pathname.startsWith(to + '/')
-            return (
-              <Link
-                key={to}
-                to={to}
-                className={[
-                  'px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200',
-                  isActive
-                    ? 'bg-white text-black'
-                    : 'text-white/40 hover:text-white hover:bg-white/[0.06]',
-                ].join(' ')}
-              >
-                {genzMode ? genz : label}
-              </Link>
-            )
-          })}
+        <nav className="hidden md:flex items-center gap-1" aria-label="Primary">
+          {navLinks.map(({ to, label }) => (
+            <Link
+              key={to}
+              to={to}
+              className={`relative px-4 py-2 text-sm transition-colors duration-200 ${
+                isActive(to) ? 'text-white' : 'text-white/55 hover:text-white'
+              }`}
+            >
+              {label}
+              {isActive(to) && (
+                <motion.span layoutId="nav-dot" className="absolute left-1/2 -translate-x-1/2 bottom-0.5 w-1 h-1 rounded-full bg-signal" />
+              )}
+            </Link>
+          ))}
         </nav>
 
-        {/* Right side */}
-        <div className="flex items-center gap-2 flex-shrink-0">
+        <div className="flex items-center gap-2">
           <a
-            href="/resume/kulshresth-jangid-resume.pdf"
-            download="kulshresth-jangid-resume.pdf"
-            title={genzMode ? 'grab the receipts' : 'Download resume (PDF)'}
-            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[11px] font-mono text-white/40 border border-white/[0.08] hover:text-white hover:border-white/20 hover:bg-white/[0.06] transition-all duration-200"
+            href={CALENDLY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-1.5 pl-4 pr-3 py-2 rounded-full bg-white text-ink text-sm font-medium hover:bg-signal transition-colors duration-200"
           >
-            <Download size={12} />
-            {genzMode ? 'receipts' : 'Resume'}
+            Book a call
+            <ArrowUpRight size={15} />
           </a>
-          <motion.button
-            onClick={toggleGenZ}
-            animate={shakeControls}
-            className={[
-              'px-3 py-1.5 rounded-md text-[11px] font-mono tracking-wider transition-all duration-300 cursor-pointer font-semibold',
-              genzMode
-                ? 'bg-white text-black shadow-[0_0_12px_rgba(255,255,255,0.4)]'
-                : 'bg-white/[0.08] border border-white/30 text-white hover:bg-white/[0.14] hover:border-white/50 hover:shadow-[0_0_10px_rgba(255,255,255,0.15)]',
-            ].join(' ')}
+          <button
+            type="button"
+            className="md:hidden w-10 h-10 flex items-center justify-center rounded-full border border-white/15 text-white"
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-label={open ? 'Close menu' : 'Open menu'}
           >
-            {genzMode ? 'back to linkedin mode' : 'switch the vibe'}
-          </motion.button>
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.08]">
-            <span className="w-1.5 h-1.5 rounded-full bg-white/60 animate-pulse" />
-            <span className="text-[10px] font-mono text-white/40 hidden sm:block tracking-wider">
-              {genzMode ? 'NOT OFFLINE' : 'ONLINE'}
-            </span>
-          </div>
+            {open ? <X size={18} /> : <Menu size={18} />}
+          </button>
         </div>
       </div>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="md:hidden overflow-hidden"
+          >
+            <nav className="px-5 pb-6 pt-2 flex flex-col" aria-label="Mobile">
+              {[{ to: '/', label: 'Home' }, ...navLinks].map(({ to, label }) => (
+                <Link key={to} to={to} className="display text-4xl py-3 border-b border-white/[0.07] text-white">
+                  {label}
+                </Link>
+              ))}
+              <a
+                href={CALENDLY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center justify-center gap-2 py-3.5 rounded-full bg-signal text-ink font-medium"
+              >
+                Book a call
+                <ArrowUpRight size={16} />
+              </a>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   )
 }
