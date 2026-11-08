@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Calendar, Mail, CheckCircle2, Loader2 } from 'lucide-react'
+import { ArrowUpRight, CheckCircle2, Loader2 } from 'lucide-react'
 import { usePageMeta } from '../hooks/usePageMeta'
 import GlassCard from '../components/GlassCard'
 
@@ -23,26 +23,38 @@ const fadeUp = {
   transition: { duration: 0.45 },
 }
 
-const offers = [
-  {
-    title: 'LLM / Chatbot Backends',
-    who: 'Teams that need a real conversational product, support automation, an internal AI assistant, a qualification or booking flow, wired into actual data, not a demo script.',
-    get: 'A conversational backend built for production: structured prompts, conversation state and memory, and real integrations into your systems. Same foundation I built Zigchat and its Bot Creation API on.',
-    timeline: '2-4 weeks',
-  },
-  {
-    title: 'API & Microservice Builds',
-    who: 'Founders and CTOs who need a backend service built from scratch or extended without breaking what already works.',
-    get: 'A Node.js/TypeScript or Java/Spring Boot service with a proper schema, auth, and clean architecture, SQL or NoSQL, Redis where it earns its place, and tests that actually catch regressions.',
-    timeline: '2-4 weeks',
-  },
-  {
-    title: 'Backend Audit & Scaling',
-    who: 'An existing backend that is slow, flaky, or hard to deploy, and a team that wants a straight answer on why.',
-    get: 'A full review of your current backend, concrete performance and reliability fixes, and a production setup (Docker, Kubernetes, Nginx, CI/CD) that holds up under real traffic.',
-    timeline: '1-2 weeks',
-  },
-]
+// Positioning follows HIRE_OFFER_POSITIONING.md: every long-running build-service
+// ad in the research is a named package with fixed scope, fixed price, a timeline
+// and a team size. So the flagship leads, the chatbot offer is positioned on
+// ownership, and the audit stays a quiet upsell.
+const flagship = {
+  name: 'MVP Backend Sprint',
+  promise: 'A working backend for your MVP in 3 weeks.',
+  terms: ['Fixed scope', 'Fixed price', 'You own the code', 'One senior engineer, no handoffs'],
+  who: 'Founders and small product teams with a validated idea who need the backend built properly and fast, without hiring a team.',
+  scope: [
+    'API design and database schema',
+    'Authentication and role based access',
+    'Core endpoints and background jobs',
+    'Automated tests on the critical paths',
+    'Docker, CI/CD and a production deploy',
+    'Docs, a runbook and a handover walkthrough',
+  ],
+  timeline: '3 weeks for a typical MVP scope',
+  price: 'Fixed price, quoted after a 20 minute call',
+}
+
+const chatbotOffer = {
+  title: 'Your own chatbot backend',
+  who: 'Teams that tried an off-the-shelf chatbot tool and hit its limits: rigid flows, per seat pricing, and your data in someone else’s cloud.',
+  get: 'A chatbot backend you own and can shape: structured prompts, conversation state and memory, and real integrations into your systems. The same foundation I built Zigchat and its Bot Creation API on.',
+  timeline: '2 to 4 weeks',
+}
+
+const auditOffer = {
+  title: 'Already have a backend?',
+  body: 'If it is slow, flaky or hard to deploy, a 1 to 2 week audit finds the cause and ranks the fixes by impact.',
+}
 
 const proofPoints = [
   '4+ years of professional backend and full-stack engineering',
@@ -119,13 +131,13 @@ type FormStatus = 'idle' | 'submitting' | 'success' | 'error'
 
 export default function Hire() {
   usePageMeta(
-    'Hire Kulshresth Jangid: Freelance Backend & AI Integration Engineer',
-    'Backend and AI integration engineer for early-stage teams. I build APIs, microservices and LLM/chatbot backends that ship fast and hold up in production. Node.js, TypeScript, Java/Spring Boot.',
+    'MVP Backend in 3 Weeks | Kulshresth Jangid, Freelance Backend Engineer',
+    'Fixed scope, fixed price MVP backend in 3 weeks. APIs, auth, tests, deploy and handover from one senior engineer, and you own the code. Node.js, TypeScript, Java.',
     {
       canonical: 'https://buildwithkulshresth.com/hire',
       og: {
-        title: 'Hire Kulshresth Jangid: Freelance Backend & AI Integration Engineer',
-        description: 'Backend and AI integration engineer for early-stage teams. APIs, microservices, and LLM/chatbot backends that ship fast and hold up in production.',
+        title: 'MVP Backend in 3 Weeks | Kulshresth Jangid, Freelance Backend Engineer',
+        description: 'Fixed scope, fixed price MVP backend in 3 weeks from one senior engineer. You own the code.',
         type: 'profile',
       },
       jsonLd: [
@@ -159,10 +171,11 @@ export default function Hire() {
           name: 'Kulshresth Jangid: Freelance Backend Engineering',
           url: 'https://buildwithkulshresth.com/hire',
           image: 'https://buildwithkulshresth.com/og-image.png',
-          description: 'Project-based backend and AI integration engineering for early-stage startups: API and microservice builds, LLM/chatbot backends, and backend audits and scaling.',
+          description: 'Fixed scope, fixed price MVP backend builds in about 3 weeks, plus LLM/chatbot backends and backend audits, for early-stage startups.',
           areaServed: 'Worldwide',
           provider: { '@type': 'Person', name: 'Kulshresth Jangid' },
           serviceType: [
+            'MVP Backend Development',
             'Backend Development',
             'API Development',
             'LLM Integration',
@@ -227,70 +240,109 @@ export default function Hire() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-12 space-y-20">
       {/* Hero */}
-      <motion.section {...fadeUp} className="space-y-6 max-w-2xl">
-        <p className="text-xs font-mono text-white/25 tracking-[0.25em] uppercase">
-          Freelance / Project-Based
-        </p>
-        <h1 className="display text-5xl sm:text-6xl text-white leading-[1.05]">
-          Backend and AI integration engineer for early-stage teams.
+      <motion.section {...fadeUp} className="space-y-6 max-w-3xl">
+        <p className="eyebrow">Freelance / Fixed scope</p>
+        <h1 className="display text-5xl sm:text-7xl text-white leading-[1.02]">
+          A working backend for your MVP in <em className="text-signal">3 weeks.</em>
         </h1>
-        <p className="text-base text-white/50 leading-relaxed max-w-xl">
-          I build APIs, microservices and LLM/chatbot backends that ship fast and
-          hold up in production. Node.js, TypeScript, Java/Spring Boot.
+        <p className="text-lg text-white/70 leading-relaxed max-w-xl">
+          Fixed scope, fixed price, and you own the code. One senior engineer, no handoffs. Node.js, TypeScript and
+          Java/Spring Boot.
         </p>
-        <div className="flex gap-3 flex-wrap pt-2">
+        <div className="flex items-center gap-x-6 gap-y-3 flex-wrap pt-2">
           <a
             href={CALENDLY_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white text-black text-sm font-semibold hover:bg-white/90 transition-all duration-150"
+            className="group inline-flex items-center gap-2.5 pl-6 pr-2 py-2 rounded-full bg-signal text-ink font-medium hover:bg-white transition-colors duration-200"
           >
-            <Calendar size={15} />
-            Book a 20-min intro call
+            Book a free 20 minute call
+            <span className="w-9 h-9 rounded-full bg-ink text-white flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
+              <ArrowUpRight size={17} />
+            </span>
           </a>
-          <a
-            href={`mailto:${EMAIL}`}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg glass glass-hover text-white/60 text-sm font-medium hover:text-white transition-all duration-150"
-          >
-            <Mail size={15} />
-            Email me
+          <a href={`mailto:${EMAIL}`} className="text-white/70 hover:text-white border-b border-white/25 hover:border-signal pb-0.5 transition-colors">
+            or email me
           </a>
         </div>
       </motion.section>
 
-      {/* What I build */}
+      {/* What I build: flagship package first, then the two quieter offers */}
       <motion.section
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.08 }}
       >
-        <h2 className="text-base font-semibold text-white mb-1">What I build</h2>
-        <p className="text-xs text-white/20 font-mono mb-6">// pick the shape of help you need</p>
-        <div className="grid md:grid-cols-3 gap-4">
-          {offers.map((offer) => (
-            <GlassCard key={offer.title} hoverable className="flex flex-col gap-4 h-full">
-              <h3 className="text-sm font-semibold text-white leading-snug">{offer.title}</h3>
-              <div className="space-y-3 flex-1">
-                <div>
-                  <p className="text-[10px] font-mono text-white/25 uppercase tracking-wider mb-1">Who it&apos;s for</p>
-                  <p className="text-xs text-white/50 leading-relaxed">{offer.who}</p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-mono text-white/25 uppercase tracking-wider mb-1">What you get</p>
-                  <p className="text-xs text-white/50 leading-relaxed">{offer.get}</p>
-                </div>
+        <h2 className="display text-4xl text-white mb-2">What I build</h2>
+        <p className="text-sm text-white/50 mb-8">Pick the shape of help you need.</p>
+
+        <GlassCard padding="lg" className="grid lg:grid-cols-5 gap-8 border-signal/30">
+          <div className="lg:col-span-3 flex flex-col gap-5">
+            <p className="eyebrow text-signal">The main package</p>
+            <div>
+              <h3 className="display text-4xl text-white leading-tight">{flagship.name}</h3>
+              <p className="mt-2 text-xl text-white/80">{flagship.promise}</p>
+            </div>
+            <ul className="flex flex-wrap gap-2">
+              {flagship.terms.map((t) => (
+                <li key={t} className="px-3 py-1.5 rounded-full border border-signal/40 text-signal text-xs font-mono">
+                  {t}
+                </li>
+              ))}
+            </ul>
+            <div>
+              <p className="eyebrow mb-1.5">Who it is for</p>
+              <p className="text-white/65 leading-relaxed">{flagship.who}</p>
+            </div>
+            <div className="mt-auto pt-5 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-3">
+              <div className="font-mono text-xs text-white/50 space-y-1">
+                <p>Timeline: {flagship.timeline}</p>
+                <p>Price: {flagship.price}</p>
               </div>
-              <div className="flex items-center justify-between pt-3 border-t border-white/[0.06]">
-                <span className="text-xs font-mono text-white/30">Typical: {offer.timeline}</span>
-                <a
-                  href="#contact"
-                  className="text-xs text-white/40 hover:text-white font-medium transition-colors"
-                >
-                  Get a quote →
-                </a>
-              </div>
-            </GlassCard>
-          ))}
+              <a href="#contact" className="inline-flex items-center gap-1.5 text-white hover:text-signal font-medium transition-colors">
+                Get a fixed quote <ArrowUpRight size={16} />
+              </a>
+            </div>
+          </div>
+          <div className="lg:col-span-2 lg:border-l lg:border-white/[0.08] lg:pl-8">
+            <p className="eyebrow mb-4">What is included</p>
+            <ul className="space-y-3">
+              {flagship.scope.map((item) => (
+                <li key={item} className="flex gap-2.5 text-white/75 leading-snug">
+                  <CheckCircle2 size={17} className="text-signal flex-shrink-0 mt-0.5" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </GlassCard>
+
+        <div className="grid md:grid-cols-2 gap-4 mt-4">
+          <GlassCard hoverable padding="lg" className="flex flex-col gap-4">
+            <h3 className="display text-3xl text-white leading-tight">{chatbotOffer.title}</h3>
+            <div>
+              <p className="eyebrow mb-1.5">Who it is for</p>
+              <p className="text-white/65 leading-relaxed">{chatbotOffer.who}</p>
+            </div>
+            <div className="flex-1">
+              <p className="eyebrow mb-1.5">What you get</p>
+              <p className="text-white/65 leading-relaxed">{chatbotOffer.get}</p>
+            </div>
+            <div className="flex items-center justify-between pt-4 border-t border-white/[0.08]">
+              <span className="font-mono text-xs text-white/50">Typical: {chatbotOffer.timeline}</span>
+              <a href="#contact" className="text-sm text-white/70 hover:text-signal font-medium transition-colors">
+                Get a quote &rarr;
+              </a>
+            </div>
+          </GlassCard>
+
+          <div className="rounded-xl border border-dashed border-white/15 p-8 flex flex-col gap-4">
+            <h3 className="display text-3xl text-white leading-tight">{auditOffer.title}</h3>
+            <p className="text-white/60 leading-relaxed flex-1">{auditOffer.body}</p>
+            <a href="#contact" className="self-start text-sm text-white/70 hover:text-signal font-medium transition-colors">
+              Ask about an audit &rarr;
+            </a>
+          </div>
         </div>
       </motion.section>
 
@@ -300,18 +352,18 @@ export default function Hire() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.14 }}
       >
-        <h2 className="text-base font-semibold text-white mb-6">Background</h2>
+        <h2 className="display text-4xl text-white mb-6">Background</h2>
         <GlassCard className="space-y-5">
           <ul className="space-y-2.5">
             {proofPoints.map((point) => (
               <li key={point} className="flex gap-2.5 text-sm">
                 <CheckCircle2 size={16} className="text-white/30 flex-shrink-0 mt-0.5" />
-                <span className="text-white/50 leading-relaxed">{point}</span>
+                <span className="text-white/70 leading-relaxed">{point}</span>
               </li>
             ))}
           </ul>
           <div className="pt-4 border-t border-white/[0.06]">
-            <p className="text-[10px] font-mono text-white/25 uppercase tracking-wider mb-2.5">Stack</p>
+            <p className="text-[10px] font-mono text-white/50 uppercase tracking-wider mb-2.5">Stack</p>
             <div className="flex flex-wrap gap-1.5">
               {stack.map((tech) => (
                 <span
@@ -332,16 +384,16 @@ export default function Hire() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.2 }}
       >
-        <h2 className="text-base font-semibold text-white mb-1">How I work</h2>
+        <h2 className="display text-4xl text-white mb-1">How I work</h2>
         <p className="text-xs text-white/20 font-mono mb-6">
           // async-friendly, ~{OVERLAP_HOURS} overlap with US time zones
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {howIWork.map(({ step, title, desc }) => (
             <GlassCard key={step} padding="sm" className="space-y-2">
-              <span className="text-xs font-mono text-white/20">{step}</span>
+              <span className="text-xs font-mono text-white/45">{step}</span>
               <h3 className="text-sm font-semibold text-white">{title}</h3>
-              <p className="text-xs text-white/40 leading-relaxed">{desc}</p>
+              <p className="text-sm text-white/60 leading-relaxed">{desc}</p>
             </GlassCard>
           ))}
         </div>
@@ -354,7 +406,7 @@ export default function Hire() {
         transition={{ duration: 0.45, delay: 0.26 }}
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-base font-semibold text-white">Selected work</h2>
+          <h2 className="display text-4xl text-white">Selected work</h2>
           <Link to="/projects" className="text-xs text-white/40 hover:text-white font-mono transition-colors">
             all projects →
           </Link>
@@ -365,12 +417,12 @@ export default function Hire() {
               <GlassCard hoverable className="h-full flex flex-col gap-3 group-hover:border-white/[0.16] group-hover:-translate-y-0.5 transition-transform duration-300">
                 <h3 className="text-sm font-semibold text-white leading-snug">{work.title}</h3>
                 <div>
-                  <p className="text-[10px] font-mono text-white/25 uppercase tracking-wider mb-1">Problem</p>
-                  <p className="text-xs text-white/50 leading-relaxed">{work.problem}</p>
+                  <p className="text-[10px] font-mono text-white/50 uppercase tracking-wider mb-1">Problem</p>
+                  <p className="text-sm text-white/65 leading-relaxed">{work.problem}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] font-mono text-white/25 uppercase tracking-wider mb-1">What I built</p>
-                  <p className="text-xs text-white/50 leading-relaxed">{work.built}</p>
+                  <p className="text-[10px] font-mono text-white/50 uppercase tracking-wider mb-1">What I built</p>
+                  <p className="text-sm text-white/65 leading-relaxed">{work.built}</p>
                 </div>
                 <div className="flex flex-wrap gap-1.5 mt-auto pt-2">
                   {work.stack.map((tech) => (
@@ -397,12 +449,12 @@ export default function Hire() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.32 }}
       >
-        <h2 className="text-base font-semibold text-white mb-6">FAQ</h2>
+        <h2 className="display text-4xl text-white mb-6">FAQ</h2>
         <div className="space-y-3">
           {faqs.map(({ q, a }) => (
             <GlassCard key={q} padding="sm">
               <h3 className="text-sm font-semibold text-white mb-1.5">{q}</h3>
-              <p className="text-xs text-white/45 leading-relaxed">{a}</p>
+              <p className="text-sm text-white/65 leading-relaxed">{a}</p>
             </GlassCard>
           ))}
         </div>
@@ -417,7 +469,7 @@ export default function Hire() {
         className="scroll-mt-20"
       >
         <div className="text-center mb-8 max-w-xl mx-auto">
-          <h2 className="text-2xl font-black text-white tracking-tight mb-2">
+          <h2 className="display text-5xl text-white mb-3">
             Tell me about the project
           </h2>
           <p className="text-sm text-white/40">
