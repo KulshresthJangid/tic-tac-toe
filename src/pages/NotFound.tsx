@@ -17,7 +17,7 @@ const glitchMessages = [
   "this page left the chat.",
   "POV: you fumbled the URL.",
   "bro thought this was a real page 💀",
-  "404 — but like, existentially.",
+  "404, but like, existentially.",
   "the vibes here? immaculate. the page? nonexistent.",
 ]
 
@@ -40,7 +40,7 @@ const terminalLines = [
 ]
 
 export default function NotFound() {
-  usePageMeta('404 — Page Not Found · Kulshresth Jangid')
+  usePageMeta('404: Page Not Found · Kulshresth Jangid')
   const [msg] = useState(() => glitchMessages[Math.floor(Math.random() * glitchMessages.length)])
   const [visibleLines, setVisibleLines] = useState(0)
 
