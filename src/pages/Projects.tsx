@@ -18,14 +18,14 @@ const filters: Array<{ value: Filter; label: string }> = [
 
 export default function Projects() {
   usePageMeta(
-    'Projects & Case Studies — Kulshresth Jangid · Backend Systems & SaaS Architecture',
+    'Projects & Case Studies: Kulshresth Jangid · Backend Systems & SaaS Architecture',
     'Case studies and architecture breakdowns: real systems built, decisions made, outcomes measured. Node.js, Java, TypeScript, Go in production.',
     {
       canonical: 'https://buildwithkulshresth.com/projects',
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'ItemList',
-        name: 'Backend Engineering Projects — Kulshresth Jangid',
+        name: 'Backend Engineering Projects: Kulshresth Jangid',
         description: 'Production systems and architecture case studies by Kulshresth Jangid: distributed SaaS platforms, microservices migrations, and API performance engineering.',
         url: 'https://buildwithkulshresth.com/projects',
         itemListElement: [
@@ -33,7 +33,7 @@ export default function Projects() {
             '@type': 'ListItem',
             position: 1,
             url: 'https://buildwithkulshresth.com/projects/social-saas',
-            name: 'Kaizex — Marketing Operating System',
+            name: 'Kaizex: Marketing Operating System',
           },
           {
             '@type': 'ListItem',
@@ -57,7 +57,7 @@ export default function Projects() {
             '@type': 'ListItem',
             position: 5,
             url: 'https://buildwithkulshresth.com/projects/goalbegins',
-            name: 'GoalBegins — Corporate Services Portal',
+            name: 'GoalBegins: Corporate Services Portal',
           },
           {
             '@type': 'ListItem',
