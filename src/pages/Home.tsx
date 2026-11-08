@@ -1,67 +1,111 @@
+import { useEffect, useRef, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
+import { animate, motion, useInView, useReducedMotion } from 'framer-motion'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { usePageMeta } from '../hooks/usePageMeta'
-import { useGenZ } from '../context/GenZContext'
-import GlassCard from '../components/GlassCard'
-import StatusBadge from '../components/StatusBadge'
-import TerminalBlock from '../components/TerminalBlock'
-import ProjectCard from '../components/ProjectCard'
-import Testimonials from '../components/Testimonials'
+import LatencyTrace from '../components/LatencyTrace'
+import { CALENDLY_URL } from '../components/Navbar'
 import { projects } from '../data/projects'
-import { appServices } from '../data/apps'
 import { testimonials } from '../data/testimonials'
 
-const terminalLines = [
-  { prompt: true, text: 'status', delay: 600 },
-  { text: '[  OK  ] tic-tac-toe    ACTIVE   :443    entry-point', delay: 160, color: 'text-white/70' },
-  { text: '[  OK  ] kaizex       ACTIVE   /kaizex  kaizex-saas', delay: 140, color: 'text-white/50' },
-  { text: '[  OK  ] smart-server   ACTIVE   :8080   backend-api', delay: 140, color: 'text-white/50' },
-  { text: '[  OK  ] scheduler      ACTIVE   redis   1M tasks/inst', delay: 140, color: 'text-white/50' },
-  { prompt: true, text: 'slo --window 30d', delay: 400 },
-  { text: '  kaizex.availability    99.94%   SLO 99.9%   budget: 87%', delay: 120, color: 'text-white/30' },
-  { text: '  smart-server.latency_p99  99.97%   SLO 99.9%   budget: 97%', delay: 100, color: 'text-white/30' },
-  { prompt: true, text: 'whoami', delay: 350 },
-  { text: '  kulshresth jangid — systems architect, jaipur', delay: 80, color: 'text-white/60' },
+const EMAIL = 'jangidkulshresth@gmail.com'
+
+const stack = [
+  'Java', 'Spring Boot', 'Node.js', 'TypeScript', 'Kafka', 'RabbitMQ', 'Redis',
+  'PostgreSQL', 'MySQL', 'MongoDB', 'Kubernetes', 'Docker', 'Prometheus', 'Terraform',
 ]
 
-const impactStats = [
-  { value: '40%', label: 'p99 latency cut', sub: 'MySQL + caching redesign' },
-  { value: '1M+', label: 'tasks/instance', sub: 'scheduling engine' },
-  { value: '28%', label: 'MTTR reduction', sub: 'microservices migration' },
-  { value: '30%', label: 'fewer deploy failures', sub: 'canary + auto-rollback' },
+const proof = [
+  { value: 40, suffix: '%', label: 'lower p99 database latency', where: 'CarDekho', to: '/projects/api-performance' },
+  { value: 30, suffix: '%', label: 'fewer failed deployments', where: 'Equinix', to: '/projects/cicd-automation' },
+  { value: 28, suffix: '%', label: 'faster recovery from incidents', where: 'Rampwin', to: '/projects/microservices-migration' },
+  { value: 1, suffix: 'M+', label: 'scheduled tasks per instance', where: 'Kaizex', to: '/projects/social-saas' },
 ]
 
-const genzTerminalLines = [
-  { prompt: true, text: 'vibe --check', delay: 600 },
-  { text: '[  OK  ] tic-tac-toe    NOT CRASHED  :443    still standing', delay: 160, color: 'text-white/70' },
-  { text: '[  OK  ] kaizex       ATE          /kaizex  no crumbs left', delay: 140, color: 'text-white/50' },
-  { text: '[  OK  ] smart-server   COPING       :8080   its giving backend', delay: 140, color: 'text-white/50' },
-  { text: '[  OK  ] scheduler      SENDING      redis   1M tasks bestie', delay: 140, color: 'text-white/50' },
-  { prompt: true, text: 'slo --vibecheck 30d', delay: 400 },
-  { text: '  kaizex   99.94%   eating       budget: 87%  slay', delay: 120, color: 'text-white/30' },
-  { text: '  smart-server 99.97%   no cap       budget: 97%  ate', delay: 100, color: 'text-white/30' },
-  { prompt: true, text: 'whoami', delay: 350 },
-  { text: '  kul from jaipur — delulu enough to build this', delay: 80, color: 'text-white/60' },
+const services = [
+  {
+    title: 'LLM and chatbot backends',
+    body: 'Support automation, internal assistants and booking flows that run on real data and real integrations, not a demo script.',
+    time: '2 to 4 weeks',
+  },
+  {
+    title: 'API and microservice builds',
+    body: 'New services or extensions to existing ones, with a clean schema, auth, tests that catch regressions, and no surprises in production.',
+    time: '2 to 4 weeks',
+  },
+  {
+    title: 'Backend audit and scaling',
+    body: 'A straight answer on why your backend is slow or flaky, the fixes ranked by impact, and a deploy setup that holds under traffic.',
+    time: '1 to 2 weeks',
+  },
 ]
 
-const genzImpactStats = [
-  { value: '40%', label: 'made db go fast', sub: 'fixed what was clearly broken' },
-  { value: '1M+', label: 'tasks handled ngl', sub: 'scheduler was unhinged' },
-  { value: '28%', label: 'panic time cut', sub: 'services stopped beefing' },
-  { value: '30%', label: 'fewer 3am calls', sub: 'auto-rollback clocked in' },
+const steps = [
+  { n: '01', title: 'Intro call', body: '20 minutes to understand the problem. No pitch.' },
+  { n: '02', title: 'Scoped proposal', body: 'Fixed milestones and deliverables, in writing, before any work starts.' },
+  { n: '03', title: 'Weekly demos', body: 'Working software every week, so nothing is a black box.' },
+  { n: '04', title: 'Clean handover', body: 'Docs, a runbook and a walkthrough. Yours to own from day one.' },
 ]
 
-const fadeUp = {
-  initial: { opacity: 0, y: 18 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.45 },
+function Reveal({ children, delay = 0, className = '' }: { children: ReactNode; delay?: number; className?: string }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 26 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+function CountUp({ to, suffix }: { to: number; suffix: string }) {
+  const ref = useRef<HTMLSpanElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-40px' })
+  const reduce = useReducedMotion()
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (!inView || reduce) {
+      el.textContent = `${inView || reduce ? to : 0}${suffix}`
+      return
+    }
+    const controls = animate(0, to, {
+      duration: 1.6,
+      ease: [0.22, 1, 0.36, 1],
+      onUpdate: (v) => {
+        el.textContent = `${Math.round(v)}${suffix}`
+      },
+    })
+    return () => controls.stop()
+  }, [inView, reduce, to, suffix])
+
+  return <span ref={ref}>{`0${suffix}`}</span>
+}
+
+/* A headline line that slides up out of a mask. */
+function Line({ children, delay }: { children: ReactNode; delay: number }) {
+  return (
+    <span className="block overflow-hidden pb-[0.08em]">
+      <motion.span
+        className="block"
+        initial={{ y: '105%' }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {children}
+      </motion.span>
+    </span>
+  )
 }
 
 export default function Home() {
   usePageMeta(
-    'Kulshresth Jangid — Backend Engineer · Node.js, TypeScript, Java · Open to Remote',
-    'Backend engineer with 4+ years shipping distributed systems, SaaS APIs, and real-time applications. Available for remote roles and consulting.',
+    'Kulshresth Jangid | Freelance Backend Engineer for Startups',
+    'Freelance backend engineer. I cut API latency, harden deployments and build LLM and chatbot backends for startups and product teams. Node.js, TypeScript, Java. Remote from India.',
     {
       canonical: 'https://buildwithkulshresth.com/',
       jsonLd: {
@@ -70,319 +114,366 @@ export default function Home() {
         mainEntity: [
           {
             '@type': 'Question',
-            name: 'What does Kulshresth Jangid specialise in?',
+            name: 'What does Kulshresth Jangid do?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'Backend engineering — distributed systems, SaaS APIs, microservices architecture, and performance engineering using Node.js, Java, TypeScript, and Go.',
+              text: 'Freelance backend engineering: API performance, microservices, deployment reliability, and LLM or chatbot backends, using Node.js, TypeScript and Java.',
             },
           },
           {
             '@type': 'Question',
-            name: 'Is Kulshresth Jangid available for remote roles?',
+            name: 'Is Kulshresth Jangid available for freelance projects?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'Yes. Currently open to senior backend engineering roles and consulting engagements. Remote-first. Based in Jaipur, India.',
-            },
-          },
-          {
-            '@type': 'Question',
-            name: 'What technologies does Kulshresth Jangid work with?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Node.js, TypeScript, Java, Spring Boot, Go, Python, React, Kafka, RabbitMQ, Redis, PostgreSQL, MySQL, MongoDB, Kubernetes, Docker, and AWS.',
+              text: 'Yes. He takes a small number of fixed scope projects at a time, working remotely from Jaipur, India.',
             },
           },
         ],
       },
     },
   )
-  const { genzMode } = useGenZ()
-  const otherProjects = projects.slice(1, 4)
-  const onlineServices = appServices.filter((s) => s.status === 'ONLINE')
+
+  const heroRef = useRef<HTMLElement>(null)
+  const reduce = useReducedMotion()
+  const approved = testimonials.filter((t) => t.approved)
+  const featured = approved.find((t) => t.id === 'nikhil-saini') ?? approved[0]
+  const others = approved.filter((t) => t.id !== featured?.id).slice(0, 3)
+  const work = projects.slice(0, 4)
+
+  function onHeroMove(e: React.PointerEvent<HTMLElement>) {
+    if (reduce || e.pointerType === 'touch') return
+    const el = heroRef.current
+    if (!el) return
+    const r = el.getBoundingClientRect()
+    el.style.setProperty('--mx', `${e.clientX - r.left}px`)
+    el.style.setProperty('--my', `${e.clientY - r.top}px`)
+  }
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12 space-y-14">
+    <div>
       {/* Hero */}
-      <motion.section {...fadeUp} className="grid lg:grid-cols-2 gap-8 items-start">
-        <div className="flex flex-col gap-6">
-          <div>
-            <p className="text-xs font-mono text-white/25 mb-4 tracking-[0.25em] uppercase">
-              {genzMode ? 'kul · jaipur, india · he/him' : 'Kulshresth Jangid — Jaipur, India'}
-            </p>
-            <h1 className="text-5xl sm:text-6xl font-black text-white leading-[1.05] tracking-tight mb-6">
-              {genzMode ? (
-                <>
-                  i make servers
-                  <br />
-                  go brrr.
-                  <br />
-                  <span className="text-white/30">no cap.</span>
-                </>
-              ) : (
-                <>
-                  Backend Engineer.
-                  <br />
-                  I build systems
-                  <br />
-                  <span className="text-white/30">that scale.</span>
-                </>
-              )}
+      <section
+        ref={heroRef}
+        onPointerMove={onHeroMove}
+        className="spotlight relative overflow-hidden border-b border-white/[0.08]"
+      >
+        <div className="rule-grid absolute inset-0 pointer-events-none" aria-hidden />
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-8 pt-14 sm:pt-20 pb-16 sm:pb-24 grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          <div className="lg:col-span-6 xl:col-span-6">
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              className="eyebrow flex items-center gap-2.5 mb-7"
+            >
+              <span className="relative flex w-2 h-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-signal opacity-60 animate-ping" />
+                <span className="relative inline-flex w-2 h-2 rounded-full bg-signal" />
+              </span>
+              Freelance backend engineer, remote
+            </motion.p>
+
+            <h1 className="display text-[2.75rem] sm:text-6xl lg:text-[4.4rem] leading-[1.02] text-white">
+              <Line delay={0.1}>Slow backends,</Line>
+              <Line delay={0.22}>
+                made <em className="text-signal">fast.</em>
+              </Line>
+              <Line delay={0.34}>Fragile systems,</Line>
+              <Line delay={0.46}>
+                made <em className="text-signal">calm.</em>
+              </Line>
             </h1>
-            <p className="text-sm text-white/40 leading-relaxed max-w-md">
-              {genzMode
-                ? "been writing code since before it was a personality. founded a whole saas thing from scratch. senior engineer at equinix. lowkey just vibing and shipping."
-                : 'Four years building distributed systems at scale. Founded Kaizex — a multi-tenant Marketing OS — from schema to Kubernetes, currently running in production. Senior Engineer at Equinix.'}
-            </p>
-          </div>
 
-          <div className="flex gap-3 flex-wrap">
-            <Link
-              to="/projects"
-              className="px-5 py-2 rounded-lg bg-white text-black text-sm font-semibold hover:bg-white/90 transition-all duration-150"
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.75 }}
+              className="mt-7 max-w-xl text-base sm:text-lg leading-relaxed text-white/65"
             >
-              {genzMode ? 'witness the damage' : 'View my work'}
-            </Link>
-            <Link
-              to="/about"
-              className="px-5 py-2 rounded-lg glass glass-hover text-white/60 text-sm font-medium hover:text-white transition-all duration-150"
+              I help startups and product teams cut latency, stop the 2am pages, and ship services that hold up under real
+              traffic. Four years in production at CarDekho, Rampwin and Equinix.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
+              className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4"
             >
-              {genzMode ? 'shoot your shot' : "Let's talk"}
-            </Link>
+              <a
+                href={CALENDLY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2.5 pl-6 pr-2 py-2 rounded-full bg-signal text-ink font-medium hover:bg-white transition-colors duration-200"
+              >
+                Book a 20 minute call
+                <span className="w-9 h-9 rounded-full bg-ink text-white flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
+                  <ArrowUpRight size={17} />
+                </span>
+              </a>
+              <a href="#proof" className="group inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors">
+                <span className="border-b border-white/30 group-hover:border-signal pb-0.5 transition-colors">See the proof</span>
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </a>
+            </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 1.15 }}
+              className="mt-10 font-mono text-[11px] uppercase tracking-[0.2em] text-white/40"
+            >
+              Worked with teams at <span className="text-white/70">CarDekho</span> · <span className="text-white/70">Rampwin</span> ·{' '}
+              <span className="text-white/70">Equinix</span> · <span className="text-white/70">Bombaywala</span>
+            </motion.p>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
-            <span className="text-xs font-mono text-white/35">
-              {genzMode
-                ? 'open to remote · will consider equity · april 2026'
-                : 'Available for remote roles · Open to new projects · March 2026'}
-            </span>
-          </div>
-        </div>
-        <TerminalBlock lines={genzMode ? genzTerminalLines : terminalLines} />
-      </motion.section>
-
-      {/* Freelance CTA */}
-      <motion.section
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.06 }}
-      >
-        <Link to="/hire" className="block group">
-          <GlassCard
-            hoverable
-            padding="md"
-            className="flex items-center justify-between gap-4 flex-wrap group-hover:border-white/[0.16] transition-colors duration-300"
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-6 xl:col-span-6"
           >
-            <div>
-              <p className="text-sm font-semibold text-white">
-                {genzMode ? 'taking on select freelance work rn' : 'Taking on select freelance projects'}
-              </p>
-              <p className="text-xs text-white/40 mt-1">
-                {genzMode
-                  ? 'backend + AI/chatbot builds for early-stage teams. slide in.'
-                  : 'Backend and AI/chatbot builds for early-stage teams, scoped and delivered project by project.'}
-              </p>
-            </div>
-            <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white text-black text-xs font-semibold flex-shrink-0 group-hover:bg-white/90 transition-colors">
-              {genzMode ? 'slide into the inbox' : 'Work with me'}
-              <ArrowRight size={13} />
-            </span>
-          </GlassCard>
-        </Link>
-      </motion.section>
-
-      {/* Impact stats */}
-      <motion.section
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.1 }}
-        className="grid grid-cols-2 lg:grid-cols-4 gap-4"
-      >
-        {(genzMode ? genzImpactStats : impactStats).map(({ value, label, sub }) => (
-          <GlassCard key={label} padding="md" className="text-center select-none">
-            <div className="text-2xl font-black text-white font-mono">{value}</div>
-            <div className="text-xs text-white/50 mt-1 leading-snug">{label}</div>
-            <div className="text-[10px] font-mono text-white/20 mt-1">{sub}</div>
-          </GlassCard>
-        ))}
-      </motion.section>
-
-      {/* Featured Case Study */}
-      <motion.section
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.16 }}
-      >
-        <div className="flex items-center gap-2 mb-6">
-          <h2 className="text-base font-semibold text-white">
-            {genzMode ? 'the one i am actually proud of — Kaizex' : 'Featured Case Study — Kaizex'}
-          </h2>
-          <span className="px-2 py-0.5 text-[10px] font-mono bg-white/[0.05] border border-white/[0.1] text-white/50 rounded tracking-wider">
-            {genzMode ? 'MY MAGNUM OPUS' : 'CASE STUDY'}
-          </span>
+            <LatencyTrace />
+          </motion.div>
         </div>
+      </section>
 
-        <GlassCard className="lg:grid lg:grid-cols-5 gap-8 space-y-5 lg:space-y-0">
-          <div className="lg:col-span-3 flex flex-col gap-4">
+      {/* Stack marquee */}
+      <div className="border-b border-white/[0.08] overflow-hidden py-4" aria-label="Technology I work with">
+        <div className="flex w-max animate-marquee gap-10 font-mono text-sm text-white/40">
+          {[...stack, ...stack].map((s, i) => (
+            <span key={i} className="flex items-center gap-10 whitespace-nowrap" aria-hidden={i >= stack.length}>
+              {s}
+              <span className="w-1 h-1 rounded-full bg-signal/70" />
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Proof */}
+      <section id="proof" className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-28 scroll-mt-20">
+        <Reveal>
+          <p className="eyebrow mb-4">Proof</p>
+          <h2 className="display text-4xl sm:text-5xl lg:text-6xl text-white max-w-3xl leading-[1.05]">
+            Numbers I can point to, <span className="text-white/45">and the work behind each one.</span>
+          </h2>
+        </Reveal>
+
+        <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 border-t border-l border-white/[0.09]">
+          {proof.map((p, i) => (
+            <Reveal key={p.label} delay={i * 0.08} className="border-r border-b border-white/[0.09]">
+              <Link to={p.to} className="group block h-full p-6 sm:p-8 hover:bg-surface transition-colors duration-300">
+                <div className="display text-6xl sm:text-7xl text-white group-hover:text-signal transition-colors duration-300 tabular-nums">
+                  <CountUp to={p.value} suffix={p.suffix} />
+                </div>
+                <p className="mt-4 text-sm sm:text-base text-white/70 leading-snug">{p.label}</p>
+                <p className="mt-6 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.18em] text-white/40">
+                  {p.where}
+                  <ArrowUpRight size={15} className="opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all" />
+                </p>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* Services */}
+      <section className="border-y border-white/[0.08] bg-surface/50">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-28">
+          <Reveal className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <div className="flex items-center gap-2.5 mb-1 flex-wrap">
-          <h3 className="text-lg font-bold text-white">Kaizex — Marketing Operating System</h3>
-                <StatusBadge status="LIVE" pulse />
-              </div>
-              <p className="text-xs font-mono text-white/25">Founded · 2025 · Production</p>
+              <p className="eyebrow mb-4">What I take on</p>
+              <h2 className="display text-4xl sm:text-5xl lg:text-6xl text-white leading-[1.05]">Three ways to work together.</h2>
             </div>
-
-            <div className="space-y-1.5">
-              <p className="text-xs text-white/25 font-mono uppercase tracking-wider">
-                {genzMode ? 'the pain' : 'Problem'}
-              </p>
-              <p className="text-sm text-white/50 leading-relaxed">
-                {genzMode
-                  ? 'content teams were cooked. posting manually, switching between 10 tabs, getting mid AI output with zero strategic brain. buffer and hootsuite? glorified copy-paste tools. i said no.'
-                  : 'Content teams are operationally bottlenecked: posting manually, context-switching across platforms, and getting generic AI output with no strategic grounding. Existing schedulers (Buffer, Hootsuite) are dumb pipes — no content intelligence, no insight layer, no ownership of the output.'}
-              </p>
-            </div>
-
-            <div className="space-y-1.5">
-              <p className="text-xs text-white/25 font-mono uppercase tracking-wider">
-                {genzMode ? 'what i did about it' : 'Solution'}
-              </p>
-              <p className="text-sm text-white/50 leading-relaxed">
-                {genzMode
-                  ? 'built a whole marketing OS. four stages: dump your raw thoughts in, AI extracts the good bits, persona engine makes it sound like you, async workers publish it. three modes: do it yourself, let AI draft it, or just let it run while you sleep. bring your own AI model. the scheduler handles 1M+ tasks. yes, really.'
-                  : 'A Marketing Operating System with a four-stage pipeline: Source → Insight → Content → Distribution. Raw knowledge enters as articles and notes; the AI layer extracts strategic signals; a configurable persona engine generates platform-native content; async workers publish it. Three automation modes: Manual, Review, Autopilot. BYO-AI: connect any LLM. Scheduling engine validated at 1M+ tasks/instance.'}
-              </p>
-            </div>
-
-            <Link
-              to="/projects/social-saas"
-              className="self-start mt-1 px-4 py-2 rounded-lg bg-white/[0.05] border border-white/[0.1] text-white/60 text-xs font-mono hover:bg-white/[0.09] hover:text-white transition-all duration-200"
-            >
-              {genzMode ? 'see the unhinged plan ->' : 'Read full architecture →'}
+            <Link to="/hire" className="group inline-flex items-center gap-2 text-white/80 hover:text-white">
+              <span className="border-b border-white/30 group-hover:border-signal pb-0.5 transition-colors">How engagements work</span>
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
-          </div>
+          </Reveal>
 
-          <div className="lg:col-span-2 flex flex-col gap-3 lg:border-l lg:border-white/[0.06] lg:pl-8">
-            <p className="text-xs font-mono text-white/20 uppercase tracking-wider">
-              {genzMode ? 'the receipts' : 'Key signals'}
-            </p>
-            {[
-              ['Pipeline', 'Source → Insight → Content → Distribution'],
-              ['Automation', 'Manual / Review / Autopilot'],
-              ['Scale', '1M+ tasks/instance'],
-              ['AI', 'BYO (OpenAI / Anthropic / self-hosted)'],
-              ['Entry', 'tic-tac-toe (:443)'],
-              ['Frontend', 'kaizex (/kaizex)'],
-              ['Backend', 'smart-server (:8080)'],
-              ['Platforms', 'LinkedIn (live) · X (WIP)'],
-            ].map(([label, value]) => (
-              <div key={label} className="flex items-baseline gap-3">
-                <span className="text-[11px] font-mono text-white/20 w-24 flex-shrink-0">{label}</span>
-                <span className="text-xs text-white/50">{value}</span>
-              </div>
+          <div className="mt-14 grid md:grid-cols-3 gap-5">
+            {services.map((s, i) => (
+              <Reveal key={s.title} delay={i * 0.1}>
+                <div className="group h-full rounded-2xl border border-white/[0.09] bg-ink p-7 flex flex-col gap-5 hover:border-signal/60 hover:-translate-y-1 transition-all duration-300">
+                  <span className="display text-5xl text-white/25 group-hover:text-signal transition-colors duration-300">0{i + 1}</span>
+                  <h3 className="display text-3xl text-white leading-tight">{s.title}</h3>
+                  <p className="text-white/60 leading-relaxed flex-1">{s.body}</p>
+                  <span className="self-start font-mono text-[11px] uppercase tracking-[0.16em] px-3 py-1.5 rounded-full border border-white/15 text-white/60">
+                    {s.time}
+                  </span>
+                </div>
+              </Reveal>
             ))}
           </div>
-        </GlassCard>
-      </motion.section>
+        </div>
+      </section>
 
       {/* Selected work */}
-      <motion.section
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.22 }}
-      >
-        <div className="flex items-center justify-between mb-6">
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-28">
+        <Reveal className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <h2 className="text-base font-semibold text-white">
-              {genzMode ? 'other stuff that actually runs' : 'Selected Backend Engineering Work'}
-            </h2>
-            <p className="text-xs text-white/20 font-mono mt-0.5">
-              {genzMode ? '// real code, real prod, real chaos' : '// production systems and architecture'}
-            </p>
+            <p className="eyebrow mb-4">Selected work</p>
+            <h2 className="display text-4xl sm:text-5xl lg:text-6xl text-white leading-[1.05]">Systems that run in production.</h2>
           </div>
-          <Link to="/projects" className="text-xs text-white/40 hover:text-white font-mono transition-colors">
-            {genzMode ? 'all the damage ->' : 'all projects →'}
+          <Link to="/projects" className="group inline-flex items-center gap-2 text-white/80 hover:text-white">
+            <span className="border-b border-white/30 group-hover:border-signal pb-0.5 transition-colors">All case studies</span>
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </Link>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {otherProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+        </Reveal>
+
+        <div className="mt-12 border-t border-white/[0.09]">
+          {work.map((p, i) => (
+            <Reveal key={p.id} delay={i * 0.06}>
+              <Link
+                to={`/projects/${p.id}`}
+                className="group grid grid-cols-12 gap-4 items-start py-7 sm:py-9 border-b border-white/[0.09] hover:pl-3 transition-all duration-300"
+              >
+                <span className="col-span-2 sm:col-span-1 font-mono text-xs text-white/35 pt-2">0{i + 1}</span>
+                <div className="col-span-10 sm:col-span-7">
+                  <h3 className="display text-3xl sm:text-4xl text-white group-hover:text-signal transition-colors duration-300 leading-tight">
+                    {p.title}
+                  </h3>
+                  <p className="mt-3 text-white/60 leading-relaxed max-w-2xl">{p.shortDescription}</p>
+                </div>
+                <div className="col-span-10 col-start-3 sm:col-span-4 sm:col-start-auto flex sm:justify-end items-start gap-4">
+                  <div className="flex flex-wrap sm:justify-end gap-1.5">
+                    {p.techStack.slice(0, 4).map((t) => (
+                      <span key={t} className="px-2.5 py-1 text-[11px] font-mono rounded-full border border-white/12 text-white/50">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <ArrowUpRight size={22} className="hidden sm:block flex-shrink-0 text-white/30 group-hover:text-signal group-hover:rotate-12 transition-all" />
+                </div>
+              </Link>
+            </Reveal>
           ))}
         </div>
-      </motion.section>
+      </section>
 
-      {/* Testimonials — whole section hidden, not just the grid, until at
-          least one entry is approved (an empty heading with nothing under
-          it is its own small bug we hit in prod) */}
-      {testimonials.some((t) => t.approved) && (
-        <motion.section
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.25 }}
-        >
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h2 className="text-base font-semibold text-white">
-                {genzMode ? 'people who’ve worked with me' : 'What People Say'}
-              </h2>
-              <p className="text-xs text-white/20 font-mono mt-0.5">
-                {genzMode ? '// receipts from real humans' : '// colleagues, managers, clients'}
-              </p>
-            </div>
-            <Link to="/about" className="text-xs text-white/40 hover:text-white font-mono transition-colors">
-              {genzMode ? 'more ->' : 'more →'}
-            </Link>
+      {/* Testimonials */}
+      {featured && (
+        <section className="border-y border-white/[0.08] bg-surface/50">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-28">
+            <Reveal>
+              <p className="eyebrow mb-10">What people say</p>
+              <blockquote>
+                <p className="display text-3xl sm:text-4xl lg:text-5xl leading-[1.15] text-white max-w-5xl">
+                  <span className="text-signal">“</span>
+                  {featured.quote}
+                  <span className="text-signal">”</span>
+                </p>
+                <footer className="mt-8 flex items-center gap-4">
+                  <span className="w-11 h-11 rounded-full border border-white/20 flex items-center justify-center font-mono text-xs text-white/70">
+                    {featured.name
+                      .split(' ')
+                      .map((w) => w[0])
+                      .join('')
+                      .slice(0, 2)}
+                  </span>
+                  <div>
+                    <p className="text-white font-medium">
+                      {featured.linkedinUrl ? (
+                        <a href={featured.linkedinUrl} target="_blank" rel="noopener noreferrer" className="hover:text-signal transition-colors">
+                          {featured.name}
+                        </a>
+                      ) : (
+                        featured.name
+                      )}
+                    </p>
+                    <p className="font-mono text-xs text-white/45">
+                      {featured.role}, {featured.company}
+                    </p>
+                  </div>
+                </footer>
+              </blockquote>
+            </Reveal>
+
+            {others.length > 0 && (
+              <div className="mt-16 grid md:grid-cols-3 gap-5">
+                {others.map((t, i) => (
+                  <Reveal key={t.id} delay={i * 0.1}>
+                    <figure className="h-full rounded-2xl border border-white/[0.09] bg-ink p-6 flex flex-col gap-5">
+                      <blockquote className="text-white/70 leading-relaxed flex-1">{t.quote}</blockquote>
+                      <figcaption className="pt-4 border-t border-white/[0.08]">
+                        <p className="text-sm text-white font-medium">
+                          {t.linkedinUrl ? (
+                            <a href={t.linkedinUrl} target="_blank" rel="noopener noreferrer" className="hover:text-signal transition-colors">
+                              {t.name}
+                            </a>
+                          ) : (
+                            t.name
+                          )}
+                        </p>
+                        <p className="font-mono text-[11px] text-white/45 mt-0.5">
+                          {t.role}
+                          {t.company ? `, ${t.company}` : ''}
+                        </p>
+                      </figcaption>
+                    </figure>
+                  </Reveal>
+                ))}
+              </div>
+            )}
           </div>
-          <Testimonials testimonials={testimonials} compact />
-        </motion.section>
+        </section>
       )}
 
-      {/* Active services */}
-      <motion.section
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.28 }}
-      >
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-base font-semibold text-white">
-              {genzMode ? 'things currently not crashing' : 'Live Infrastructure'}
-            </h2>
-            <p className="text-xs text-white/20 font-mono mt-0.5">
-              {genzMode ? '// tic-tac-toe gateway — touch wood' : '// tic-tac-toe gateway — all systems nominal'}
-            </p>
-          </div>
-          <Link to="/apps" className="text-xs text-white/40 hover:text-white font-mono transition-colors">
-            {genzMode ? 'full roster ->' : 'full registry →'}
-          </Link>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {onlineServices.map((app) => (
-            <a
-              key={app.id}
-              href={app.externalUrl ?? app.route}
-              target={app.externalUrl ? '_blank' : undefined}
-              rel={app.externalUrl ? 'noopener noreferrer' : undefined}
-              className="block"
-            >
-              <GlassCard hoverable padding="sm" className="flex items-center gap-3">
-                <div className="w-8 h-8 flex-shrink-0 rounded-md bg-white/[0.05] border border-white/[0.1] flex items-center justify-center font-mono font-bold text-white/50 text-xs">
-                  {app.name.slice(0, 2).toUpperCase()}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-white truncate">{app.name}</div>
-                  <div className="text-[11px] font-mono text-white/25 truncate">
-                    {app.externalUrl ?? app.route}
-                  </div>
-                </div>
-                <StatusBadge status={app.status} pulse />
-              </GlassCard>
-            </a>
+      {/* Process */}
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-28">
+        <Reveal>
+          <p className="eyebrow mb-4">How it works</p>
+          <h2 className="display text-4xl sm:text-5xl lg:text-6xl text-white leading-[1.05] max-w-3xl">
+            No black boxes. You see progress every week.
+          </h2>
+        </Reveal>
+        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10">
+          {steps.map((s, i) => (
+            <Reveal key={s.n} delay={i * 0.08}>
+              <div className="border-t border-white/20 pt-5">
+                <span className="font-mono text-xs text-signal">{s.n}</span>
+                <h3 className="display text-3xl text-white mt-3">{s.title}</h3>
+                <p className="mt-3 text-white/60 leading-relaxed">{s.body}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
-      </motion.section>
+      </section>
+
+      {/* Closing CTA */}
+      <section className="relative overflow-hidden border-t border-white/[0.08]">
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_120%,rgba(176,228,204,0.22),transparent_60%)]" aria-hidden />
+        <div className="relative max-w-5xl mx-auto px-5 sm:px-8 py-24 sm:py-36 text-center">
+          <Reveal>
+            <h2 className="display text-5xl sm:text-7xl lg:text-8xl text-white leading-[1.02]">
+              Have a slow or shaky backend? <em className="text-signal">Let&rsquo;s look at it.</em>
+            </h2>
+            <p className="mt-8 text-lg text-white/65 max-w-xl mx-auto leading-relaxed">
+              Twenty minutes, no pitch. You describe the problem and I tell you honestly whether I can help.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+              <a
+                href={CALENDLY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2.5 pl-7 pr-2.5 py-2.5 rounded-full bg-signal text-ink font-medium hover:bg-white transition-colors duration-200"
+              >
+                Book a 20 minute call
+                <span className="w-10 h-10 rounded-full bg-ink text-white flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
+                  <ArrowUpRight size={18} />
+                </span>
+              </a>
+              <a
+                href={`mailto:${EMAIL}`}
+                className="px-7 py-3.5 rounded-full border border-white/25 text-white hover:border-white hover:bg-white/5 transition-colors"
+              >
+                {EMAIL}
+              </a>
+            </div>
+          </Reveal>
+        </div>
+      </section>
     </div>
   )
 }
