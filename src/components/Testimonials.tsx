@@ -53,12 +53,12 @@ export default function Testimonials({ testimonials, compact = false }: Testimon
                 )}
               </div>
               <div className="text-[11px] font-mono text-white/30 truncate">
-                {t.role}{t.company !== '—' ? ` · ${t.company}` : ''}
+                {t.role}{t.company ? ` · ${t.company}` : ''}
               </div>
             </div>
             {!t.approved && (
               <span
-                title="Draft quote — not yet confirmed by the person it's attributed to"
+                title="Draft quote, not yet confirmed by the person it's attributed to"
                 className="flex-shrink-0 text-[10px] font-mono text-white/15 italic"
               >
                 draft
