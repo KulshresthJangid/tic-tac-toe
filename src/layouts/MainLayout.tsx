@@ -30,6 +30,12 @@ export default function MainLayout({ children }: MainLayoutProps) {
             <a href="/resume/kulshresth-jangid-resume.pdf" download className="hover:text-white transition-colors">Resume</a>
           </nav>
         </div>
+        <div className="border-t border-white/[0.06]">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 font-mono text-[11px] text-white/35">
+            <span>&copy; {new Date().getFullYear()} Kulshresth Jangid. Client work is covered by a written agreement.</span>
+            <Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+          </div>
+        </div>
       </footer>
     </div>
   )
