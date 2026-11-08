@@ -7,14 +7,14 @@ import GlassCard from '../components/GlassCard'
 
 const CALENDLY_LINK = 'https://calendly.com/jangidkulshresth/20-min-intro-call'
 const EMAIL = 'jangidkulshresth@gmail.com'
-// Calendly's intro-call event is open 7-11pm IST weekdays — that window is
+// Calendly's intro-call event is open 7-11pm IST weekdays, that window is
 // ~13:30-17:30 UTC, i.e. roughly 8:30am-12:30pm US Eastern. Real overlap is
 // with Eastern mornings; Pacific clients land in their very-early morning.
 const OVERLAP_HOURS = '4 hours (US Eastern mornings)'
 
-// Web3Forms — free, no backend of our own needed (this site is a static
+// Web3Forms, free, no backend of our own needed (this site is a static
 // SPA with no server). This key is a public, client-side key by design
-// (Web3Forms' own model, not a secret leak) — safe to ship in the bundle.
+// (Web3Forms' own model, not a secret leak), safe to ship in the bundle.
 const WEB3FORMS_ACCESS_KEY = '4322fba6-b1a2-4070-8c14-391821aca840'
 
 const fadeUp = {
@@ -26,27 +26,27 @@ const fadeUp = {
 const offers = [
   {
     title: 'LLM / Chatbot Backends',
-    who: 'Teams that need a real conversational product — support automation, an internal AI assistant, a qualification or booking flow — wired into actual data, not a demo script.',
+    who: 'Teams that need a real conversational product, support automation, an internal AI assistant, a qualification or booking flow, wired into actual data, not a demo script.',
     get: 'A conversational backend built for production: structured prompts, conversation state and memory, and real integrations into your systems. Same foundation I built Zigchat and its Bot Creation API on.',
     timeline: '2-4 weeks',
   },
   {
     title: 'API & Microservice Builds',
     who: 'Founders and CTOs who need a backend service built from scratch or extended without breaking what already works.',
-    get: 'A Node.js/TypeScript or Java/Spring Boot service with a proper schema, auth, and clean architecture — SQL or NoSQL, Redis where it earns its place, tests that actually catch regressions.',
+    get: 'A Node.js/TypeScript or Java/Spring Boot service with a proper schema, auth, and clean architecture, SQL or NoSQL, Redis where it earns its place, and tests that actually catch regressions.',
     timeline: '2-4 weeks',
   },
   {
     title: 'Backend Audit & Scaling',
     who: 'An existing backend that is slow, flaky, or hard to deploy, and a team that wants a straight answer on why.',
-    get: 'A full review of your current backend, concrete performance and reliability fixes, and a production setup — Docker, Kubernetes, Nginx, CI/CD — that holds up under real traffic.',
+    get: 'A full review of your current backend, concrete performance and reliability fixes, and a production setup (Docker, Kubernetes, Nginx, CI/CD) that holds up under real traffic.',
     timeline: '1-2 weeks',
   },
 ]
 
 const proofPoints = [
   '4+ years of professional backend and full-stack engineering',
-  'Built Zigchat — a no-code chatbot SaaS (Node.js, Express, TypeScript, SQL, NLP)',
+  'Built Zigchat: a no-code chatbot SaaS (Node.js, Express, TypeScript, SQL, NLP)',
   'Open-source contributions to Rocket.Chat',
   'Previously a tech lead on a flagship SaaS product',
 ]
@@ -59,24 +59,24 @@ const stack = [
 
 const howIWork = [
   { step: '01', title: 'Intro call', desc: 'A 20-minute call to understand the problem, not to pitch you. We figure out together if this is a fit.' },
-  { step: '02', title: 'Scoped proposal', desc: 'A written proposal with fixed milestones and deliverables — you know what you’re getting and when before any work starts.' },
+  { step: '02', title: 'Scoped proposal', desc: 'A written proposal with fixed milestones and deliverables, you know what you’re getting and when before any work starts.' },
   { step: '03', title: 'Weekly demos', desc: 'Working software, shown weekly. No black-box stretches where you’re left guessing what’s happening.' },
-  { step: '04', title: 'Handover with docs', desc: 'Clean handover: documented code, a runbook for what you own now, and a walkthrough — not a project that only I understand.' },
+  { step: '04', title: 'Handover with docs', desc: 'Clean handover: documented code, a runbook for what you own now, and a walkthrough, not a project that only I understand.' },
 ]
 
 const selectedWork = [
   {
     id: 'social-saas',
-    title: 'Kaizex — Marketing Operating System',
-    problem: 'Content teams needed real conversational automation — not a scripted bot — running across a website widget and WhatsApp Business, with no existing tool offering content intelligence or a usable builder.',
+    title: 'Kaizex: Marketing Operating System',
+    problem: 'Content teams needed real conversational automation, not a scripted bot, running across a website widget and WhatsApp Business, with no existing tool offering content intelligence or a usable builder.',
     built: 'A visual, node-based pipeline builder (21+ node types) that drives real conversations across channels, landing in one unified inbox regardless of where the message came from. BYO-AI across five provider adapters.',
     stack: ['Java', 'Spring Boot', 'RabbitMQ', 'Redis', 'MariaDB', 'WhatsApp Cloud API'],
   },
   {
     id: 'leadgen-pro',
-    title: 'LeadGen Pro — AI Lead Generation Engine',
+    title: 'LeadGen Pro: AI Lead Generation Engine',
     problem: 'B2B lead generation at any real volume gets expensive fast once you’re paying per API call for qualification and outreach copy.',
-    built: 'A fully self-hosted pipeline: multi-source scraping, SHA-256 + fuzzy deduplication, and a local LLM (Mistral 7B via Ollama) doing two-pass qualification and personalised outreach — zero recurring AI cost.',
+    built: 'A fully self-hosted pipeline: multi-source scraping, SHA-256 + fuzzy deduplication, and a local LLM (Mistral 7B via Ollama) doing two-pass qualification and personalised outreach, zero recurring AI cost.',
     stack: ['Node.js', 'Express', 'Ollama', 'Mistral 7B', 'PostgreSQL', 'Socket.io'],
   },
   {
@@ -95,11 +95,11 @@ const faqs = [
   },
   {
     q: 'What time zone are you in, and how much overlap can we get?',
-    a: `I'm based in Jaipur, India (IST, UTC+5:30). Expect roughly ${OVERLAP_HOURS} of real-time overlap with US business hours, plus async-friendly communication the rest of the day — written updates, recorded demos, and async code review so nothing waits on a live call.`,
+    a: `I'm based in Jaipur, India (IST, UTC+5:30). Expect roughly ${OVERLAP_HOURS} of real-time overlap with US business hours, plus async-friendly communication the rest of the day, written updates, recorded demos, and async code review so nothing waits on a live call.`,
   },
   {
     q: 'Who owns the code once the project is done?',
-    a: 'You do, fully. Everything built under the engagement — code, docs, infrastructure configs — is yours on delivery. No retained rights, no licensing strings.',
+    a: 'You do, fully. Everything built under the engagement, code, docs, infrastructure configs, is yours on delivery. No retained rights, no licensing strings.',
   },
   {
     q: 'Can you sign an NDA?',
@@ -112,19 +112,19 @@ const budgetRanges = [
   '$5k – $15k',
   '$15k – $40k',
   '$40k+',
-  'Not sure yet — let’s discuss',
+  'Not sure yet: let’s discuss',
 ]
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error'
 
 export default function Hire() {
   usePageMeta(
-    'Hire Kulshresth Jangid — Freelance Backend & AI Integration Engineer',
+    'Hire Kulshresth Jangid: Freelance Backend & AI Integration Engineer',
     'Backend and AI integration engineer for early-stage teams. I build APIs, microservices and LLM/chatbot backends that ship fast and hold up in production. Node.js, TypeScript, Java/Spring Boot.',
     {
       canonical: 'https://buildwithkulshresth.com/hire',
       og: {
-        title: 'Hire Kulshresth Jangid — Freelance Backend & AI Integration Engineer',
+        title: 'Hire Kulshresth Jangid: Freelance Backend & AI Integration Engineer',
         description: 'Backend and AI integration engineer for early-stage teams. APIs, microservices, and LLM/chatbot backends that ship fast and hold up in production.',
         type: 'profile',
       },
@@ -156,7 +156,7 @@ export default function Hire() {
         {
           '@context': 'https://schema.org',
           '@type': 'ProfessionalService',
-          name: 'Kulshresth Jangid — Freelance Backend Engineering',
+          name: 'Kulshresth Jangid: Freelance Backend Engineering',
           url: 'https://buildwithkulshresth.com/hire',
           image: 'https://buildwithkulshresth.com/og-image.png',
           description: 'Project-based backend and AI integration engineering for early-stage startups: API and microservice builds, LLM/chatbot backends, and backend audits and scaling.',
@@ -182,9 +182,9 @@ export default function Hire() {
     const form = e.currentTarget
     const data = new FormData(form)
 
-    // Honeypot — real users never fill a visually-hidden field. Bots that
+    // Honeypot, real users never fill a visually-hidden field. Bots that
     // blindly fill every input will. Deliberately not named "website" (or
-    // anything else a browser's autofill heuristics commonly target) —
+    // anything else a browser's autofill heuristics commonly target),
     // that would false-positive against real users whose autofill profile
     // has a website field, silently eating their submission. Pretend
     // success, send nothing.
@@ -197,7 +197,7 @@ export default function Hire() {
     if (WEB3FORMS_ACCESS_KEY.startsWith('[')) {
       setStatus('error')
       setErrorMsg(
-        `Form isn't wired up yet — email me directly instead: ${EMAIL}`,
+        `Form isn't wired up yet, email me directly instead: ${EMAIL}`,
       )
       return
     }
@@ -206,7 +206,7 @@ export default function Hire() {
     setErrorMsg('')
     try {
       data.set('access_key', WEB3FORMS_ACCESS_KEY)
-      data.set('subject', 'New freelance project inquiry — buildwithkulshresth.com/hire')
+      data.set('subject', 'New freelance project inquiry, buildwithkulshresth.com/hire')
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body: data,
@@ -220,7 +220,7 @@ export default function Hire() {
       }
     } catch {
       setStatus('error')
-      setErrorMsg(`Something went wrong — email me directly instead: ${EMAIL}`)
+      setErrorMsg(`Something went wrong, email me directly instead: ${EMAIL}`)
     }
   }
 
@@ -231,7 +231,7 @@ export default function Hire() {
         <p className="text-xs font-mono text-white/25 tracking-[0.25em] uppercase">
           Freelance / Project-Based
         </p>
-        <h1 className="text-4xl sm:text-5xl font-black text-white leading-[1.1] tracking-tight">
+        <h1 className="display text-5xl sm:text-6xl text-white leading-[1.05]">
           Backend and AI integration engineer for early-stage teams.
         </h1>
         <p className="text-base text-white/50 leading-relaxed max-w-xl">
@@ -433,7 +433,7 @@ export default function Hire() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4 relative" noValidate>
-              {/* Honeypot — hidden from real users, visible to naive bots */}
+              {/* Honeypot, hidden from real users, visible to naive bots */}
               <div className="absolute w-px h-px overflow-hidden opacity-0 -z-10" aria-hidden="true">
                 <label htmlFor="hp_confirm">Leave this field empty</label>
                 <input type="text" id="hp_confirm" name="hp_confirm" tabIndex={-1} autoComplete="off" />
@@ -523,7 +523,7 @@ export default function Hire() {
               </button>
 
               <p className="text-[11px] text-white/25 text-center">
-                Or skip the form —{' '}
+                Or skip the form,{' '}
                 <a href={`mailto:${EMAIL}`} className="underline hover:text-white/50">
                   email me directly
                 </a>
