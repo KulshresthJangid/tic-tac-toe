@@ -3,19 +3,13 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowUpRight, CheckCircle2, Loader2 } from 'lucide-react'
 import { usePageMeta } from '../hooks/usePageMeta'
+import { CALENDLY_URL as CALENDLY_LINK, EMAIL, WEB3FORMS_ACCESS_KEY } from '../lib/contact'
 import GlassCard from '../components/GlassCard'
 
-const CALENDLY_LINK = 'https://calendly.com/jangidkulshresth/20-min-intro-call'
-const EMAIL = 'jangidkulshresth@gmail.com'
 // Calendly's intro-call event is open 7-11pm IST weekdays, that window is
 // ~13:30-17:30 UTC, i.e. roughly 8:30am-12:30pm US Eastern. Real overlap is
 // with Eastern mornings; Pacific clients land in their very-early morning.
 const OVERLAP_HOURS = '4 hours (US Eastern mornings)'
-
-// Web3Forms, free, no backend of our own needed (this site is a static
-// SPA with no server). This key is a public, client-side key by design
-// (Web3Forms' own model, not a secret leak), safe to ship in the bundle.
-const WEB3FORMS_ACCESS_KEY = '4322fba6-b1a2-4070-8c14-391821aca840'
 
 const fadeUp = {
   initial: { opacity: 0, y: 18 },
