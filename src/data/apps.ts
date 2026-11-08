@@ -36,7 +36,7 @@ export const appServices: AppService[] = [
     id: 'scheduler',
     name: 'Scheduler Engine',
     description:
-      'Distributed task scheduling using a time-wheel algorithm over Redis sorted sets. Validated at 1M+ concurrent tasks/instance — at-least-once delivery with idempotent publish consumers.',
+      'Distributed task scheduling using a time-wheel algorithm over Redis sorted sets. Validated at 1M+ concurrent tasks/instance, at-least-once delivery with idempotent publish consumers.',
     route: '/scheduler',
     status: 'ONLINE',
     version: '1.4.0',
@@ -97,7 +97,7 @@ export const appServices: AppService[] = [
     id: 'session-logger-db',
     name: 'Session Logger DB',
     description:
-      'PostgreSQL 16 instance in Docker Compose. Prisma v5 ORM with billing snapshot schema — client rate frozen into each session row at start time.',
+      'PostgreSQL 16 instance in Docker Compose. Prisma v5 ORM with billing snapshot schema, client rate frozen into each session row at start time.',
     route: '/session-logger/db',
     status: 'ONLINE',
     version: '16.0',
@@ -138,7 +138,7 @@ export const appServices: AppService[] = [
     id: 'leadgen-pro-db',
     name: 'LeadGen Pro DB',
     description:
-      'SQLite (default) or PostgreSQL — swappable via env var. SHA-256 email fingerprinting and Levenshtein fuzzy deduplication at the persistence layer.',
+      'SQLite (default) or PostgreSQL, swappable via env var. SHA-256 email fingerprinting and Levenshtein fuzzy deduplication at the persistence layer.',
     route: '/drip/db',
     status: 'ONLINE',
     version: '1.0.0',
