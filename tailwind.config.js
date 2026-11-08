@@ -5,16 +5,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Color Hunt "deep green + mint" palette (#091413 #285A48 #408A71 #B0E4CC).
-        // `white` is remapped to a mint tinted off white so every
-        // existing text-white/NN and bg-white/[0.NN] across the site picks up
-        // tint without touching each page.
-        white: '#e8f2ed',
-        ink: '#091413',
-        surface: '#0f1d1b',
-        'surface-2': '#152826',
-        signal: '#B0E4CC',
-        'signal-soft': '#8fd1b3',
+        // Color Hunt "deep green + mint" palette, driven by CSS variables in
+        // index.css so light and dark share every class. `white` is the
+        // foreground colour (bone in dark, deep green ink in light) so all
+        // existing text-white/NN and border-white/[0.NN] adapt for free.
+        white: 'rgb(var(--c-fg) / <alpha-value>)',
+        ink: 'rgb(var(--c-ink) / <alpha-value>)',
+        surface: 'rgb(var(--c-surface) / <alpha-value>)',
+        'surface-2': 'rgb(var(--c-surface-2) / <alpha-value>)',
+        signal: 'rgb(var(--c-signal) / <alpha-value>)',
+        'signal-soft': 'rgb(var(--c-signal-soft) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
