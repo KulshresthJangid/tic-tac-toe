@@ -40,9 +40,9 @@ const experience = [
     period: 'Jun 2025 \u2013 Present',
     location: 'Remote, India',
     notes: [
-      'Rewrote the Spring Boot data-access layer with targeted query optimization and composite indexing \u2014 MySQL p99 latency down 40%, API latency down 35%, user conversion up 12% at the affected flow',
-      'Designed canary deployment pipeline with automated rollback on Prometheus error budget burn-rate triggers \u2014 deployment failure rate down 30%',
-      'Integrated Pact contract testing into CI \u2014 API breaking changes caught at the PR level before staging is ever deployed',
+      'Rewrote the Spring Boot data-access layer with targeted query optimization and composite indexing, MySQL p99 latency down 40%, API latency down 35%, user conversion up 12% at the affected flow',
+      'Designed canary deployment pipeline with automated rollback on Prometheus error budget burn-rate triggers, deployment failure rate down 30%',
+      'Integrated Pact contract testing into CI, API breaking changes caught at the PR level before staging is ever deployed',
       'Led incident response and postmortem process; authored runbooks covering 12 failure modes; on-call MTTR measurably reduced',
       'Built JWT-secured partner APIs with Spring Security, enforcing team RBAC at the claim level rather than in application logic',
     ],
@@ -54,7 +54,7 @@ const experience = [
     location: 'Jaipur, India',
     notes: [
       'Led monolith-to-microservices migration: ran event storming to identify 6 bounded contexts, defined inter-service contracts before any code was extracted, used strangler fig with feature-flag traffic routing for zero-downtime cutover',
-      'Reduced MTTR by 28% through domain isolation \u2014 failures in one bounded context are now structurally contained and cannot cascade across unrelated services',
+      'Reduced MTTR by 28% through domain isolation, failures in one bounded context are now structurally contained and cannot cascade across unrelated services',
       'Designed distributed saga orchestration for checkout and order workflows with full compensating transaction support and idempotent retry',
       'Enforced Pact contract testing across 4 service pairs; breaking changes blocked at CI before reaching staging',
       'Optimized MongoDB under high-write load: compound index design, write concern tuning, and read replica routing across all hot query paths',
@@ -66,10 +66,10 @@ const experience = [
     period: 'Jan 2022 \u2013 Nov 2024',
     location: 'Jaipur, India',
     notes: [
-      'Built chatbot automation system using a branching decision engine \u2014 increased weekly user engagement by 20%',
-      'Diagnosed and eliminated N+1 query patterns, redesigned composite indexes, rebuilt Redis caching strategy \u2014 p99 DB latency down 40%, API latency down 35%',
-      'Led LMS migration to zero-downtime using dual-write and progressive cutover \u2014 no user-visible impact across the full migration window',
-      'Moved downstream enrichment calls off the critical response path using CompletableFuture \u2014 eliminated synchronous blocking on three high-traffic endpoints',
+      'Built chatbot automation system using a branching decision engine, increased weekly user engagement by 20%',
+      'Diagnosed and eliminated N+1 query patterns, redesigned composite indexes, rebuilt Redis caching strategy, p99 DB latency down 40%, API latency down 35%',
+      'Led LMS migration to zero-downtime using dual-write and progressive cutover, no user-visible impact across the full migration window',
+      'Moved downstream enrichment calls off the critical response path using CompletableFuture, eliminated synchronous blocking on three high-traffic endpoints',
       'Improved Redis cache hit rate from 54% to 87% by replacing per-row TTLs with domain-aligned invalidation and tag-based cache busting',
     ],
   },
@@ -104,7 +104,7 @@ const technicalDepth = [
 
 export default function About() {
   usePageMeta(
-    'About Kulshresth Jangid — Senior Backend Engineer · Jaipur, India',
+    'About Kulshresth Jangid: Senior Backend Engineer · Jaipur, India',
     'Senior backend engineer from Jaipur, India. I build scalable APIs, SaaS backends, and distributed systems. 4+ years at CarDekho, Rampwin, and Equinix. Open to remote roles globally.',
     {
       canonical: 'https://buildwithkulshresth.com/about',
@@ -167,12 +167,12 @@ export default function About() {
             <p className="text-white/50 leading-relaxed text-sm">
               {genzMode
                 ? 'i write backend code and somehow systems do not fall over. four years. cartech, fintech, saas. real traffic, real incidents, real 2am pages. i own what i build end to end, which means i have to fix it when it breaks, which means i try very hard not to break it.'
-                : 'I design distributed systems, ship production software, and operate what I build. Four years as an engineer across cartech, fintech, and SaaS — working on microservices architectures that handle real traffic, real failure modes, and real consequence when something breaks at 2am. My default orientation is ownership: I define the problem, choose the architecture, write the code, instrument it, and stay on-call for it.'}
+                : 'I design distributed systems, ship production software, and operate what I build. Four years as an engineer across cartech, fintech, and SaaS, working on microservices architectures that handle real traffic, real failure modes, and real consequence when something breaks at 2am. My default orientation is ownership: I define the problem, choose the architecture, write the code, instrument it, and stay on-call for it.'}
             </p>
             <p className="text-white/50 leading-relaxed text-sm">
               {genzMode
                 ? 'i think in systems before i think in features. what breaks first? where does data get lost? what happens at 100x load? boring obvious solutions that compose well beat clever abstractions that hide failure modes every single time.'
-                : 'I think in systems before I think in features. Before writing code, I want to understand the consistency requirements, the failure boundary, the scaling inflection point, and the operational cost. I don\'t optimize for elegance \u2014 I optimize for correctness under load and debuggability under incident. Boring, obvious solutions that compose well are better than clever abstractions that hide failure modes.'}
+                : 'I think in systems before I think in features. Before writing code, I want to understand the consistency requirements, the failure boundary, the scaling inflection point, and the operational cost. I don\'t optimize for elegance, I optimize for correctness under load and debuggability under incident. Boring, obvious solutions that compose well are better than clever abstractions that hide failure modes.'}
             </p>
             <p className="text-white/50 leading-relaxed text-sm">
               {genzMode ? (
@@ -181,7 +181,7 @@ export default function About() {
                 </>
               ) : (
                 <>
-                  I founded <span className="text-white font-medium">Kaizex</span> \u2014 a multi-tenant Marketing Operating System \u2014 as a product, not a side project. Four-stage pipeline: Source \u2192 Insight \u2192 Content \u2192 Distribution. Three automation modes. BYO-AI with no model lock-in. Scheduling engine validated at 1M+ tasks/instance. Entry point: <span className="text-white/70 font-mono text-xs">tic-tac-toe</span>. Frontend at <span className="text-white/70 font-mono text-xs">/kaizex</span>. Backend: <span className="text-white/70 font-mono text-xs">smart-server</span>. Designed, deployed, and operated end-to-end.
+                  I founded <span className="text-white font-medium">Kaizex</span>, a multi-tenant Marketing Operating System, as a product, not a side project. Four-stage pipeline: Source → Insight → Content → Distribution. Three automation modes. BYO-AI with no model lock-in. Scheduling engine validated at 1M+ tasks/instance. Entry point: <span className="text-white/70 font-mono text-xs">tic-tac-toe</span>. Frontend at <span className="text-white/70 font-mono text-xs">/kaizex</span>. Backend: <span className="text-white/70 font-mono text-xs">smart-server</span>. Designed, deployed, and operated end-to-end.
                 </>
               )}
             </p>
@@ -265,7 +265,7 @@ export default function About() {
           </div>
         </div>
 
-        {/* Testimonials — whole block hidden until at least one is approved */}
+        {/* Testimonials, whole block hidden until at least one is approved */}
         {testimonials.some((t) => t.approved) && (
           <div>
             <h2 className="text-sm font-semibold text-white mb-5 font-mono flex items-center gap-2">
