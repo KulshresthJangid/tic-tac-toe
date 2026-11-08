@@ -11,19 +11,19 @@ type RunState = 'idle' | 'running' | 'done'
 const script = [
   { text: 'Compiling 4 years of production incidents into 2 pages...', delay: 260 },
   { text: 'Packaging: experience.json → skills.json → impact-metrics.json', delay: 220 },
-  { text: 'Bundling PDF — kulshresth-jangid-resume.pdf (231 KB)', delay: 240 },
+  { text: 'Bundling PDF, kulshresth-jangid-resume.pdf (231 KB)', delay: 240 },
   { text: '[ DONE ] Saved to Downloads ✓', delay: 320, color: 'text-white/80' },
 ]
 
 const genzScript = [
   { text: 'cooking up 4 years of not crashing prod into 2 pages...', delay: 260 },
   { text: 'packaging: receipts.json -> flexes.json -> the-good-stuff.json', delay: 220 },
-  { text: 'bundling pdf — kulshresth-jangid-resume.pdf (231 kb)', delay: 240 },
+  { text: 'bundling pdf, kulshresth-jangid-resume.pdf (231 kb)', delay: 240 },
   { text: "[ DONE ] it's in your downloads. go get it. ✓", delay: 320, color: 'text-white/80' },
 ]
 
 /**
- * Terminal-styled resume download — matches TerminalBlock's window chrome
+ * Terminal-styled resume download, matches TerminalBlock's window chrome
  * so it reads as part of the same fake-infra bit the rest of the site runs,
  * not a bolted-on widget. Clicking "runs" a short fake script and triggers
  * the real download once it finishes; the icon button next to it is the
@@ -55,12 +55,12 @@ export default function ResumeDownload({ className = '' }: { className?: string 
 
   return (
     <div className={cn('glass rounded-xl p-5 font-mono text-sm', className)}>
-      {/* Window chrome — same pattern as TerminalBlock */}
+      {/* Window chrome, same pattern as TerminalBlock */}
       <div className="flex items-center gap-1.5 mb-4 pb-3 border-b border-white/[0.06]">
         <span className="w-3 h-3 rounded-full bg-white/10" />
         <span className="w-3 h-3 rounded-full bg-white/10" />
         <span className="w-3 h-3 rounded-full bg-white/10" />
-        <span className="ml-3 text-xs text-white/20 select-none">bash — resume.sh</span>
+        <span className="ml-3 text-xs text-white/20 select-none">bash, resume.sh</span>
         <a
           href={RESUME_PATH}
           download={RESUME_FILENAME}

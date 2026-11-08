@@ -29,7 +29,7 @@ export default function TerminalBlock({ lines, className = '' }: TerminalBlockPr
         <span className="w-3 h-3 rounded-full bg-white/10" />
         <span className="w-3 h-3 rounded-full bg-white/10" />
         <span className="w-3 h-3 rounded-full bg-white/10" />
-        <span className="ml-3 text-xs text-white/20 select-none">bash — server@production</span>
+        <span className="ml-3 text-xs text-white/20 select-none">bash, server@production</span>
       </div>
 
       <div className="space-y-1.5">
