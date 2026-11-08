@@ -4,7 +4,7 @@
 // That means AI/search crawlers that don't execute JS (GPTBot, ClaudeBot,
 // PerplexityBot, and others) only ever see an empty <div id="root">, plus
 // the per-page <title>/meta/JSON-LD that usePageMeta() injects at runtime
-// via useEffect — also invisible to them.
+// via useEffect, also invisible to them.
 //
 // This script boots a static server over the just-built dist/, drives a
 // headless Chromium through every public route, waits for React to mount
@@ -14,7 +14,7 @@
 // over the SPA fallback, so this needs no server config changes.
 //
 // Client-side navigation is untouched: React re-renders over this markup
-// on load (createRoot, not hydrateRoot — no hydration mismatch risk).
+// on load (createRoot, not hydrateRoot, no hydration mismatch risk).
 
 import { chromium } from 'playwright-chromium'
 import { createServer } from 'node:http'
@@ -26,7 +26,7 @@ import { fileURLToPath } from 'node:url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const DIST = path.join(__dirname, '..', 'dist')
 
-// Public, indexable routes only — admin/dsa/ai-ml are behind ProtectedRoute
+// Public, indexable routes only, admin/dsa/ai-ml are behind ProtectedRoute
 // and disallowed in robots.txt, so they're intentionally excluded here too.
 const ROUTES = [
   '/',
@@ -84,7 +84,7 @@ function startStaticServer() {
 
 async function main() {
   if (!existsSync(DIST)) {
-    console.error('[prerender] dist/ not found — run `vite build` first.')
+    console.error('[prerender] dist/ not found, run `vite build` first.')
     process.exit(1)
   }
 
@@ -99,7 +99,7 @@ async function main() {
 
   for (const route of ROUTES) {
     await page.goto(base + route, { waitUntil: 'networkidle' })
-    // usePageMeta runs in a useEffect after mount — give it a beat past
+    // usePageMeta runs in a useEffect after mount, give it a beat past
     // networkidle to guarantee title/meta/JSON-LD are written to <head>.
     await page.waitForFunction(() => !!document.getElementById('root')?.children.length)
     await page.waitForTimeout(250)
