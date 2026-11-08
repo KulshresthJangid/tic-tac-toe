@@ -1,55 +1,127 @@
 import { useEffect, useRef, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { animate, motion, useInView, useReducedMotion } from 'framer-motion'
-import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ArrowRight, Box, MessageCircle, Rocket, ShieldCheck, Zap } from 'lucide-react'
 import { usePageMeta } from '../hooks/usePageMeta'
-import LatencyTrace from '../components/LatencyTrace'
-import { CALENDLY_URL } from '../components/Navbar'
-import { projects } from '../data/projects'
-import { testimonials } from '../data/testimonials'
+import EnquiryForm from '../components/EnquiryForm'
+import FaqList, { type FaqItem } from '../components/FaqList'
+import TestimonialCarousel from '../components/TestimonialCarousel'
+import { testimonials as allTestimonials } from '../data/testimonials'
 
-const EMAIL = 'jangidkulshresth@gmail.com'
+// The one person who hired me for freelance work goes first.
+const testimonials = [...allTestimonials].sort((a, b) => Number(b.id === 'nikhil-saini') - Number(a.id === 'nikhil-saini'))
 
 /*
- * Page structure follows one rule: if a section does not raise the share of
- * qualified visitors who book a call, it does not belong here. Offers, process
- * and pricing detail live on /hire for people who want them.
+ * One page, one job: get a qualified project enquiry. The enquiry form sits in
+ * the hero, the proof sits underneath it, and everything else answers a
+ * question a buyer has before they write. Offer detail lives on /hire.
  */
 
-// Top three reasons a founder hesitates to hire a freelancer, most common first.
-const objections = [
+const stats = [
+  { icon: Zap, value: '4+ years', label: 'of backend engineering' },
+  { icon: Box, value: '1M+', label: 'scheduled tasks per instance' },
+  { icon: ShieldCheck, value: '-40%', label: 'database latency (CarDekho)' },
+]
+
+const services = [
   {
-    q: 'Will it hold up in production?',
-    a: 'Four years running real traffic at CarDekho, Rampwin and Equinix. Every number on this page comes from a system I shipped.',
+    icon: Rocket,
+    title: 'MVP backend development',
+    body: 'Build your idea on a reliable, scalable backend. Fixed scope, fixed price, live in about three weeks.',
   },
   {
-    q: 'What will it cost, and what if scope drifts?',
-    a: 'Fixed scope and milestones, agreed in writing before any work starts. You own the code the day it is delivered.',
+    icon: Zap,
+    title: 'Backend performance optimisation',
+    body: 'Find the bottlenecks, fix them, and measure the difference. Faster responses and fewer 2am pages.',
   },
   {
-    q: 'Can we work across time zones?',
-    a: 'About four hours of live overlap with US Eastern mornings, plus a written update and a working demo every week.',
+    icon: MessageCircle,
+    title: 'Custom chatbot development',
+    body: 'A chatbot backend you own and can shape, wired into your data and tools, not another SaaS subscription.',
   },
 ]
 
-const proof = [
-  { value: 40, suffix: '%', label: 'lower p99 database latency', where: 'CarDekho', to: '/projects/api-performance' },
-  { value: 30, suffix: '%', label: 'fewer failed deployments', where: 'Equinix', to: '/projects/cicd-automation' },
-  { value: 28, suffix: '%', label: 'faster incident recovery', where: 'Rampwin', to: '/projects/microservices-migration' },
-  { value: 1, suffix: 'M+', label: 'scheduled tasks per instance', where: 'Kaizex', to: '/projects/social-saas' },
+const weeks = [
+  { n: 'Week 1', title: 'Foundation', body: 'Schema, authentication and API design, agreed with you before code.' },
+  { n: 'Week 2', title: 'Build', body: 'Core endpoints, background jobs and tests on the critical paths.' },
+  { n: 'Week 3', title: 'Ship', body: 'Production deploy, CI/CD, docs and a handover walkthrough.' },
+]
+
+const caseStudies = [
+  {
+    company: 'CarDekho',
+    value: -40,
+    suffix: '%',
+    label: 'Database latency',
+    body: 'Optimised queries, indexing and caching for faster, steadier responses.',
+    to: '/projects/api-performance',
+  },
+  {
+    company: 'Rampwin',
+    value: -28,
+    suffix: '%',
+    label: 'Incident recovery time',
+    body: 'Split a monolith into bounded services so failures stay contained.',
+    to: '/projects/microservices-migration',
+  },
+  {
+    company: 'Equinix',
+    value: -30,
+    suffix: '%',
+    label: 'Deployment failures',
+    body: 'Canary releases with automatic rollback for steadier deployments.',
+    to: '/projects/cicd-automation',
+  },
+]
+
+const faqs: FaqItem[] = [
+  {
+    q: 'Can you guarantee a timeline?',
+    a: 'For a defined MVP scope I put the timeline in writing before work starts, typically three weeks. If the scope changes, we agree the new timeline before I continue.',
+  },
+  {
+    q: 'Do you work with startups?',
+    a: 'Yes. Early stage startups and small product teams are who I build for: founders who need a solid backend without hiring a full team.',
+  },
+  {
+    q: 'What technologies do you use?',
+    a: 'Node.js and TypeScript, or Java with Spring Boot, for services. PostgreSQL, MySQL, MongoDB and Redis for data. Docker, Kubernetes and CI/CD for delivery.',
+  },
+  {
+    q: 'Do you provide post-launch support?',
+    a: 'Every project ends with documentation, a runbook and a walkthrough. If you want me to stay on, I can support and extend the system as ongoing hourly work.',
+  },
+  {
+    q: 'What are your engagement models?',
+    a: 'Fixed scope projects with defined milestones, or ongoing hourly work once we have a working rhythm. We agree which fits before any contract.',
+  },
+  {
+    q: 'How do we get started?',
+    a: 'Send the enquiry form or book a 20 minute call. I will reply within one working day with questions or a fixed quote.',
+  },
 ]
 
 function Reveal({ children, delay = 0, className = '' }: { children: ReactNode; delay?: number; className?: string }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 22 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
       {children}
     </motion.div>
+  )
+}
+
+function SectionTitle({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex items-center gap-5 mb-10">
+      <span className="h-px flex-1 bg-white/[0.14]" aria-hidden />
+      <h2 className="display text-3xl sm:text-4xl text-white text-center">{children}</h2>
+      <span className="h-px flex-1 bg-white/[0.14]" aria-hidden />
+    </div>
   )
 }
 
@@ -66,7 +138,7 @@ function CountUp({ to, suffix }: { to: number; suffix: string }) {
       return
     }
     const controls = animate(0, to, {
-      duration: 1.5,
+      duration: 1.4,
       ease: [0.22, 1, 0.36, 1],
       onUpdate: (v) => {
         el.textContent = `${Math.round(v)}${suffix}`
@@ -81,7 +153,7 @@ function CountUp({ to, suffix }: { to: number; suffix: string }) {
 /* A headline line that slides up out of a mask. */
 function Line({ children, delay }: { children: ReactNode; delay: number }) {
   return (
-    <span className="block overflow-hidden pb-[0.08em]">
+    <span className="block overflow-hidden pb-[0.1em]">
       <motion.span
         className="block"
         initial={{ y: '105%' }}
@@ -94,64 +166,28 @@ function Line({ children, delay }: { children: ReactNode; delay: number }) {
   )
 }
 
-function CallButton({ size = 'md' }: { size?: 'md' | 'lg' }) {
-  const lg = size === 'lg'
-  return (
-    <a
-      href={CALENDLY_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`group inline-flex items-center gap-2.5 rounded-full bg-signal text-ink font-medium hover:bg-white transition-colors duration-200 ${
-        lg ? 'pl-7 pr-2.5 py-2.5 text-base' : 'pl-6 pr-2 py-2'
-      }`}
-    >
-      Book a free 20 minute call
-      <span
-        className={`${lg ? 'w-10 h-10' : 'w-9 h-9'} rounded-full bg-ink text-white flex items-center justify-center group-hover:rotate-45 transition-transform duration-300`}
-      >
-        <ArrowUpRight size={lg ? 18 : 17} />
-      </span>
-    </a>
-  )
-}
-
 export default function Home() {
   usePageMeta(
-    'Kulshresth Jangid | Freelance Backend Engineer for Startups',
-    'Slow backend? I find what is slowing your API down, fix it, and show you the numbers. Freelance backend engineer for startups. Node.js, TypeScript, Java. Remote from India.',
+    'Kulshresth Jangid | Freelance Backend Engineer for SaaS Startups',
+    'Build your SaaS product with confidence. A production-ready backend in 3 weeks, with clean architecture, scalability and business focus. Freelance backend engineer, Node.js, TypeScript and Java.',
     {
       canonical: 'https://buildwithkulshresth.com/',
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
-        mainEntity: [
-          {
-            '@type': 'Question',
-            name: 'What does Kulshresth Jangid do?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Freelance backend engineering: API performance, microservices, deployment reliability, and LLM or chatbot backends, using Node.js, TypeScript and Java.',
-            },
-          },
-          {
-            '@type': 'Question',
-            name: 'Is Kulshresth Jangid available for freelance projects?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Yes. He takes a small number of fixed scope projects at a time, working remotely from Jaipur, India.',
-            },
-          },
-        ],
+        mainEntity: faqs.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
       },
     },
   )
 
   const heroRef = useRef<HTMLElement>(null)
   const reduce = useReducedMotion()
-  const approved = testimonials.filter((t) => t.approved)
-  const featured = approved.find((t) => t.id === 'nikhil-saini') ?? approved[0]
-  const others = approved.filter((t) => t.id !== featured?.id).slice(0, 2)
-  const work = projects.slice(0, 3)
+  const weeksRef = useRef<HTMLDivElement>(null)
+  const weeksInView = useInView(weeksRef, { once: true, margin: '-80px' })
 
   function onHeroMove(e: React.PointerEvent<HTMLElement>) {
     if (reduce || e.pointerType === 'touch') return
@@ -164,224 +200,210 @@ export default function Home() {
 
   return (
     <div>
-      {/* 1. Hero: one promise, one clarifying line, proof as the image, one button */}
+      {/* Hero: promise on the left, the enquiry form on the right */}
       <section
         ref={heroRef}
         onPointerMove={onHeroMove}
-        className="spotlight relative overflow-hidden border-b border-white/[0.08]"
+        className="spotlight relative overflow-hidden border-b border-white/[0.1]"
       >
         <div className="rule-grid absolute inset-0 pointer-events-none" aria-hidden />
-        <div className="relative max-w-7xl mx-auto px-5 sm:px-8 pt-14 sm:pt-20 pb-16 sm:pb-24 grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          <div className="lg:col-span-6">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-8 pt-12 sm:pt-16 pb-14 sm:pb-20 grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+          <div className="lg:col-span-7">
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              className="eyebrow flex items-center gap-2.5 mb-7"
+              transition={{ duration: 0.7 }}
+              className="inline-flex items-center gap-2.5 rounded-full border border-white/[0.16] bg-surface/70 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-white/80 mb-7"
             >
               <span className="relative flex w-2 h-2">
                 <span className="absolute inline-flex h-full w-full rounded-full bg-signal opacity-60 animate-ping" />
                 <span className="relative inline-flex w-2 h-2 rounded-full bg-signal" />
               </span>
-              Freelance backend engineer, taking new projects
+              Freelance backend engineer
             </motion.p>
 
-            <h1 className="display text-[3.1rem] sm:text-7xl lg:text-[5.2rem] leading-[1] text-white">
-              <Line delay={0.1}>Slow backend?</Line>
-              <Line delay={0.25}>
-                I&rsquo;ll make it <em className="text-signal">fast.</em>
+            <h1 className="display text-[3rem] sm:text-7xl lg:text-[5rem] leading-[1.02] text-white">
+              <Line delay={0.1}>Build your SaaS product</Line>
+              <Line delay={0.24}>
+                with <em className="text-signal">confidence.</em>
               </Line>
             </h1>
 
             <motion.p
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="mt-7 max-w-xl text-base sm:text-lg leading-relaxed text-white/70"
+              transition={{ duration: 0.8, delay: 0.55 }}
+              className="mt-7 max-w-xl text-lg sm:text-xl leading-relaxed text-white/80"
             >
-              I find what is slowing your API down, fix it, and show you the numbers. At CarDekho that meant p99 database
-              latency down 40%.
+              Get a production-ready backend, built in 3 weeks, with clean architecture, scalability and business focus.
             </motion.p>
 
-            <motion.div
+            <motion.ul
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="mt-9"
+              transition={{ duration: 0.8, delay: 0.75 }}
+              className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-0 sm:divide-x divide-white/[0.14] max-w-2xl"
             >
-              <CallButton />
-            </motion.div>
+              {stats.map(({ icon: Icon, value, label }) => (
+                <li key={label} className="sm:px-6 first:sm:pl-0 flex sm:block items-center gap-4">
+                  <Icon size={26} strokeWidth={1.5} className="text-signal sm:mb-3 flex-shrink-0" />
+                  <div>
+                    <p className="display text-3xl text-white leading-none">{value}</p>
+                    <p className="mt-1.5 text-sm text-white/65 leading-snug">{label}</p>
+                  </div>
+                </li>
+              ))}
+            </motion.ul>
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-6"
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-5"
           >
-            <LatencyTrace />
+            <div className="rounded-2xl border border-white/[0.16] bg-surface/80 backdrop-blur-sm p-6 sm:p-7 shadow-[0_20px_60px_-30px_rgb(0_0_0/0.5)]">
+              <h2 className="display text-3xl text-white">Tell me about your project.</h2>
+              <p className="mt-1.5 mb-5 text-sm text-white/65">I review your requirements and get back to you within one working day.</p>
+              <EnquiryForm variant="full" submitLabel="Send enquiry" source="hero" />
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* 2. Three objections, most common first */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
-        <div className="grid md:grid-cols-3 gap-x-10 gap-y-10">
-          {objections.map((o, i) => (
-            <Reveal key={o.q} delay={i * 0.08}>
-              <div className="border-t border-white/20 pt-5 h-full">
-                <span className="font-mono text-xs text-signal">0{i + 1}</span>
-                <h2 className="display text-3xl text-white mt-3 leading-tight">{o.q}</h2>
-                <p className="mt-3 text-white/65 leading-relaxed">{o.a}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* 3. Social proof, underneath */}
-      <section id="proof" className="border-y border-white/[0.08] bg-surface/50 scroll-mt-20">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
+      {/* What clients say */}
+      {testimonials.some((t) => t.approved) && (
+        <section className="max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-20">
           <Reveal>
-            <p className="eyebrow mb-4">Proof</p>
-            <h2 className="display text-4xl sm:text-5xl text-white leading-[1.05] max-w-3xl">
-              Numbers from teams I have worked with.
-            </h2>
+            <SectionTitle>What clients say</SectionTitle>
+            <TestimonialCarousel testimonials={testimonials} />
           </Reveal>
+        </section>
+      )}
 
-          <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 border-t border-l border-white/[0.09]">
-            {proof.map((p, i) => (
-              <Reveal key={p.label} delay={i * 0.07} className="border-r border-b border-white/[0.09]">
-                <Link to={p.to} className="group block h-full p-6 sm:p-8 hover:bg-ink/60 transition-colors duration-300">
-                  <div className="display text-6xl sm:text-7xl text-white group-hover:text-signal transition-colors duration-300 tabular-nums">
-                    <CountUp to={p.value} suffix={p.suffix} />
-                  </div>
-                  <p className="mt-4 text-sm sm:text-base text-white/70 leading-snug">{p.label}</p>
-                  <p className="mt-6 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.18em] text-white/40">
-                    {p.where}
-                    <ArrowUpRight size={15} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </p>
+      {/* Services */}
+      <section className="border-y border-white/[0.1] bg-surface/50">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-20">
+          <Reveal>
+            <SectionTitle>Services</SectionTitle>
+          </Reveal>
+          <div className="grid md:grid-cols-3 gap-5">
+            {services.map(({ icon: Icon, title, body }, i) => (
+              <Reveal key={title} delay={i * 0.08}>
+                <Link
+                  to="/hire"
+                  className="group h-full rounded-2xl border border-white/[0.14] bg-ink/40 p-7 flex flex-col gap-4 hover:border-signal/60 hover:-translate-y-1 transition-all duration-300"
+                >
+                  <Icon size={30} strokeWidth={1.5} className="text-signal" />
+                  <h3 className="display text-2xl text-white leading-tight">{title}</h3>
+                  <p className="text-white/70 leading-relaxed flex-1">{body}</p>
+                  <span className="inline-flex items-center gap-1.5 text-sm text-white group-hover:text-signal transition-colors">
+                    Learn more <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+                  </span>
                 </Link>
               </Reveal>
             ))}
           </div>
-
-          {featured && (
-            <Reveal className="mt-16">
-              <blockquote>
-                <p className="display text-3xl sm:text-4xl lg:text-5xl leading-[1.15] text-white max-w-5xl">
-                  <span className="text-signal">&ldquo;</span>
-                  {featured.quote}
-                  <span className="text-signal">&rdquo;</span>
-                </p>
-                <footer className="mt-8 flex items-center gap-4">
-                  <span className="w-11 h-11 rounded-full border border-white/20 flex items-center justify-center font-mono text-xs text-white/70">
-                    {featured.name
-                      .split(' ')
-                      .map((w) => w[0])
-                      .join('')
-                      .slice(0, 2)}
-                  </span>
-                  <div>
-                    <p className="text-white font-medium">
-                      {featured.linkedinUrl ? (
-                        <a href={featured.linkedinUrl} target="_blank" rel="noopener noreferrer" className="hover:text-signal transition-colors">
-                          {featured.name}
-                        </a>
-                      ) : (
-                        featured.name
-                      )}
-                    </p>
-                    <p className="font-mono text-xs text-white/45">
-                      {featured.role}, {featured.company}
-                    </p>
-                  </div>
-                </footer>
-              </blockquote>
-            </Reveal>
-          )}
-
-          {others.length > 0 && (
-            <div className="mt-12 grid md:grid-cols-2 gap-5">
-              {others.map((t, i) => (
-                <Reveal key={t.id} delay={i * 0.1}>
-                  <figure className="h-full rounded-2xl border border-white/[0.09] bg-ink p-6 flex flex-col gap-5">
-                    <blockquote className="text-white/70 leading-relaxed flex-1">{t.quote}</blockquote>
-                    <figcaption className="pt-4 border-t border-white/[0.08]">
-                      <p className="text-sm text-white font-medium">
-                        {t.linkedinUrl ? (
-                          <a href={t.linkedinUrl} target="_blank" rel="noopener noreferrer" className="hover:text-signal transition-colors">
-                            {t.name}
-                          </a>
-                        ) : (
-                          t.name
-                        )}
-                      </p>
-                      <p className="font-mono text-[11px] text-white/45 mt-0.5">
-                        {t.role}
-                        {t.company ? `, ${t.company}` : ''}
-                      </p>
-                    </figcaption>
-                  </figure>
-                </Reveal>
-              ))}
-            </div>
-          )}
         </div>
       </section>
 
-      {/* 4. Selected work: three rows, no extras */}
+      {/* About, with the 3 week plan in place of a stock photo */}
       <section className="max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
-        <Reveal className="flex flex-wrap items-end justify-between gap-6">
-          <h2 className="display text-4xl sm:text-5xl text-white leading-[1.05]">Recent work</h2>
-          <Link to="/projects" className="group inline-flex items-center gap-2 text-white/80 hover:text-white">
-            <span className="border-b border-white/30 group-hover:border-signal pb-0.5 transition-colors">All case studies</span>
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </Reveal>
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <Reveal>
+            <div ref={weeksRef} className="rounded-2xl border border-white/[0.14] bg-surface p-7 sm:p-8">
+              <p className="eyebrow mb-1">How the 3 weeks go</p>
+              <p className="text-sm text-white/60 mb-7">Fixed scope, fixed price, you own the code.</p>
+              <ol className="relative space-y-7">
+                <span className="absolute left-[11px] top-2 bottom-2 w-px bg-white/[0.14]" aria-hidden />
+                <motion.span
+                  className="absolute left-[11px] top-2 w-px bg-signal origin-top"
+                  style={{ height: 'calc(100% - 1rem)' }}
+                  initial={{ scaleY: 0 }}
+                  animate={{ scaleY: weeksInView ? 1 : 0 }}
+                  transition={{ duration: reduce ? 0 : 1.6, ease: 'easeInOut' }}
+                  aria-hidden
+                />
+                {weeks.map((w) => (
+                  <li key={w.n} className="relative pl-10">
+                    <span className="absolute left-0 top-1 w-6 h-6 rounded-full border border-signal bg-ink flex items-center justify-center">
+                      <span className="w-2 h-2 rounded-full bg-signal" />
+                    </span>
+                    <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-signal">{w.n}</p>
+                    <p className="display text-2xl text-white mt-0.5">{w.title}</p>
+                    <p className="text-white/70 mt-1 leading-relaxed">{w.body}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </Reveal>
 
-        <div className="mt-10 border-t border-white/[0.09]">
-          {work.map((p, i) => (
-            <Reveal key={p.id} delay={i * 0.06}>
-              <Link
-                to={`/projects/${p.id}`}
-                className="group flex items-start justify-between gap-6 py-7 sm:py-8 border-b border-white/[0.09] hover:pl-3 transition-all duration-300"
-              >
-                <div>
-                  <h3 className="display text-3xl sm:text-4xl text-white group-hover:text-signal transition-colors duration-300 leading-tight">
-                    {p.title}
-                  </h3>
-                  <p className="mt-3 text-white/60 leading-relaxed max-w-2xl">{p.shortDescription}</p>
-                </div>
-                <ArrowUpRight size={22} className="mt-2 flex-shrink-0 text-white/30 group-hover:text-signal transition-colors" />
-              </Link>
-            </Reveal>
-          ))}
+          <Reveal delay={0.1}>
+            <p className="eyebrow text-signal mb-3">About me</p>
+            <h2 className="display text-4xl sm:text-5xl text-white leading-[1.05]">
+              A backend engineer with a <em className="text-signal">product mindset.</em>
+            </h2>
+            <p className="mt-6 text-lg text-white/75 leading-relaxed max-w-xl">
+              I&rsquo;m Kulshresth Jangid, a backend engineer with 4+ years of experience building scalable systems for startups and
+              enterprises like CarDekho, Rampwin and Equinix.
+            </p>
+            <Link
+              to="/about"
+              className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-3 text-white hover:border-signal hover:text-signal transition-colors"
+            >
+              Know more about me <ArrowRight size={16} />
+            </Link>
+          </Reveal>
         </div>
       </section>
 
-      {/* 5. One last ask */}
-      <section className="relative overflow-hidden border-t border-white/[0.08]">
-        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_120%,rgba(176,228,204,0.2),transparent_60%)]" aria-hidden />
-        <div className="relative max-w-4xl mx-auto px-5 sm:px-8 py-24 sm:py-32 text-center">
+      {/* Case studies */}
+      <section className="border-y border-white/[0.1] bg-surface/50">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-20">
           <Reveal>
-            <h2 className="display text-5xl sm:text-7xl text-white leading-[1.02]">
-              Tell me what is slow. <em className="text-signal">I&rsquo;ll tell you if I can fix it.</em>
-            </h2>
-            <div className="mt-10 flex justify-center">
-              <CallButton size="lg" />
+            <SectionTitle>Case studies</SectionTitle>
+          </Reveal>
+          <div className="grid md:grid-cols-3 gap-5">
+            {caseStudies.map((c, i) => (
+              <Reveal key={c.company} delay={i * 0.08}>
+                <Link
+                  to={c.to}
+                  className="group h-full rounded-2xl border border-white/[0.14] bg-ink/40 p-7 flex flex-col gap-3 hover:border-signal/60 hover:-translate-y-1 transition-all duration-300"
+                >
+                  <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/70">{c.company}</p>
+                  <p className="display text-6xl text-signal tabular-nums">
+                    <CountUp to={c.value} suffix={c.suffix} />
+                  </p>
+                  <p className="text-white font-medium">{c.label}</p>
+                  <p className="text-white/65 leading-relaxed flex-1">{c.body}</p>
+                  <span className="inline-flex items-center gap-1.5 text-sm text-white group-hover:text-signal transition-colors">
+                    Read case study <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact and FAQ */}
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+          <Reveal>
+            <div id="contact" className="scroll-mt-24 rounded-2xl border border-white/[0.16] bg-surface p-7 sm:p-8">
+              <h2 className="display text-4xl text-white">Let&rsquo;s discuss your project.</h2>
+              <p className="mt-2 mb-6 text-white/70">Share a few details and I&rsquo;ll get back to you.</p>
+              <EnquiryForm variant="compact" submitLabel="Get in touch" source="contact" />
             </div>
-            <p className="mt-6 text-sm text-white/55">
-              Prefer email?{' '}
-              <a href={`mailto:${EMAIL}`} className="text-white/80 hover:text-signal transition-colors">
-                {EMAIL}
-              </a>{' '}
-              or see{' '}
-              <Link to="/hire" className="text-white/80 hover:text-signal transition-colors">
-                what I take on and how I work
-              </Link>
-              .
-            </p>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <div id="faq" className="scroll-mt-24">
+              <div className="flex items-end justify-between gap-4 mb-5">
+                <h2 className="display text-4xl text-white">Frequently asked questions</h2>
+              </div>
+              <FaqList items={faqs} />
+            </div>
           </Reveal>
         </div>
       </section>
