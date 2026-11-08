@@ -13,11 +13,11 @@ interface PageMetaOptions {
   /** JSON-LD structured data object(s) to inject for this page only. Removed on unmount. */
   jsonLd?: object | object[];
   /**
-   * Per-page Open Graph + Twitter Card overrides. Opt-in — pages that don't
+   * Per-page Open Graph + Twitter Card overrides. Opt-in, pages that don't
    * pass this keep whatever og: and twitter: tags index.html (or a previous
    * page) already set, same as canonical's existing behaviour. Unlike
    * canonical, these aren't removed on unmount (og: tags are expected to
-   * always be present once the document has loaded) — they're restored to
+   * always be present once the document has loaded), they're restored to
    * the site-wide homepage defaults instead.
    */
   og?: OgOptions;
@@ -25,7 +25,7 @@ interface PageMetaOptions {
 
 const SITE_DEFAULT = {
   url: 'https://buildwithkulshresth.com/',
-  title: 'Kulshresth Jangid — Backend Engineer · Node.js, TypeScript, Java · Open to Remote',
+  title: 'Kulshresth Jangid: Backend Engineer · Node.js, TypeScript, Java · Open to Remote',
   description:
     'Backend engineer with 4+ years shipping distributed systems, SaaS APIs, and real-time applications. Available for remote roles and consulting.',
   image: 'https://buildwithkulshresth.com/og-image.png',
