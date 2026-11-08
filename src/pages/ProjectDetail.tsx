@@ -33,7 +33,7 @@ export default function ProjectDetail() {
     : undefined
   usePageMeta(
     project
-      ? `${project.title} — Architecture Case Study · Kulshresth Jangid`
+      ? `${project.title}, Architecture Case Study · Kulshresth Jangid`
       : 'Project not found | Kulshresth Jangid',
     project ? project.shortDescription : undefined,
     {
