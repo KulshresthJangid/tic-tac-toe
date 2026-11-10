@@ -63,6 +63,14 @@ const services = [
     title: 'Backend and Architecture Audits',
     desc: 'Reviewing an existing system to find what is slow, broken, or about to break, then fixing the root cause instead of a quick patch.',
   },
+  {
+    title: 'Workflow and AI Automation',
+    desc: 'Automating repetitive manual work, like data entry or follow ups, using scripts and AI so people do not have to do it by hand.',
+  },
+  {
+    title: 'Full Stack Delivery',
+    desc: 'Building both what the customer sees, the app or website, and everything running behind it, as one complete package.',
+  },
 ]
 
 const proofPoints = [
