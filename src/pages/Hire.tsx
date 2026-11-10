@@ -50,6 +50,21 @@ const auditOffer = {
   body: 'If it is slow, flaky or hard to deploy, a 1 to 2 week audit finds the cause and ranks the fixes by impact.',
 }
 
+const services = [
+  {
+    title: 'Backend and API Development',
+    desc: 'Building the engine that runs behind an app or website, so it works fast, handles lots of users, and does not break.',
+  },
+  {
+    title: 'LLM and AI Integration',
+    desc: 'Adding AI features into an existing app or website, like a chatbot that actually answers customers, or smart automation that saves staff time.',
+  },
+  {
+    title: 'Backend and Architecture Audits',
+    desc: 'Reviewing an existing system to find what is slow, broken, or about to break, then fixing the root cause instead of a quick patch.',
+  },
+]
+
 const proofPoints = [
   '4+ years of professional backend and full-stack engineering',
   'Built Zigchat: a no-code chatbot SaaS (Node.js, Express, TypeScript, SQL, NLP)',
@@ -337,6 +352,26 @@ export default function Hire() {
               Ask about an audit &rarr;
             </a>
           </div>
+        </div>
+      </motion.section>
+
+      {/* Full services list */}
+      <motion.section
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.11 }}
+      >
+        <h2 className="display text-4xl text-white mb-2">Services</h2>
+        <p className="text-sm text-white/50 mb-8">
+          Everything above comes together from this list.
+        </p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {services.map(({ title, desc }) => (
+            <GlassCard key={title} hoverable padding="md" className="space-y-2">
+              <h3 className="text-sm font-semibold text-white leading-snug">{title}</h3>
+              <p className="text-sm text-white/60 leading-relaxed">{desc}</p>
+            </GlassCard>
+          ))}
         </div>
       </motion.section>
 
