@@ -71,6 +71,14 @@ const services = [
     title: 'Full Stack Delivery',
     desc: 'Building both what the customer sees, the app or website, and everything running behind it, as one complete package.',
   },
+  {
+    title: 'DevOps and Cloud Infrastructure',
+    desc: 'Setting up and managing servers and cloud hosting, AWS, GCP, Azure, Cloudflare, or custom infra, so the app stays online, fast, and secure.',
+  },
+  {
+    title: 'QA and Test Automation',
+    desc: 'Testing software thoroughly before it goes live, and setting up automatic checks, so bugs get caught before customers ever see them.',
+  },
 ]
 
 const proofPoints = [
