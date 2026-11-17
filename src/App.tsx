@@ -9,6 +9,7 @@ import ProjectDetail from './pages/ProjectDetail'
 import Apps from './pages/Apps'
 import About from './pages/About'
 import Hire from './pages/Hire'
+import Productivity from './pages/Productivity'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -36,6 +37,7 @@ export default function App() {
               <Route path="/projects/:id" element={<ProjectDetail />} />
               <Route path="/apps" element={<Apps />} />
               <Route path="/about" element={<About />} />
+              <Route path="/productivity" element={<Productivity />} />
               <Route path="/hire" element={<Hire />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />

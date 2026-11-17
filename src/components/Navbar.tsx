@@ -16,6 +16,7 @@ const navItems: NavItem[] = [
   { label: 'Home', to: '/' },
   { label: 'Services', to: '/hire' },
   { label: 'Case Studies', to: '/projects' },
+  { label: 'Productivity', to: '/productivity' },
   { label: 'About', to: '/about' },
   { label: 'FAQ', to: '/', hash: '#faq' },
 ]
