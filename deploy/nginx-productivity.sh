@@ -20,7 +20,7 @@ fi
 echo "Patched lookaheads: $(grep -c '(?!productivity|' "$CONF") (expected 4)"
 
 # 2. transcriptor proxy block (skip if already present)
-if ! grep -q 'location ^~ /productivity/transcriptor/' "$CONF"; then
+if ! grep -qF 'location ^~ /productivity/transcriptor/' "$CONF"; then
   BLOCK=$(mktemp)
   cat > "$BLOCK" <<'NGX'
     # ===== PRODUCTIVITY: free transcriptor (docker compose app on 127.0.0.1:8000) =====
@@ -48,6 +48,32 @@ NGX
   awk -v blk="$BLOCK" '/# ===== DEFAULT FALLBACK =====/ { while ((getline l < blk) > 0) print l } { print }' "$CONF" > "$CONF.new"
   mv "$CONF.new" "$CONF"
   rm -f "$BLOCK"
+fi
+
+# 3. WebSocket for live job progress (needs Upgrade headers; skip if already present)
+if ! grep -qF 'location ^~ /productivity/transcriptor/ws/' "$CONF"; then
+  WSBLOCK=$(mktemp)
+  cat > "$WSBLOCK" <<'NGX'
+    # ===== PRODUCTIVITY: transcriptor WebSocket (job progress). Longer prefix than the block
+    # below, so it wins; plain upgrade headers, long idle timeout (the app pings every 20 s). =====
+    location ^~ /productivity/transcriptor/ws/ {
+        proxy_pass         http://127.0.0.1:8000/ws/;
+        proxy_http_version 1.1;
+        proxy_set_header   Upgrade $http_upgrade;
+        proxy_set_header   Connection "upgrade";
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto https;
+        proxy_read_timeout 3600s;
+        proxy_send_timeout 3600s;
+        proxy_buffering    off;
+    }
+
+NGX
+  awk -v blk="$WSBLOCK" '/# ===== DEFAULT FALLBACK =====/ { while ((getline l < blk) > 0) print l } { print }' "$CONF" > "$CONF.new"
+  mv "$CONF.new" "$CONF"
+  rm -f "$WSBLOCK"
 fi
 
 if nginx -t; then
