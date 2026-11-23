@@ -16,7 +16,7 @@
 #      which is noindex) for anything that is not a file or a known route.
 #   4. Adds X-Robots-Tag: noindex for the private SPA routes (/admin, /ai-ml, /dsa*).
 #
-#   6. Adds X-Robots-Tag noindex to `location /kaizex/` (the product UI answers 200 for any slug).
+#   6. Kaizex product UI: noindex header, and a real 404 for /kaizex/<unknown-brand>/ (it answers 200 for any slug).
 #   5. Restricts the two catch-all brand-slug regexes (`^/<any-slug>$` and `^/<any-slug>/(.*)$`,
 #      which 301 to /kaizex/<slug>/...) to BRAND_SLUGS (default "zoralis"), so unknown paths such as
 #      /zzz-random fall through to the real 404. Override: BRAND_SLUGS="zoralis|acme" ./nginx-seo.sh
@@ -128,19 +128,28 @@ elif 'try_files $uri $uri.html =404;' in fb:
 else:
     print("WARNING: default fallback block did not contain `try_files $uri $uri/ /index.html;`; unknown paths there still return 200. Check --inspect.")
 
-# 5. /kaizex/ is the product UI (a client-rendered app that answers 200 "Loading..." for ANY slug, so Google
-#    indexes junk like /kaizex/foo/ as soft-404s). Keep the whole section out of the index.
+# 5. The Kaizex product UI is served by `location ~ ^/kaizex/<slug>/(.*)$ { alias .../out/$2; }`, which answers 200
+#    "Loading..." for ANY slug, so Google indexes junk like /kaizex/foo/ as soft-404s. Two changes:
+#    - unknown brand roots (/kaizex/<not-a-brand>/) return a real 404 (brands = BRAND_SLUGS)
+#    - everything the block serves carries X-Robots-Tag noindex (it is a login-gated product UI)
 NOINDEX = 'add_header X-Robots-Tag "noindex, nofollow" always;'
-m = re.search(r'location /kaizex/ \{', s)
-if m:
+app_re = re.compile(r'([ \t]*)location ~ \^/kaizex/\(\[a-z0-9_-\]\+\)/\(\.\*\)\$ \{')
+m = app_re.search(s)
+if not m:
+    print("WARNING: kaizex app location `^/kaizex/(slug)/(.*)$` not found; /kaizex/* is still indexable")
+else:
+    indent = m.group(1)
     end = s.find('}', m.end())
     if NOINDEX not in s[m.end():end]:
-        s = s[:m.end()] + '\n        ' + NOINDEX + s[m.end():]
-        print("noindex header added to `location /kaizex/`")
+        s = s[:m.end()] + '\n' + indent + '    ' + NOINDEX + s[m.end():]
+        print("noindex header added to the Kaizex app location")
     else:
-        print("`location /kaizex/` already sends noindex")
-else:
-    print("WARNING: `location /kaizex/ {` not found; /kaizex/* is still indexable")
+        print("Kaizex app location already sends noindex")
+    if '# seo: unknown brand roots' not in s:
+        block = (indent + '# seo: unknown brand roots get a real 404 (managed by nginx-seo.sh)\n' + indent +
+                 'location ~ ^/kaizex/(?!(?:' + brands + ')/$)[a-z0-9_-]+/$ { return 404; }\n\n')
+        s = s[:m.start()] + block + s[m.start():]
+        print(f"unknown /kaizex/<slug>/ now 404s (allowed brands: {brands})")
 
 open(conf, 'w').write(s)
 PY
