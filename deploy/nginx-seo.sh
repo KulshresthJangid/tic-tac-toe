@@ -16,12 +16,16 @@
 #      which is noindex) for anything that is not a file or a known route.
 #   4. Adds X-Robots-Tag: noindex for the private SPA routes (/admin, /ai-ml, /dsa*).
 #
-# Not handled here: unknown single-segment paths such as /zzz-random are currently caught by the
-# Kaizex brand-slug regexes (301 -> /kaizex/<slug>/). That needs the live regexes; see
-# `--inspect` output and the note printed at the end.
+#   5. Restricts the two catch-all brand-slug regexes (`^/<any-slug>$` and `^/<any-slug>/(.*)$`,
+#      which 301 to /kaizex/<slug>/...) to BRAND_SLUGS (default "zoralis"), so unknown paths such as
+#      /zzz-random fall through to the real 404. Override: BRAND_SLUGS="zoralis|acme" ./nginx-seo.sh
 set -euo pipefail
 
 CONF=/etc/nginx/conf.d/services.conf
+# Real tenant brand slugs that keep the /<brand> -> /kaizex/<brand>/ shorthand. Pipe-separated.
+# Anything else at the top level is no longer redirected into Kaizex and gets a real 404.
+BRAND_SLUGS="${BRAND_SLUGS:-zoralis}"
+[[ "$BRAND_SLUGS" =~ ^[a-z0-9_|-]+$ ]] || { echo "BRAND_SLUGS must match [a-z0-9_|-]+"; exit 1; }
 DEST=/var/www/tic-tac-toe
 MARK_BEGIN='# ===== SEO ROUTES (managed by deploy/nginx-seo.sh) ====='
 MARK_END='# ===== END SEO ROUTES ====='
@@ -45,19 +49,24 @@ echo "Backup: $BAK"
 # Routes with a flat <route>.html in $DEST (keep in sync with src/seo/manifest.ts).
 TOP_PAGES="about hire privacy terms projects apps productivity blog"
 
-python3 - "$CONF" "$DEST" "$MARK_BEGIN" "$MARK_END" "$TOP_PAGES" <<'PY'
+python3 - "$CONF" "$DEST" "$MARK_BEGIN" "$MARK_END" "$TOP_PAGES" "$BRAND_SLUGS" <<'PY'
 import re, sys
-conf, dest, mark_begin, mark_end, top = sys.argv[1:6]
+conf, dest, mark_begin, mark_end, top, brands = sys.argv[1:7]
 s = open(conf).read()
 
 # 1. drop the old `location = /kaizex { return 301 /kaizex/; }` (we define /kaizex exactly below)
-s, n = re.subn(r'\n[ \t]*location\s*=\s*/kaizex\s*\{[^{}]*\}[ \t]*', '\n', s)
-print(f"removed old `location = /kaizex`: {n}")
+s, n = re.subn(r'\n[ \t]*location\s*=\s*/kaizex/?\s*\{[^{}]*\}[ \t]*', '\n', s)
+print(f"removed old `location = /kaizex` and `= /kaizex/`: {n} (expected 2)")
 
 # 2. reserved slugs
 if '(?!services|blog|' not in s:
     s, n = re.subn(r'\(\?!productivity\|', '(?!services|blog|productivity|', s)
     print(f"lookaheads patched: {n} (expected 4; 0 means productivity patch was never applied, check --inspect)")
+
+# 2b. brand allowlist: the two catch-all regexes whose lookahead excludes kaizex
+s, n1 = re.subn(r'location ~ \^/\(\(\?!([^)]*\|kaizex\|[^)]*)\)\[a-z0-9_-\]\+\)\$ \{', 'location ~ ^/(' + brands + ')$ {', s)
+s, n2 = re.subn(r'location ~ \^/\(\?!([^)]*\|kaizex\|[^)]*)\)\(\[a-z0-9_-\]\+\)/\(\.\*\)\$ \{', 'location ~ ^/(' + brands + ')/(.*)$ {', s)
+print(f"brand catch-all regexes restricted to ({brands}): {n1} + {n2} (expected 1 + 1; 0 + 0 means already applied)")
 
 # 3. managed block
 if mark_begin in s:
@@ -113,6 +122,8 @@ if 'try_files $uri $uri/ /index.html;' in fb:
     new = fb.replace('try_files $uri $uri/ /index.html;', 'try_files $uri $uri.html =404;\n        error_page 404 /404.html;')
     s = s[:j] + new + s[k:]
     print("default fallback now returns 404 for unknown paths")
+elif 'try_files $uri $uri.html =404;' in fb:
+    print("default fallback already returns 404 for unknown paths")
 else:
     print("WARNING: default fallback block did not contain `try_files $uri $uri/ /index.html;`; unknown paths there still return 200. Check --inspect.")
 
