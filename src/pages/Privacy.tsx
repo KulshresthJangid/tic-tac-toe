@@ -9,6 +9,7 @@ const sections = [
       'If you use the contact form I receive your name, email address, budget range and the project summary you type in. Nothing else is required.',
       'If you book a call, the booking is handled by Calendly. They collect the details you give them, and their privacy policy applies to that data.',
       'This site is served through Cloudflare, which records standard technical request data such as IP address, browser and pages requested, and may run privacy focused traffic analytics.',
+      'I also use Google Analytics 4 to count page views and clicks on links and the contact form, so I can see which pages are useful. It records pages visited, approximate location, device and the events listed above, not the contents of what you type into the form. Visitors in Europe are asked before it loads, and it does not run if you decline.',
     ],
   },
   {
@@ -26,7 +27,7 @@ const sections = [
   {
     title: 'Cookies',
     body: [
-      'This site does not set its own tracking cookies. Third party services such as Calendly or Cloudflare may set cookies of their own when you use them.',
+      'This site does not set advertising cookies. Google Analytics sets its own analytics cookies, and only after you accept if you are in Europe. Third party services such as Calendly or Cloudflare may set cookies of their own when you use them.',
     ],
   },
   {
@@ -47,7 +48,10 @@ export default function Privacy() {
   usePageMeta(
     'Privacy | Kulshresth Jangid',
     'How this site handles the details you send through the contact form, Calendly bookings and standard hosting logs.',
-    { canonical: 'https://buildwithkulshresth.com/privacy' },
+    {
+      canonical: 'https://buildwithkulshresth.com/privacy',
+      breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'Privacy', path: '/privacy' }],
+    },
   )
 
   return (

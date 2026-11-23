@@ -17,7 +17,7 @@ export default {
         'signal-soft': 'rgb(var(--c-signal-soft) / <alpha-value>)',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Inter', '"Inter Fallback"', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
         display: ['"Instrument Serif"', 'Georgia', 'serif'],
       },

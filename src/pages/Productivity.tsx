@@ -7,6 +7,10 @@ export default function Productivity() {
   usePageMeta(
     'Productivity Tools | Kulshresth Jangid',
     'Small, free, self-hosted productivity services. Starting with a Hinglish audio and video transcriptor.',
+    {
+      canonical: 'https://buildwithkulshresth.com/productivity',
+      breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'Productivity', path: '/productivity' }],
+    },
   )
 
   return (

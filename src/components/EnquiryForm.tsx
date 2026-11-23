@@ -1,6 +1,7 @@
 import { useState, type FormEvent, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Briefcase, Building2, CheckCircle2, ChevronDown, DollarSign, Loader2, Lock, Mail, User } from 'lucide-react'
+import { track } from '../lib/analytics'
 import { BUDGET_OPTIONS, EMAIL, SERVICE_OPTIONS, WEB3FORMS_ACCESS_KEY } from '../lib/contact'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
@@ -58,6 +59,7 @@ export default function EnquiryForm({ variant = 'full', submitLabel = 'Send enqu
       const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data })
       const result = await res.json()
       if (!result.success) throw new Error(result.message || 'Submission failed')
+      track('generate_lead', { lead_source: source, service: String(data.get('service') ?? '') || undefined, value: 1 })
       setStatus('success')
       form.reset()
     } catch {

@@ -12,6 +12,9 @@ import Hire from './pages/Hire'
 import Productivity from './pages/Productivity'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
+import ServicePage from './pages/ServicePage'
+import Blog from './pages/Blog'
+import BlogPost from './pages/BlogPost'
 import ProtectedRoute from './components/ProtectedRoute'
 import NotFound from './pages/NotFound'
 
@@ -39,6 +42,9 @@ export default function App() {
               <Route path="/about" element={<About />} />
               <Route path="/productivity" element={<Productivity />} />
               <Route path="/hire" element={<Hire />} />
+              <Route path="/services/:slug" element={<ServicePage />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/ai-ml" element={<ProtectedRoute><AIMLRoadmap /></ProtectedRoute>} />

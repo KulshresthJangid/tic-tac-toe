@@ -41,6 +41,8 @@ export const projects: Project[] = [
       'Decoupled incoming/outgoing message queues, inbound webhooks ack instantly and hand off to automation asynchronously; outbound sends never block on a third-party API’s latency',
     ],
     year: 2025,
+    datePublished: '2026-03-19',
+    dateModified: '2026-11-21',
   },
   {
     id: 'microservices-migration',
@@ -68,6 +70,8 @@ export const projects: Project[] = [
       'MongoDB performance optimization under high-write load: compound index design, write concern tuning, and read replica routing',
     ],
     year: 2025,
+    datePublished: '2026-03-19',
+    dateModified: '2026-11-21',
   },
   {
     id: 'api-performance',
@@ -93,6 +97,8 @@ export const projects: Project[] = [
       'Zero latency SLO regressions across two quarters post-deployment',
     ],
     year: 2023,
+    datePublished: '2026-03-19',
+    dateModified: '2026-11-21',
   },
   {
     id: 'cicd-automation',
@@ -118,6 +124,8 @@ export const projects: Project[] = [
       'Runbook library covering 12 failure modes, on-call MTTR improvement measurable within 2 sprint cycles',
     ],
     year: 2025,
+    datePublished: '2026-03-19',
+    dateModified: '2026-11-21',
   },
   {
     id: 'slo-observability',
@@ -143,6 +151,8 @@ export const projects: Project[] = [
       'Automatic post-incident timeline generation from Kibana log queries and Jaeger trace spans, RCA time per incident reduced measurably',
     ],
     year: 2024,
+    datePublished: '2026-03-19',
+    dateModified: '2026-11-21',
   },
   {
     id: 'session-logger',
@@ -176,6 +186,8 @@ export const projects: Project[] = [
       'Self-hosted, zero external SaaS dependencies: entire stack on a single VPS',
     ],
     year: 2025,
+    datePublished: '2026-04-07',
+    dateModified: '2026-08-28',
   },
   {
     id: 'sso-platform',
@@ -206,6 +218,8 @@ export const projects: Project[] = [
       'Credential-stuffing and unauthorized access risk eliminated via centralized, audited authentication path',
     ],
     year: 2025,
+    datePublished: '2026-06-10',
+    dateModified: '2026-11-21',
   },
   {
     id: 'goalbegins',
@@ -233,6 +247,8 @@ export const projects: Project[] = [
       'Fully responsive across mobile, tablet, and desktop, consistent brand experience regardless of device',
     ],
     year: 2024,
+    datePublished: '2026-06-10',
+    dateModified: '2026-08-28',
   },
   {
     id: 'webhook-proxy',
@@ -263,6 +279,8 @@ export const projects: Project[] = [
       'Multi-vendor architecture: designed to add new webhook sources (GitHub, Shopify, Twilio) without changes to the relay core',
     ],
     year: 2025,
+    datePublished: '2026-06-10',
+    dateModified: '2026-11-21',
   },
   {
     id: 'leadgen-pro',
@@ -298,6 +316,8 @@ export const projects: Project[] = [
       'Zero recurring AI cost, no OpenAI/Claude/SaaS bills; limited only by hardware and scraping rate limits',
     ],
     year: 2025,
+    datePublished: '2026-04-09',
+    dateModified: '2026-08-28',
   },
   {
     id: 'twitter-ai-bot',
@@ -329,5 +349,7 @@ export const projects: Project[] = [
       'Topic cycle tracking: exhausts full topic bank before repeating, logs remaining count and cycle number on every run',
     ],
     year: 2025,
+    datePublished: '2026-06-10',
+    dateModified: '2026-08-28',
   },
 ]

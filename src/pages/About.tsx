@@ -108,6 +108,7 @@ export default function About() {
     'Senior backend engineer from Jaipur, India. I build scalable APIs, SaaS backends, and distributed systems. 4+ years at CarDekho, Rampwin, and Equinix. Open to remote roles globally.',
     {
       canonical: 'https://buildwithkulshresth.com/about',
+      breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }],
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'ProfilePage',

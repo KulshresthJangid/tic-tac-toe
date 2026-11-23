@@ -8,6 +8,10 @@ export default function Apps() {
   usePageMeta(
     'Service Registry: tic-tac-toe Gateway | Kulshresth Jangid',
     'Live service registry. tic-tac-toe (entry point) proxies Kaizex frontend at /kaizex and smart-server backend at :8080. Kaizex platform and supporting infrastructure.',
+    {
+      canonical: 'https://buildwithkulshresth.com/apps',
+      breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'Apps', path: '/apps' }],
+    },
   )
   const onlineCount = appServices.filter((s) => s.status === 'ONLINE').length
   const degradedCount = appServices.filter((s) => s.status === 'DEGRADED').length

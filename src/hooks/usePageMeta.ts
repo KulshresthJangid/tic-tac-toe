@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { breadcrumbLd, type Crumb } from '../lib/seo';
 
 interface OgOptions {
   title: string;
@@ -21,6 +22,21 @@ interface PageMetaOptions {
    * the site-wide homepage defaults instead.
    */
   og?: OgOptions;
+  /**
+   * Mark the page noindex (used by the 404 page). Also drops the canonical,
+   * since a noindex page has no canonical URL worth declaring.
+   */
+  noindex?: boolean;
+  /** Adds a BreadcrumbList to the page's JSON-LD. First crumb should be Home. */
+  breadcrumbs?: Crumb[];
+}
+
+const ROBOTS_DEFAULT = 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1';
+
+/** Canonical for the current location when a page does not pass one: no trailing slash, no query/hash. */
+function currentCanonical(): string {
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  return path === '/' ? 'https://buildwithkulshresth.com/' : `https://buildwithkulshresth.com${path}`;
 }
 
 const SITE_DEFAULT = {
@@ -71,19 +87,23 @@ export function usePageMeta(title: string, description?: string, options?: PageM
       tag.content = description;
     }
 
-    if (options?.canonical) {
+    const canonical = options?.noindex ? undefined : (options?.canonical ?? currentCanonical());
+    if (options?.noindex) {
+      setMetaByName('robots', 'noindex, follow');
+      document.querySelector('link[rel="canonical"]')?.remove();
+    } else if (canonical) {
       let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
       if (!link) {
         link = document.createElement('link');
         link.rel = 'canonical';
         document.head.appendChild(link);
       }
-      link.href = options.canonical;
+      link.href = canonical;
     }
 
     if (options?.og) {
       const og = options.og;
-      const url = options.canonical ?? SITE_DEFAULT.url;
+      const url = canonical ?? SITE_DEFAULT.url;
       const image = og.image ?? SITE_DEFAULT.image;
       setMetaByProperty('og:type', og.type ?? 'website');
       setMetaByProperty('og:url', url);
@@ -96,22 +116,31 @@ export function usePageMeta(title: string, description?: string, options?: PageM
     }
 
     let scriptEl: HTMLScriptElement | null = null;
-    if (options?.jsonLd) {
+    const schemaList: object[] = [
+      ...(options?.jsonLd ? (Array.isArray(options.jsonLd) ? options.jsonLd : [options.jsonLd]) : []),
+      ...(options?.breadcrumbs ? [breadcrumbLd(options.breadcrumbs)] : []),
+    ];
+    if (schemaList.length > 0) {
       // Remove any stale page-level schema from a previous route
       document.getElementById('page-jsonld')?.remove();
       scriptEl = document.createElement('script');
       scriptEl.type = 'application/ld+json';
       scriptEl.id = 'page-jsonld';
-      const schemas = Array.isArray(options.jsonLd) ? options.jsonLd : [options.jsonLd];
-      scriptEl.textContent = JSON.stringify(schemas.length === 1 ? schemas[0] : schemas);
+      scriptEl.textContent = JSON.stringify(schemaList.length === 1 ? schemaList[0] : schemaList);
       document.head.appendChild(scriptEl);
     }
 
     return () => {
       document.getElementById('page-jsonld')?.remove();
+      if (options?.noindex) setMetaByName('robots', ROBOTS_DEFAULT);
       // Restore global canonical on unmount
-      const link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-      if (link) link.href = SITE_DEFAULT.url;
+      let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'canonical';
+        document.head.appendChild(link);
+      }
+      link.href = SITE_DEFAULT.url;
 
       if (options?.og) {
         setMetaByProperty('og:type', 'website');
@@ -125,5 +154,5 @@ export function usePageMeta(title: string, description?: string, options?: PageM
       }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, description, options?.canonical, options?.og]);
+  }, [title, description, options?.canonical, options?.og, options?.noindex, options?.breadcrumbs]);
 }

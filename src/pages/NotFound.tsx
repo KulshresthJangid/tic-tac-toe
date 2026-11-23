@@ -40,7 +40,7 @@ const terminalLines = [
 ]
 
 export default function NotFound() {
-  usePageMeta('404: Page Not Found · Kulshresth Jangid')
+  usePageMeta('Page not found | Kulshresth Jangid', 'This page does not exist. Head back to the homepage, services or case studies.', { noindex: true })
   const [msg] = useState(() => glitchMessages[Math.floor(Math.random() * glitchMessages.length)])
   const [visibleLines, setVisibleLines] = useState(0)
 

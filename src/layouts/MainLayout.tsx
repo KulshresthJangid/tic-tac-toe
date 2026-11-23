@@ -2,6 +2,9 @@ import { useEffect, type ReactNode } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import LogoMark from '../components/LogoMark'
+import { services } from '../data/services'
+import { useAnalytics } from '../lib/analytics'
+import ConsentBanner from '../components/ConsentBanner'
 
 interface MainLayoutProps {
   children: ReactNode
@@ -11,6 +14,7 @@ const footerLinks = [
   { label: 'Home', to: '/' },
   { label: 'Services', to: '/hire' },
   { label: 'Case Studies', to: '/projects' },
+  { label: 'Blog', to: '/blog' },
   { label: 'About', to: '/about' },
 ]
 
@@ -41,6 +45,7 @@ function useHashScroll() {
 
 export default function MainLayout({ children }: MainLayoutProps) {
   useHashScroll()
+  useAnalytics()
 
   return (
     <div className="grain min-h-screen flex flex-col">
@@ -81,6 +86,17 @@ export default function MainLayout({ children }: MainLayoutProps) {
           </div>
         </div>
 
+        <nav aria-label="Services" className="border-t border-white/[0.08]">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8 py-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/70">
+            <span className="font-mono text-[11px] uppercase tracking-wider text-white/55">Services</span>
+            {services.map((s) => (
+              <Link key={s.slug} to={`/services/${s.slug}`} className="hover:text-white transition-colors">
+                {s.navLabel}
+              </Link>
+            ))}
+          </div>
+        </nav>
+
         <div className="border-t border-white/[0.08]">
           <div className="max-w-7xl mx-auto px-5 sm:px-8 py-5 flex flex-col lg:flex-row lg:items-center justify-between gap-3 text-[11px] text-white/55 leading-relaxed">
             <span>&copy; {new Date().getFullYear()} Kulshresth Jangid. Client work is covered by a written agreement.</span>
@@ -95,6 +111,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
           </div>
         </div>
       </footer>
+      <ConsentBanner />
     </div>
   )
 }

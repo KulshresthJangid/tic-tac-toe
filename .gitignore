@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# SEO data pulled from Search Console, and generated reports
+data/
+reports/

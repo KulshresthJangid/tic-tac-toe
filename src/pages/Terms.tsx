@@ -49,7 +49,10 @@ export default function Terms() {
   usePageMeta(
     'Terms of Service | Kulshresth Jangid',
     'Terms for using this site and for freelance backend engineering engagements: written agreements, code ownership, confidentiality and results.',
-    { canonical: 'https://buildwithkulshresth.com/terms' },
+    {
+      canonical: 'https://buildwithkulshresth.com/terms',
+      breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'Terms', path: '/terms' }],
+    },
   )
 
   return (

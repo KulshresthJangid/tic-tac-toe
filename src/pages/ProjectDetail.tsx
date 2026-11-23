@@ -1,13 +1,24 @@
+import { useEffect } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { projects } from '../data/projects'
 import GlassCard from '../components/GlassCard'
 import StatusBadge from '../components/StatusBadge'
+import Breadcrumbs from '../components/Breadcrumbs'
+import { projectServiceLinks } from '../data/services'
+import { posts } from '../data/posts'
+import { track } from '../lib/analytics'
+import { absoluteUrl, breadcrumbLd, AUTHOR, PUBLISHER } from '../lib/seo'
 
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>()
   const project = projects.find((p) => p.id === id)
+  const crumbs = [
+    { name: 'Home', path: '/' },
+    { name: 'Case Studies', path: '/projects' },
+    { name: project?.title ?? 'Project', path: `/projects/${id ?? ''}` },
+  ]
   const canonicalUrl = project
     ? `https://buildwithkulshresth.com/projects/${project.id}`
     : undefined
@@ -38,9 +49,34 @@ export default function ProjectDetail() {
     project ? project.shortDescription : undefined,
     {
       canonical: canonicalUrl,
-      jsonLd: projectSchema,
+      jsonLd:
+        project && projectSchema
+          ? [
+              projectSchema,
+              {
+                '@context': 'https://schema.org',
+                '@type': 'TechArticle',
+                headline: `${project.title}: architecture case study`,
+                description: project.shortDescription,
+                url: canonicalUrl,
+                mainEntityOfPage: canonicalUrl,
+                image: absoluteUrl('/og-image.png'),
+                datePublished: project.datePublished,
+                dateModified: project.dateModified,
+                author: AUTHOR,
+                publisher: PUBLISHER,
+                keywords: project.techStack.join(', '),
+                inLanguage: 'en',
+              },
+              breadcrumbLd(crumbs),
+            ]
+          : undefined,
     },
   )
+
+  useEffect(() => {
+    if (project) track('project_view', { project_id: project.id, project_title: project.title })
+  }, [project])
 
   if (!project) return <Navigate to="/projects" replace />
 
@@ -53,12 +89,7 @@ export default function ProjectDetail() {
         className="space-y-8"
       >
         {/* Back */}
-        <Link
-          to="/projects"
-          className="inline-flex items-center gap-1.5 text-sm text-white/30 hover:text-white font-mono transition-colors"
-        >
-          ← back to projects
-        </Link>
+        <Breadcrumbs crumbs={crumbs} />
 
         {/* Header */}
         <div>
@@ -147,6 +178,26 @@ export default function ProjectDetail() {
               ))}
             </div>
           </GlassCard>
+        )}
+
+        {(projectServiceLinks[project.id] || posts.some((p) => p.projectId === project.id)) && (
+          <nav aria-label="Related" className="border-t border-white/[0.1] pt-6 space-y-2">
+            <p className="text-[10px] font-mono text-white/50 uppercase tracking-wider">Related</p>
+            <ul className="space-y-1.5 text-sm">
+              {(projectServiceLinks[project.id] ?? []).map((l) => (
+                <li key={l.slug}>
+                  Hire me for <Link to={`/services/${l.slug}`} className="text-signal hover:underline">{l.anchor}</Link>
+                </li>
+              ))}
+              {posts
+                .filter((p) => p.projectId === project.id)
+                .map((p) => (
+                  <li key={p.slug}>
+                    Read the write-up: <Link to={`/blog/${p.slug}`} className="text-signal hover:underline">{p.h1}</Link>
+                  </li>
+                ))}
+            </ul>
+          </nav>
         )}
       </motion.div>
     </div>

@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "postbuild": "node scripts/prerender.mjs",
-    "preview": "vite preview"
+    "postbuild": "node scripts/prerender.mjs && node scripts/verify-seo.mjs",
+    "preview": "vite preview",
+    "verify:live": "node scripts/verify-live.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

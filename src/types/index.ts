@@ -13,6 +13,10 @@ export interface Project {
   architecture?: string[]
   features?: string[]
   year: number
+  /** ISO date the case study went live on this site (first commit of the entry). */
+  datePublished: string
+  /** ISO date the case study copy last changed in a way worth telling Google about. */
+  dateModified: string
 }
 
 export interface AppService {

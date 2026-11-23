@@ -22,6 +22,7 @@ export default function Projects() {
     'Case studies and architecture breakdowns: real systems built, decisions made, outcomes measured. Node.js, Java, TypeScript, Go in production.',
     {
       canonical: 'https://buildwithkulshresth.com/projects',
+      breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'Case Studies', path: '/projects' }],
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'ItemList',

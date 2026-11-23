@@ -5,16 +5,21 @@ import { CalendarDays, Menu, Moon, Sun, X } from 'lucide-react'
 import LogoMark from './LogoMark'
 import { useTheme } from '../context/ThemeContext'
 import { CALENDLY_URL } from '../lib/contact'
+import { services } from '../data/services'
 
 interface NavItem {
   label: string
   to: string
   hash?: string
+  children?: { label: string; to: string }[]
 }
+
+const serviceLinks = services.map((s) => ({ label: s.navLabel, to: `/services/${s.slug}` }))
 
 const navItems: NavItem[] = [
   { label: 'Home', to: '/' },
-  { label: 'Services', to: '/hire' },
+  { label: 'Services', to: '/hire', children: serviceLinks },
+  { label: 'Blog', to: '/blog' },
   { label: 'Case Studies', to: '/projects' },
   { label: 'Productivity', to: '/productivity' },
   { label: 'About', to: '/about' },
@@ -66,20 +71,36 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
-          {navItems.map((item) => (
-            <Link
-              key={item.label}
-              to={{ pathname: item.to, hash: item.hash }}
-              className={`relative px-4 py-2 text-sm transition-colors duration-200 ${
-                isActive(item) ? 'text-white' : 'text-white/65 hover:text-white'
-              }`}
-            >
-              {item.label}
-              {isActive(item) && (
-                <motion.span layoutId="nav-dot" className="absolute left-4 right-4 -bottom-0.5 h-0.5 rounded-full bg-signal" />
-              )}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const link = (
+              <Link
+                to={{ pathname: item.to, hash: item.hash }}
+                className={`relative px-4 py-2 text-sm transition-colors duration-200 ${
+                  isActive(item) || (item.children && pathname.startsWith('/services/')) ? 'text-white' : 'text-white/65 hover:text-white'
+                }`}
+              >
+                {item.label}
+                {(isActive(item) || (item.children && pathname.startsWith('/services/'))) && (
+                  <motion.span layoutId="nav-dot" className="absolute left-4 right-4 -bottom-0.5 h-0.5 rounded-full bg-signal" />
+                )}
+              </Link>
+            )
+            if (!item.children) return <div key={item.label}>{link}</div>
+            return (
+              <div key={item.label} className="relative group">
+                {link}
+                <ul className="absolute left-0 top-full hidden group-hover:block group-focus-within:block min-w-[260px] rounded-xl border border-white/[0.12] bg-ink/95 backdrop-blur-md p-2 shadow-xl">
+                  {item.children.map((c) => (
+                    <li key={c.to}>
+                      <Link to={c.to} className="block px-3 py-2 rounded-lg text-sm text-white/75 hover:text-white hover:bg-white/[0.06] transition-colors">
+                        {c.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          })}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -116,13 +137,22 @@ export default function Navbar() {
           >
             <nav className="px-5 pb-6 pt-2 flex flex-col" aria-label="Mobile">
               {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  to={{ pathname: item.to, hash: item.hash }}
-                  className="display text-4xl py-3 border-b border-white/[0.1] text-white"
-                >
-                  {item.label}
-                </Link>
+                <div key={item.label} className="border-b border-white/[0.1]">
+                  <Link to={{ pathname: item.to, hash: item.hash }} className="display text-4xl py-3 block text-white">
+                    {item.label}
+                  </Link>
+                  {item.children && (
+                    <ul className="pb-3 pl-1 space-y-1">
+                      {item.children.map((c) => (
+                        <li key={c.to}>
+                          <Link to={c.to} className="block py-1.5 text-base text-white/70 hover:text-white">
+                            {c.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               ))}
               <a
                 href={CALENDLY_URL}

@@ -5,6 +5,9 @@ import { ArrowUpRight, CheckCircle2, Loader2 } from 'lucide-react'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { CALENDLY_URL as CALENDLY_LINK, EMAIL, WEB3FORMS_ACCESS_KEY } from '../lib/contact'
 import GlassCard from '../components/GlassCard'
+import { track } from '../lib/analytics'
+import { breadcrumbLd } from '../lib/seo'
+import { services as servicePages } from '../data/services'
 
 // Calendly's intro-call event is open 7-11pm IST weekdays, that window is
 // ~13:30-17:30 UTC, i.e. roughly 8:30am-12:30pm US Eastern. Real overlap is
@@ -208,6 +211,10 @@ export default function Hire() {
             'Backend Performance Audit',
           ],
         },
+        breadcrumbLd([
+          { name: 'Home', path: '/' },
+          { name: 'Services', path: '/hire' },
+        ]),
       ],
     },
   )
@@ -251,6 +258,7 @@ export default function Hire() {
       })
       const result = await res.json()
       if (result.success) {
+        track('generate_lead', { lead_source: 'hire_page', service: String(data.get('service') ?? '') || undefined, value: 1 })
         setStatus('success')
         form.reset()
       } else {
@@ -389,6 +397,18 @@ export default function Hire() {
             </GlassCard>
           ))}
         </div>
+        <nav aria-label="Service pages" className="mt-6">
+          <p className="text-[10px] font-mono text-white/50 uppercase tracking-wider mb-2.5">Read more about</p>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+            {servicePages.map((s) => (
+              <li key={s.slug}>
+                <Link to={`/services/${s.slug}`} className="text-signal hover:underline">
+                  {s.navLabel}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </motion.section>
 
       {/* Proof */}
