@@ -16,6 +16,7 @@
 #      which is noindex) for anything that is not a file or a known route.
 #   4. Adds X-Robots-Tag: noindex for the private SPA routes (/admin, /ai-ml, /dsa*).
 #
+#   6. Adds X-Robots-Tag noindex to `location /kaizex/` (the product UI answers 200 for any slug).
 #   5. Restricts the two catch-all brand-slug regexes (`^/<any-slug>$` and `^/<any-slug>/(.*)$`,
 #      which 301 to /kaizex/<slug>/...) to BRAND_SLUGS (default "zoralis"), so unknown paths such as
 #      /zzz-random fall through to the real 404. Override: BRAND_SLUGS="zoralis|acme" ./nginx-seo.sh
@@ -126,6 +127,20 @@ elif 'try_files $uri $uri.html =404;' in fb:
     print("default fallback already returns 404 for unknown paths")
 else:
     print("WARNING: default fallback block did not contain `try_files $uri $uri/ /index.html;`; unknown paths there still return 200. Check --inspect.")
+
+# 5. /kaizex/ is the product UI (a client-rendered app that answers 200 "Loading..." for ANY slug, so Google
+#    indexes junk like /kaizex/foo/ as soft-404s). Keep the whole section out of the index.
+NOINDEX = 'add_header X-Robots-Tag "noindex, nofollow" always;'
+m = re.search(r'location /kaizex/ \{', s)
+if m:
+    end = s.find('}', m.end())
+    if NOINDEX not in s[m.end():end]:
+        s = s[:m.end()] + '\n        ' + NOINDEX + s[m.end():]
+        print("noindex header added to `location /kaizex/`")
+    else:
+        print("`location /kaizex/` already sends noindex")
+else:
+    print("WARNING: `location /kaizex/ {` not found; /kaizex/* is still indexable")
 
 open(conf, 'w').write(s)
 PY
